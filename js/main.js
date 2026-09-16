@@ -319,7 +319,7 @@
         parallax.targetX = (px - 0.5) * 0.35; parallax.targetY = (py - 0.5) * 0.35;
       }
       if (!isReducedMotion() && !isMobile()) {
-        const r2 = clusterWrap.getBoundingClientRect();
+        const r2 = clusterSvg.getBoundingClientRect();
         if (pointerInRect(e, r2)) {
           const px2 = clamp((e.clientX - r2.left) / r2.width, 0, 1), py2 = clamp((e.clientY - r2.top) / r2.height, 0, 1);
           clusterParallax.targetX = (px2 - 0.5) * 0.5; clusterParallax.targetY = (py2 - 0.5) * 0.4;
@@ -367,8 +367,9 @@
     container.innerHTML = FEATURED_RAW.map((p, i) => `
       <div class="project-card" data-project-id="${p.id}">
         <div class="project-card-inner${i % 2 === 1 ? ' reverse' : ''}">
-          <div class="project-media">
+          <div class="project-media media-placeholder">
             <div class="project-glare" data-glare></div>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
             <span class="placeholder-label">[project screenshot]</span>
           </div>
           <div class="project-content">
@@ -437,7 +438,10 @@
       const isIn = archiveNewIds.has(p.id);
       const meta = STATUS_META[p.status];
       return `<div class="archive-card${isIn ? '' : ' hidden-out'}" data-project-id="${p.id}">
-        <div class="archive-thumb"><span>[shot]</span></div>
+        <div class="archive-thumb media-placeholder">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>[shot]</span>
+        </div>
         <div class="archive-card-head"><h4>${esc(p.name)}</h4><span class="status-dot" style="background:${meta.color}"></span></div>
         <div class="archive-domain">${esc(p.domain)}</div>
         <div class="archive-tags">${p.tech.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
@@ -500,21 +504,37 @@
   }
 
   // ---------- scroll effects ----------
-  let revealEls = [];
   function onScroll() {
     const heroWrap = document.getElementById('hero-canvas-wrap');
     const r = heroWrap.getBoundingClientRect();
     scrollProgress = clamp(1 - (r.top + r.height * 0.5) / (window.innerHeight * 0.9), 0, 1);
-    if (isReducedMotion()) return;
-    revealEls.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      const p = clamp((window.innerHeight - rect.top) / (window.innerHeight * 0.62), 0, 1);
-      el.style.transform = `perspective(1400px) rotateX(${lerp(6, 0, p).toFixed(2)}deg) scale(${lerp(0.96, 1, p).toFixed(3)})`;
-      el.style.opacity = String(lerp(0.45, 1, p).toFixed(3));
-    });
   }
-  function resetReveal() {
-    revealEls.forEach((el) => { el.style.transform = 'none'; el.style.opacity = '1'; });
+
+  let lenis = null;
+  function initScrollFX() {
+    const revealEls = Array.from(document.querySelectorAll('.reveal'));
+    if (isReducedMotion() || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      revealEls.forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
+      return;
+    }
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({ autoRaf: false });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    revealEls.forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0.45, transformPerspective: 1400, rotateX: 6, scale: 0.96 },
+        {
+          opacity: 1, rotateX: 0, scale: 1, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top 95%', end: 'top 38%', scrub: true },
+        }
+      );
+    });
   }
 
   // ---------- init ----------
@@ -539,14 +559,9 @@
     document.getElementById('back-btn').addEventListener('click', closeProject);
 
     initInteractions();
-
-    revealEls = Array.from(document.querySelectorAll('.reveal'));
-    if (isReducedMotion()) resetReveal();
+    initScrollFX();
     window.addEventListener('scroll', onScroll, { passive: true });
-    mqReduced.addEventListener('change', () => {
-      if (mqReduced.matches) { stopLoop(); resetReveal(); }
-      else { startLoop(); }
-    });
+    mqReduced.addEventListener('change', () => location.reload());
 
     document.getElementById('hud-node-count').textContent = String(N);
     renderHero();

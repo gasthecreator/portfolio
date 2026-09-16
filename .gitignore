@@ -1,0 +1,9 @@
+# AI coding tool configs / skills (local dev tooling, not site content)
+.claude/
+.agent/
+.agents/
+.cursor/
+.gemini/
+.codex/
+
+.DS_Store
