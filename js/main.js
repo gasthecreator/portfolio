@@ -70,11 +70,9 @@
   function initMobileMenu() {
     const btn = document.getElementById('hamburger-btn');
     const menu = document.getElementById('mobile-menu');
-    const closeBtn = document.getElementById('mobile-menu-close');
-    function open() { menu.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
-    function close() { menu.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+    function open() { menu.classList.add('open'); btn.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
+    function close() { menu.classList.remove('open'); btn.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
     btn.addEventListener('click', () => (menu.classList.contains('open') ? close() : open()));
-    closeBtn.addEventListener('click', close);
     menu.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) close(); });
   }
 
@@ -248,7 +246,8 @@
       revealEls.forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
       return;
     }
-    gsap.registerPlugin(ScrollTrigger);
+    const hasSplitText = typeof SplitText !== 'undefined';
+    gsap.registerPlugin(...(hasSplitText ? [ScrollTrigger, SplitText] : [ScrollTrigger]));
 
     if (typeof Lenis !== 'undefined') {
       lenis = new Lenis({ autoRaf: false });
@@ -265,6 +264,57 @@
           scrollTrigger: { trigger: el, start: 'top 95%', end: 'top 38%', scrub: true },
         }
       );
+    });
+
+    if (hasSplitText) {
+      const heroName = document.querySelector('.hero-name');
+      if (heroName) {
+        SplitText.create(heroName, {
+          type: 'chars', autoSplit: true,
+          onSplit(self) {
+            return gsap.from(self.chars, { y: '110%', opacity: 0, duration: 0.7, ease: 'back.out(1.7)', stagger: 0.025 });
+          },
+        });
+      }
+      document.querySelectorAll('.section-title, .contact-title').forEach((el) => {
+        SplitText.create(el, {
+          type: 'words', autoSplit: true,
+          onSplit(self) {
+            return gsap.from(self.words, {
+              y: '60%', opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.05,
+              scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+            });
+          },
+        });
+      });
+    }
+
+    if (!isMobile()) {
+      gsap.to('.about-image', {
+        yPercent: -8, ease: 'none',
+        scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true },
+      });
+      gsap.to('.skills-intro', {
+        yPercent: -14, ease: 'none',
+        scrollTrigger: { trigger: '.skills', start: 'top bottom', end: 'center center', scrub: true },
+      });
+    }
+  }
+
+  // ---------- micro-interactions ----------
+  function initMicroInteractions() {
+    if (typeof anime === 'undefined') return;
+    document.querySelectorAll('.btn').forEach((btn) => {
+      btn.addEventListener('pointerdown', () => {
+        if (isReducedMotion()) return;
+        anime.animate(btn, { scale: 0.94, duration: 120, ease: 'outQuad' });
+      });
+      ['pointerup', 'pointerleave'].forEach((evt) => {
+        btn.addEventListener(evt, () => {
+          if (isReducedMotion()) return;
+          anime.animate(btn, { scale: 1, duration: 320, ease: 'outElastic(1, .6)' });
+        });
+      });
     });
   }
 
@@ -286,10 +336,15 @@
       else if (kind === 'domain') { nf.domain.has(value) ? nf.domain.delete(value) : nf.domain.add(value); }
       else if (kind === 'status') { nf.status = value; }
       applyFilters(nf);
+      if (!isReducedMotion() && typeof anime !== 'undefined') {
+        const fresh = document.querySelector(`.chip[data-kind="${kind}"][data-value="${value}"]`);
+        if (fresh) anime.animate(fresh, { scale: [1, 1.12, 1], duration: 320, ease: 'outElastic(1, .6)' });
+      }
     });
     document.getElementById('back-btn').addEventListener('click', closeProject);
 
     initScrollFX();
+    initMicroInteractions();
     mqReduced.addEventListener('change', () => location.reload());
   }
 
