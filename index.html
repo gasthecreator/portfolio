@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gideon Sanni — Software Engineer</title>
+<meta name="description" content="Portfolio of Gideon Sanni, software engineer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAV : DESKTOP ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">GS</div>
+    <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    <a href="assets/resume.pdf" download class="icon-btn" title="Download résumé">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+    </a>
+  </aside>
+
+  <!-- ============ NAV : MOBILE ============ -->
+  <header class="mobile-topbar" id="mobile-topbar">
+    <div class="brand brand--sm">GS</div>
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">×</button>
+    <nav class="mobile-menu-nav" id="mobile-menu-nav"></nav>
+    <a href="assets/resume.pdf" download class="mobile-resume-link">↓ Résumé</a>
+  </div>
+
+  <!-- ============ MAIN WRAPPER ============ -->
+  <div class="main-wrap">
+
+    <!-- ============ HOME ============ -->
+    <main id="home-view">
+
+      <!-- ===== HERO ===== -->
+      <section id="hero" data-screen-label="Hero" class="hero">
+        <div class="hero-text">
+          <div class="eyebrow">Software Engineer — Available for work</div>
+          <h1 class="hero-name">Gideon Sanni</h1>
+          <p class="hero-tagline">[Tagline — one line describing what you build, for whom, and how]</p>
+          <div class="hero-actions">
+            <a href="#featured" class="btn btn--primary">View work</a>
+            <a href="#contact" class="btn btn--ghost">Contact</a>
+          </div>
+          <div class="scroll-cue">
+            <span class="scroll-dot"></span>
+            <span>SCROLL</span>
+          </div>
+        </div>
+
+        <div class="hero-canvas-wrap" id="hero-canvas-wrap">
+          <svg id="hero-svg" viewBox="-260 -260 520 520" class="orbit-svg">
+            <g id="hero-edges"></g>
+            <g id="hero-nodes"></g>
+          </svg>
+          <div class="hud hud--tl">NETWORK.VIS — <span id="hud-node-count">20</span> NODES / <span id="hud-edge-count">0</span> EDGES</div>
+          <div class="hud hud--tr" id="hud-rot">X 0° · Y 0°</div>
+          <div class="hud hud--bl" id="hud-hint">DRAG TO ORBIT · SCROLL TO MORPH</div>
+          <button class="explode-btn" id="explode-btn">[ EXPLODE ]</button>
+        </div>
+      </section>
+
+      <!-- ===== ABOUT ===== -->
+      <section id="about" data-screen-label="About" class="reveal about">
+        <div class="about-text">
+          <div class="eyebrow">Profile / 01</div>
+          <h2 class="section-title" style="margin-bottom:24px;">About</h2>
+          <p class="about-bio">[Placeholder bio — two to three sentences on background, focus area, and what kind of problems you enjoy solving. Replace with real copy before shipping.]</p>
+          <div class="about-stats">
+            <div class="stat"><div class="stat-num">[X]</div><div class="stat-label">years building</div></div>
+            <div class="stat"><div class="stat-num">[N]</div><div class="stat-label">shipped projects</div></div>
+            <div class="stat"><div class="stat-num">[City]</div><div class="stat-label">based in</div></div>
+          </div>
+        </div>
+        <div class="about-image">
+          <span class="placeholder-label">[portrait]</span>
+        </div>
+      </section>
+
+      <!-- ===== SKILLS ===== -->
+      <section id="skills" data-screen-label="Skills" class="reveal skills">
+        <div class="skills-intro">
+          <div class="eyebrow">Toolkit / 02</div>
+          <h2 class="section-title">Skills</h2>
+          <p class="skills-desc">[A living map of the languages, frameworks and tools reached for most often.]</p>
+        </div>
+        <div class="skills-cluster-wrap" id="skills-cluster-wrap">
+          <svg id="skills-svg" viewBox="-260 -170 520 340" class="orbit-svg">
+            <g id="skills-spokes"></g>
+            <g id="skills-nodes"></g>
+          </svg>
+          <div class="hud hud--bl" id="skills-hud-count">STACK.VIS — 0 NODES / 0 CATEGORIES</div>
+          <div class="hud hud--br">DRAG TO ORBIT</div>
+        </div>
+      </section>
+
+      <!-- ===== FEATURED PROJECTS ===== -->
+      <section id="featured" data-screen-label="Featured Projects" class="reveal featured">
+        <div class="featured-inner">
+          <div class="eyebrow">Selected work / 03</div>
+          <h2 class="section-title" style="margin-bottom:52px;">Featured Projects</h2>
+          <div class="featured-list" id="featured-list"></div>
+        </div>
+      </section>
+
+      <!-- ===== ARCHIVE ===== -->
+      <section id="archive" data-screen-label="Project Archive" class="reveal archive">
+        <div class="section-inner">
+          <div class="eyebrow">Everything else / 04</div>
+          <h2 class="section-title" style="margin-bottom:28px;">Full Archive</h2>
+
+          <div class="filter-bar" id="filter-bar"></div>
+
+          <div class="archive-grid" id="archive-grid"></div>
+          <div class="archive-empty" id="archive-empty" hidden>No projects match these filters.</div>
+        </div>
+      </section>
+
+      <!-- ===== EXPERIENCE ===== -->
+      <section id="experience" data-screen-label="Experience" class="reveal experience">
+        <div class="experience-inner">
+          <div class="eyebrow">Track record / 05</div>
+          <h2 class="section-title" style="margin-bottom:44px;">Experience</h2>
+          <div class="timeline" id="experience-timeline"></div>
+        </div>
+      </section>
+
+      <!-- ===== EDUCATION ===== -->
+      <section id="education" data-screen-label="Education" class="reveal education">
+        <div class="education-inner">
+          <div class="eyebrow">Education / 06</div>
+          <h2 class="section-title" style="margin-bottom:28px;">Education</h2>
+          <div class="education-list" id="education-list"></div>
+        </div>
+      </section>
+
+      <!-- ===== CONTACT / FOOTER ===== -->
+      <footer id="contact" data-screen-label="Contact" class="reveal contact">
+        <div class="section-inner">
+          <div class="eyebrow">Get in touch / 07</div>
+          <h2 class="contact-title">[Closing line — invite the visitor to reach out]</h2>
+          <div class="contact-actions">
+            <a href="mailto:hello@example.com" class="btn btn--primary">hello@example.com</a>
+            <a href="assets/resume.pdf" download class="btn btn--ghost">↓ Download résumé</a>
+          </div>
+          <div class="footer-bottom">
+            <div class="copyright">© 2026 Gideon Sanni</div>
+            <div class="social-links">
+              <a href="https://github.com/gasthecreator" target="_blank" rel="noopener">GitHub</a>
+              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener">X / Twitter</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+
+    <!-- ============ PROJECT DETAIL ============ -->
+    <main id="detail-view" class="detail-view" hidden>
+      <div class="section-inner">
+        <button class="back-btn" id="back-btn">← Back to archive</button>
+        <div class="detail-cover">
+          <span class="placeholder-label">[project cover image]</span>
+        </div>
+        <div class="detail-header">
+          <h1 class="detail-title" id="detail-title"></h1>
+          <span class="status-pill" id="detail-status"></span>
+        </div>
+        <div class="detail-tags" id="detail-tags"></div>
+        <div class="detail-grid">
+          <div><div class="detail-label">Problem</div><p class="detail-body">[Placeholder — the problem this project set out to solve]</p></div>
+          <div><div class="detail-label">Approach</div><p class="detail-body">[Placeholder — how it was designed and built]</p></div>
+          <div><div class="detail-label">Stack</div><p class="detail-body">[Placeholder — key technical decisions]</p></div>
+          <div><div class="detail-label">Outcome</div><p class="detail-body">[Placeholder — measurable or qualitative result]</p></div>
+        </div>
+        <div class="detail-links">
+          <span class="detail-link">Live demo →</span>
+          <span class="detail-link">Source →</span>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
