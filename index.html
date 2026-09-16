@@ -57,10 +57,7 @@
         </div>
 
         <div class="hero-canvas-wrap" id="hero-canvas-wrap">
-          <svg id="hero-svg" viewBox="-260 -260 520 520" class="orbit-svg">
-            <g id="hero-edges"></g>
-            <g id="hero-nodes"></g>
-          </svg>
+          <canvas id="hero-canvas" class="orbit-canvas"></canvas>
           <div class="hud hud--tl">NETWORK.VIS — <span id="hud-node-count">20</span> NODES / <span id="hud-edge-count">0</span> EDGES</div>
           <div class="hud hud--tr" id="hud-rot">X 0° · Y 0°</div>
           <div class="hud hud--bl" id="hud-hint">DRAG TO ORBIT · SCROLL TO MORPH</div>
@@ -94,10 +91,8 @@
           <p class="skills-desc">[A living map of the languages, frameworks and tools reached for most often.]</p>
         </div>
         <div class="skills-cluster-wrap" id="skills-cluster-wrap">
-          <svg id="skills-svg" viewBox="-260 -170 520 340" class="orbit-svg">
-            <g id="skills-spokes"></g>
-            <g id="skills-nodes"></g>
-          </svg>
+          <canvas id="skills-canvas" class="orbit-canvas"></canvas>
+          <div id="skills-labels" class="skills-labels"></div>
           <div class="hud hud--bl" id="skills-hud-count">STACK.VIS — 0 NODES / 0 CATEGORIES</div>
           <div class="hud hud--br">DRAG TO ORBIT</div>
         </div>
@@ -197,5 +192,9 @@
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/main.js"></script>
+<script type="importmap">
+{ "imports": { "three": "./js/vendor/three.module.js" } }
+</script>
+<script type="module" src="js/three-scene.js"></script>
 </body>
 </html>
