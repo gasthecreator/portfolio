@@ -244,7 +244,7 @@ function createSkillsScene() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(COLOR.fog.getHex(), 300, 950);
+  scene.fog = new THREE.Fog(COLOR.fog.getHex(), 620, 1700);
   const camera = new THREE.PerspectiveCamera(42, 1, 1, 2000);
   camera.position.set(0, 0, 720);
 
@@ -276,7 +276,7 @@ function createSkillsScene() {
   const spokePositions = new Float32Array(nodes.length * 2 * 3);
   const spokeGeo = new THREE.BufferGeometry();
   spokeGeo.setAttribute('position', new THREE.BufferAttribute(spokePositions, 3));
-  const spokeMat = new THREE.LineBasicMaterial({ color: COLOR.edge, transparent: true, opacity: 0.5, fog: true });
+  const spokeMat = new THREE.LineBasicMaterial({ color: COLOR.heroEdge, transparent: true, opacity: 0.85, fog: true });
   const spokes = new THREE.LineSegments(spokeGeo, spokeMat);
   group.add(spokes);
 
