@@ -9,8 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/sections.css">
 </head>
 <body>
+  <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
 
   <!-- ============ NAV : DESKTOP ============ -->
   <aside class="sidebar" id="sidebar">
@@ -81,25 +84,28 @@
       </section>
 
       <!-- ===== ABOUT ===== -->
-      <section id="about" data-screen-label="About" class="reveal about">
-        <div class="about-text">
-          <div class="eyebrow">Profile / 01</div>
-          <h2 class="section-title" style="margin-bottom:24px;">About</h2>
-          <p class="about-bio">[Placeholder bio: two to three sentences on background, focus area, and what kind of problems you enjoy solving. Replace with real copy before shipping.]</p>
-          <div class="about-stats">
-            <div class="stat"><div class="stat-num">[X]</div><div class="stat-label">years building</div></div>
-            <div class="stat"><div class="stat-num">[N]</div><div class="stat-label">shipped projects</div></div>
-            <div class="stat"><div class="stat-num">[City]</div><div class="stat-label">based in</div></div>
+      <section id="about" data-screen-label="About" class="about">
+        <div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="about-grid">
+          <div class="about-panel panel">
+            <div class="eyebrow" data-reveal>Profile / 01</div>
+            <h2 class="section-title" style="margin-bottom:24px;">About</h2>
+            <p class="about-bio" data-reveal>[Placeholder bio: two to three sentences on background, focus area, and what kind of problems you enjoy solving. Replace with real copy before shipping.]</p>
+            <div class="about-stats" data-stagger>
+              <div class="stat"><div class="stat-num">[X]</div><div class="stat-label">years building</div></div>
+              <div class="stat"><div class="stat-num">[N]</div><div class="stat-label">shipped projects</div></div>
+              <div class="stat"><div class="stat-num">[City]</div><div class="stat-label">based in</div></div>
+            </div>
           </div>
-        </div>
-        <div class="about-image media-placeholder">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="placeholder-label">[portrait]</span>
+          <div class="about-image media-placeholder" data-clip>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span class="placeholder-label">[portrait]</span>
+          </div>
         </div>
       </section>
 
       <!-- ===== SKILLS ===== -->
-      <section id="skills" data-screen-label="Skills" class="reveal skills">
+      <section id="skills" data-screen-label="Skills" class="skills" data-curtain>
         <div class="skills-intro">
           <div class="eyebrow">Toolkit / 02</div>
           <h2 class="section-title">Skills</h2>
@@ -114,7 +120,8 @@
       </section>
 
       <!-- ===== FEATURED PROJECTS ===== -->
-      <section id="featured" data-screen-label="Featured Projects" class="reveal featured">
+      <section id="featured" data-screen-label="Featured Projects" class="featured">
+        <div class="blobs blobs--warm" aria-hidden="true"><i></i><i></i></div>
         <div class="featured-inner">
           <div class="eyebrow">Selected work / 03</div>
           <h2 class="section-title" style="margin-bottom:52px;">Featured Projects</h2>
@@ -122,31 +129,34 @@
         </div>
       </section>
 
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track"><span>TypeScript</span><span>Three.js</span><span>React</span><span>Node.js</span><span>PostgreSQL</span><span>WebGL</span><span>GraphQL</span><span>Docker</span><span>Motion design</span><span>Design systems</span><span>TypeScript</span><span>Three.js</span><span>React</span><span>Node.js</span><span>PostgreSQL</span><span>WebGL</span><span>GraphQL</span><span>Docker</span><span>Motion design</span><span>Design systems</span></div>
+      </div>
+
       <!-- ===== ARCHIVE ===== -->
-      <section id="archive" data-screen-label="Project Archive" class="reveal archive">
+      <section id="archive" data-screen-label="Project Archive" class="archive">
         <div class="section-inner">
           <div class="eyebrow">Everything else / 04</div>
           <h2 class="section-title" style="margin-bottom:28px;">Full Archive</h2>
-
           <div class="filter-bar" id="filter-bar"></div>
-
           <div class="archive-grid" id="archive-grid"></div>
           <div class="archive-empty" id="archive-empty" hidden>No projects match these filters.</div>
         </div>
       </section>
 
       <!-- ===== EXPERIENCE ===== -->
-      <section id="experience" data-screen-label="Experience" class="reveal experience">
-        <div class="experience-inner">
+      <section id="experience" data-screen-label="Experience" class="experience">
+        <div class="blobs" aria-hidden="true"><i></i><i></i></div>
+        <div class="experience-inner panel">
           <div class="eyebrow">Track record / 05</div>
           <h2 class="section-title" style="margin-bottom:44px;">Experience</h2>
-          <div class="timeline" id="experience-timeline"></div>
+          <div class="timeline" id="experience-timeline"><span class="timeline-line" aria-hidden="true"></span></div>
         </div>
       </section>
 
       <!-- ===== EDUCATION ===== -->
-      <section id="education" data-screen-label="Education" class="reveal education">
-        <div class="education-inner">
+      <section id="education" data-screen-label="Education" class="education">
+        <div class="education-inner panel" data-reveal>
           <div class="eyebrow">Education / 06</div>
           <h2 class="section-title" style="margin-bottom:28px;">Education</h2>
           <div class="education-list" id="education-list"></div>
@@ -154,21 +164,25 @@
       </section>
 
       <!-- ===== CONTACT / FOOTER ===== -->
-      <footer id="contact" data-screen-label="Contact" class="reveal contact">
-        <div class="section-inner">
+      <footer id="contact" data-screen-label="Contact" class="contact" data-curtain>
+        <div class="stars" id="stars" aria-hidden="true"></div>
+        <svg class="ridge ridge--far" id="ridge-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <svg class="ridge ridge--mid" id="ridge-mid" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <svg class="ridge ridge--near" id="ridge-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="section-inner contact-inner">
           <div class="eyebrow">Get in touch / 07</div>
           <h2 class="contact-title">[Closing line: invite the visitor to reach out]</h2>
-          <div class="contact-actions">
+          <div class="contact-actions" data-reveal>
             <a href="mailto:hello@example.com" class="btn btn--primary">hello@example.com</a>
             <a href="assets/resume.pdf" download class="btn btn--ghost">↓ Download résumé</a>
           </div>
-          <div class="footer-bottom">
-            <div class="copyright">© 2026 Gideon Sanni</div>
-            <div class="social-links">
-              <a href="https://github.com/gasthecreator" target="_blank" rel="noopener">GitHub</a>
-              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
-              <a href="#" target="_blank" rel="noopener">X / Twitter</a>
-            </div>
+        </div>
+        <div class="section-inner footer-bottom">
+          <div class="copyright">© 2026 Gideon Sanni</div>
+          <div class="social-links">
+            <a href="https://github.com/gasthecreator" target="_blank" rel="noopener">GitHub</a>
+            <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="#" target="_blank" rel="noopener">X / Twitter</a>
           </div>
         </div>
       </footer>

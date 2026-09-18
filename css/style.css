@@ -17,7 +17,7 @@
   --canvas-bg-1: oklch(0.27 0.05 152);
   --canvas-bg-2: oklch(0.19 0.048 152);
   --canvas-border: oklch(0.4 0.05 148);
-  --hud-dim: oklch(0.76 0.03 140);
+  --hud-dim: oklch(0.93 0.06 150);
   --hud-accent: oklch(0.76 0.11 146);
   --explode-bg: oklch(0.28 0.05 152);
   --explode-border: oklch(0.4 0.05 148);
@@ -248,16 +248,6 @@ img { max-width: 100%; }
 
 /* scroll reveal is animated directly by GSAP ScrollTrigger (see js/main.js) */
 
-/* ===== About ===== */
-.about {
-  padding: 110px 0 130px; display: flex; flex-wrap: wrap; align-items: center; background: var(--bg);
-}
-.about-text { flex: 1 1 340px; min-width: 260px; padding-left: 8%; padding-right: 40px; max-width: 480px; }
-.about-bio { font-size: 17px; line-height: 1.75; color: var(--text-secondary); margin: 0 0 32px; max-width: 420px; }
-.about-stats { display: flex; gap: 32px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; }
-.stat-num { font-size: 22px; font-weight: 600; color: var(--text); }
-.stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-.about-image { flex: 1.1 1 320px; min-width: 260px; height: 460px; }
 .media-placeholder {
   background: var(--surface-alt);
   border: 1px dashed var(--border);
@@ -266,48 +256,14 @@ img { max-width: 100%; }
 }
 .media-placeholder svg { opacity: 0.45; color: var(--text-faint); }
 .media-placeholder span { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); }
-@media (max-width: 900px) {
-  .about { padding: 56px 20px; gap: 32px; }
-  .about-text { padding-left: 0; padding-right: 0; max-width: none; }
-  .about-image { height: 280px; border-radius: 12px; }
-}
 
-/* alt background used by skills + archive */
-.alt-bg {
-  background-color: var(--bg-alt);
-  background-image: radial-gradient(circle at 82% 22%, oklch(0.885 0.024 140 / 0.55), transparent 45%),
-    radial-gradient(oklch(0.74 0.03 146 / 0.32) 1px, transparent 1px); background-size: auto, 22px 22px;
-}
-
-/* ===== Skills ===== */
-.skills { padding: 120px 0 100px; background-color: var(--bg-alt); background-image: radial-gradient(circle at 82% 22%, oklch(0.885 0.024 140 / 0.55), transparent 45%), radial-gradient(oklch(0.74 0.03 146 / 0.32) 1px, transparent 1px); background-size: auto, 22px 22px; }
-.skills-intro { max-width: 640px; padding: 0 56px; margin-bottom: 40px; }
-.skills-desc { font-size: 15px; color: var(--text-secondary); max-width: 380px; margin: 14px 0 0; line-height: 1.6; }
-.skills-cluster-wrap {
-  position: relative; width: 100%; height: 440px; padding: 16px 0;
-  background: radial-gradient(circle at 25% 30%, var(--canvas-bg-1), var(--canvas-bg-2));
-  border-top: 1px solid var(--canvas-border); border-bottom: 1px solid var(--canvas-border); overflow: hidden;
-}
-@media (max-width: 900px) {
-  .skills { padding: 56px 0 40px; }
-  .skills-intro { padding: 0 20px; }
-  .skills-cluster-wrap { height: 300px; }
-}
 .skills-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .skill-label {
   position: absolute; top: 0; left: 0; will-change: transform;
   font-family: 'IBM Plex Mono', monospace; font-size: 11px; white-space: nowrap; line-height: 1;
-  pointer-events: none; color: oklch(0.85 0.02 128);
+  pointer-events: none; color: oklch(0.95 0.012 130);
 }
 
-/* ===== Featured ===== */
-.featured { padding: 150px 0 140px; background: var(--bg); }
-.featured-inner { max-width: 1320px; margin: 0 auto; padding: 0 40px; }
-.featured-list { display: flex; flex-direction: column; gap: 32px; }
-@media (max-width: 900px) {
-  .featured { padding: 64px 0; }
-  .featured-inner { padding: 0 20px; }
-}
 .project-card {
   border: 1px solid var(--border-light); border-radius: 14px; background: var(--surface);
   cursor: pointer; overflow: hidden; transform-style: preserve-3d; will-change: transform;
@@ -404,19 +360,6 @@ img { max-width: 100%; }
 .education-school { font-size: 13px; color: var(--accent); margin-bottom: 6px; }
 .education-note { font-size: 12px; color: var(--text-faint); }
 .education-dates { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-muted); white-space: nowrap; }
-
-/* ===== Contact ===== */
-.contact { padding: 150px 0 60px; background: var(--bg); }
-@media (max-width: 900px) { .contact { padding: 64px 0 40px; } }
-.contact-title { font-family: var(--font-display); font-size: clamp(30px, 5vw, 54px); font-weight: 600; margin: 0 0 28px; max-width: 620px; line-height: 1.15; color: var(--text-strong); }
-.contact-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 60px; }
-.footer-bottom {
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
-  border-top: 1px solid var(--border-lighter); padding-top: 24px;
-}
-.copyright { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); }
-.social-links { display: flex; gap: 20px; }
-.social-links a { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); }
 
 /* ===== Detail view ===== */
 .detail-view { padding: 80px 0 100px; background: var(--bg); min-height: 100vh; }

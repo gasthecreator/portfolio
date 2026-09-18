@@ -341,7 +341,7 @@ function updateSkills(sk, state) {
     }
   }
   projected.forEach((p) => {
-    const op = clamp(lerp(1, 0.4, (p.z + 1) / 2), 0.35, 1);
+    const op = clamp(lerp(1, 0.7, (p.z + 1) / 2), 0.62, 1);
     p.n.label.style.transform = `translate(${(p.sx + halfW + 8).toFixed(1)}px, ${(p.sy + halfH - 9).toFixed(1)}px)`;
     p.n.label.style.opacity = op.toFixed(3);
   });
