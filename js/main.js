@@ -54,10 +54,38 @@
     { degree: '[Degree, Field of Study]', school: '[University Name]', note: '[Placeholder: honors, focus area]', dates: '2016 – 2020' },
   ];
   const STATUS_META = {
-    shipped: { label: 'Shipped', color: 'oklch(0.48 0.14 45)' },
-    'in-progress': { label: 'In progress', color: 'oklch(0.5 0.1 250)' },
-    archived: { label: 'Archived', color: 'oklch(0.5 0.03 60)' },
+    shipped: { label: 'Shipped', color: 'var(--st-shipped)' },
+    'in-progress': { label: 'In progress', color: 'var(--st-progress)' },
+    archived: { label: 'Archived', color: 'var(--st-archived)' },
   };
+
+  // ---------- theme ----------
+  function currentTheme() { return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'; }
+  function applyTheme(t, animate) {
+    const root = document.documentElement;
+    if (animate) { root.classList.add('theme-anim'); setTimeout(() => root.classList.remove('theme-anim'), 450); }
+    root.dataset.theme = t;
+    document.querySelectorAll('.theme-toggle').forEach((b) => {
+      b.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+    window.dispatchEvent(new CustomEvent('themechange', { detail: t }));
+  }
+  function initTheme() {
+    applyTheme(currentTheme(), false);
+    document.querySelectorAll('.theme-toggle').forEach((b) => {
+      b.addEventListener('click', () => {
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        applyTheme(next, true);
+      });
+    });
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change', (e) => {
+      let saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (err) {}
+      if (!saved) applyTheme(e.matches ? 'dark' : 'light', true);
+    });
+  }
 
   // ---------- nav ----------
   function renderNav() {
@@ -416,6 +444,7 @@
     });
     document.getElementById('back-btn').addEventListener('click', closeProject);
 
+    initTheme();
     buildScenery();
     initScrollFX();
     initMicroInteractions();

@@ -2,15 +2,15 @@
 
 /* ===== Shared ===== */
 .panel {
-  background: oklch(0.985 0.008 245 / 0.84);
+  background: var(--panel-bg);
   backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2);
-  border: 1px solid oklch(1 0 0 / 0.75); border-radius: 26px;
+  border: 1px solid var(--panel-border); border-radius: 26px;
 }
 .about, .featured, .experience { position: relative; overflow: clip; }
 .blobs { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .blobs i {
   position: absolute; width: 44vw; height: 44vw; max-width: 640px; max-height: 640px; border-radius: 50%;
-  filter: blur(70px); opacity: 0.55; animation: blob-drift 24s ease-in-out infinite alternate;
+  filter: blur(70px); opacity: var(--blob-opacity); animation: blob-drift 24s ease-in-out infinite alternate;
 }
 .blobs i:nth-child(1) { left: -8%; top: 4%; background: oklch(0.88 0.09 68); }
 .blobs i:nth-child(2) { right: -10%; top: 38%; background: oklch(0.86 0.06 240); animation-delay: -9s; }
@@ -28,7 +28,7 @@
   background: linear-gradient(90deg, oklch(0.78 0.13 65), oklch(0.7 0.1 250));
   transform: scaleX(0); transform-origin: 0 50%;
 }
-.sidebar-nav a.active { background: oklch(1 0 0 / 0.9); color: var(--accent-strong); }
+.sidebar-nav a.active { background: var(--glass-active); color: var(--glass-active-text); }
 
 /* ===== About ===== */
 .about { padding: 130px 0; background: var(--bg); }
@@ -65,7 +65,7 @@
 .stack-item { position: sticky; top: calc(96px + var(--i) * 20px); margin-bottom: 16vh; transform-origin: 50% 0; }
 .stack-item:last-child { margin-bottom: 0; }
 .project-card {
-  background: oklch(0.985 0.008 245 / 0.94); border: 0; border-radius: 28px;
+  background: var(--card-bg); border: 0; border-radius: 28px;
   box-shadow: 0 34px 60px -34px oklch(0.3 0.08 50 / 0.4);
 }
 @media (max-height: 720px) { .stack-item { position: static; margin-bottom: 28px; } }
@@ -78,7 +78,7 @@
 
 /* ===== Archive ===== */
 .archive { background: linear-gradient(180deg, var(--bg-alt), var(--bg)); }
-.archive-card { border-radius: 18px; background: oklch(0.985 0.008 245 / 0.95); }
+.archive-card { border-radius: 18px; background: var(--card-bg); }
 
 /* ===== Experience / Education ===== */
 .experience { padding: 130px 0 60px; background: var(--bg); }

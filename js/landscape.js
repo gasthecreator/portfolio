@@ -162,14 +162,15 @@ function init() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.75));
 
   const OCT = mobile ? 4 : 5;
-  const page = oklchToRGB('oklch(0.955 0.02 245)');
+  const PAGE = { light: 'oklch(0.955 0.02 245)', dark: 'oklch(0.19 0.045 268)' };
+  const pageColor = () => new THREE.Color(...oklchToRGB(PAGE[document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light']));
   const sunDir = new THREE.Vector3(0.6, 0.24, -0.75).normalize();
   const horizon = new THREE.Color(1.0, 0.72, 0.5);
 
   const skyUniforms = {
     uSunDir: { value: sunDir }, uHorizon: { value: horizon.clone() },
     uMid: { value: new THREE.Color(0.6, 0.7, 0.85) }, uZenith: { value: new THREE.Color(0.27, 0.46, 0.72) },
-    uPage: { value: new THREE.Color(...page) }, uTime: { value: 0 }, uFade: { value: 0 }, uLinearOut: { value: 0 },
+    uPage: { value: pageColor() }, uTime: { value: 0 }, uFade: { value: 0 }, uLinearOut: { value: 0 },
   };
   const skyMat = new THREE.ShaderMaterial({
     uniforms: skyUniforms, vertexShader: SKY_VERT, fragmentShader: SKY_FRAG,
@@ -191,7 +192,7 @@ function init() {
   tGeo.translate(0, 0, -270);
   const terrainUniforms = {
     uSunDir: { value: sunDir }, uHaze: { value: horizon.clone() }, uCam: { value: new THREE.Vector3() },
-    uPage: { value: new THREE.Color(...page) }, uFade: { value: 0 },
+    uPage: { value: pageColor() }, uFade: { value: 0 },
   };
   const terrain = new THREE.Mesh(tGeo, new THREE.ShaderMaterial({
     uniforms: terrainUniforms, vertexShader: TERRAIN_VERT, fragmentShader: TERRAIN_FRAG, defines: { OCT },
@@ -229,6 +230,11 @@ function init() {
   card.add(front, back);
   card.scale.setScalar(2.1);
   scene.add(card);
+
+  window.addEventListener('themechange', () => {
+    skyUniforms.uPage.value.copy(pageColor());
+    terrainUniforms.uPage.value.copy(pageColor());
+  });
 
   const state = { p: 0, time: 0, mx: 0, my: 0, tx: 0, ty: 0 };
   const fwd = new THREE.Vector3(), look = new THREE.Vector3();
