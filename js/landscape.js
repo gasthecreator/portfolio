@@ -5,6 +5,12 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 
+const DAYC = { horizon: [1.0, 0.72, 0.5], mid: [0.6, 0.7, 0.85], zen: [0.27, 0.46, 0.72] };
+const NIGHTC = { horizon: [0.3, 0.22, 0.46], mid: [0.1, 0.12, 0.29], zen: [0.03, 0.04, 0.13] };
+const DAY_DIR = [0.6, 0.24, -0.75];
+const NIGHT_DIR = [0.37, 0.38, -0.85];
+const mixC = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+
 const mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 const mqMobile = window.matchMedia('(max-width: 900px)');
 
@@ -34,25 +40,41 @@ const SKY_FRAG = /* glsl */ `
   precision highp float;
   varying vec3 vDir;
   uniform vec3 uSunDir, uHorizon, uMid, uZenith, uPage;
-  uniform float uTime, uFade, uLinearOut;
+  uniform float uTime, uFade, uLinearOut, uNight;
   ${NOISE}
+  float hash31(vec3 p){ p = fract(p * 0.1031); p += dot(p, p.zyx + 31.32); return fract((p.x + p.y) * p.z); }
   void main() {
     vec3 dir = normalize(vDir);
     float h = dir.y;
     vec3 sky = mix(uHorizon, uMid, smoothstep(0.0, 0.28, h));
     sky = mix(sky, uZenith, smoothstep(0.22, 0.85, h));
     float sd = max(dot(dir, uSunDir), 0.0);
-    sky += vec3(1.0, 0.68, 0.38) * (pow(sd, 90.0) * 0.9 + pow(sd, 7.0) * 0.32);
+    float disc = mix(pow(sd, 90.0) * 0.9, pow(sd, 900.0) * 1.4, uNight);
+    float halo = mix(pow(sd, 7.0) * 0.32, pow(sd, 14.0) * 0.22, uNight);
+    sky += mix(vec3(1.0, 0.68, 0.38), vec3(0.82, 0.9, 1.0), uNight) * (disc + halo);
+    vec3 stars = vec3(0.0);
+    if (uNight > 0.01 && h > 0.0) {
+      vec3 sp = dir * 160.0;
+      vec3 id = floor(sp);
+      float rnd = hash31(id);
+      float d = length(fract(sp) - 0.5);
+      float tw = 0.65 + 0.35 * sin(uTime * 2.0 + rnd * 40.0);
+      float s = smoothstep(0.2, 0.0, d) * step(0.972, rnd) * tw * smoothstep(0.03, 0.3, h) * uNight;
+      stars = vec3(0.9, 0.93, 1.0) * s * 2.2;
+    }
     if (h > 0.0) {
       vec2 uv = dir.xz / (h + 0.14) * 1.5 + vec2(uTime * 0.012, uTime * 0.004);
       float d = fbm(uv);
       float d2 = fbm(uv + uSunDir.xz * 0.28);
       float cover = smoothstep(0.46, 0.8, d) * smoothstep(0.0, 0.16, h);
       float lit = clamp((d - d2) * 4.2 + 0.55, 0.0, 1.0);
-      vec3 cloud = mix(vec3(0.48, 0.44, 0.56), vec3(1.0, 0.8, 0.58), lit);
-      cloud = mix(cloud, vec3(1.0, 0.95, 0.88), smoothstep(0.62, 0.85, d) * 0.5);
-      sky = mix(sky, cloud, cover);
+      vec3 dayCloud = mix(vec3(0.48, 0.44, 0.56), vec3(1.0, 0.8, 0.58), lit);
+      dayCloud = mix(dayCloud, vec3(1.0, 0.95, 0.88), smoothstep(0.62, 0.85, d) * 0.5);
+      vec3 nightCloud = mix(vec3(0.06, 0.07, 0.16), vec3(0.42, 0.48, 0.7), lit * 0.8);
+      sky = mix(sky, mix(dayCloud, nightCloud, uNight), cover);
+      stars *= (1.0 - cover);
     }
+    sky += stars;
     sky = mix(sky, uHorizon, smoothstep(0.02, -0.06, h));
     sky = mix(sky, uPage, uFade);
     gl_FragColor = vec4(mix(sky, pow(sky, vec3(2.2)), uLinearOut), 1.0);
@@ -93,7 +115,7 @@ const TERRAIN_FRAG = /* glsl */ `
   precision highp float;
   varying vec3 vWorld; varying vec3 vN;
   uniform vec3 uSunDir, uHaze, uCam, uPage;
-  uniform float uFade;
+  uniform float uFade, uNight;
   float hash21(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
   float vnoise(vec2 p){
     vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);
@@ -108,9 +130,11 @@ const TERRAIN_FRAG = /* glsl */ `
     vec3 grass = mix(grassA, grassB, speck);
     vec3 rock = mix(vec3(0.42, 0.28, 0.2), vec3(0.62, 0.4, 0.26), speck);
     vec3 col = mix(grass, rock, smoothstep(0.22, 0.5, slope + (speck - 0.5) * 0.2));
+    col = mix(col, col * vec3(0.55, 0.72, 1.0), uNight);
     float diff = max(dot(n, uSunDir), 0.0);
-    vec3 light = vec3(1.0, 0.74, 0.44) * diff * 1.9 + vec3(0.42, 0.48, 0.66) * (0.42 + 0.58 * n.y);
-    vec3 c = col * light;
+    vec3 sunLight = mix(vec3(1.0, 0.74, 0.44) * 1.9, vec3(0.5, 0.66, 1.0) * 1.05, uNight);
+    vec3 amb = mix(vec3(0.42, 0.48, 0.66), vec3(0.14, 0.18, 0.34), uNight);
+    vec3 c = col * (sunLight * diff + amb * (0.42 + 0.58 * n.y));
     float dist = length(vWorld - uCam);
     float fog = 1.0 - exp(-pow(dist * 0.0032, 1.3));
     c = mix(c, uHaze, clamp(fog, 0.0, 1.0));
@@ -170,7 +194,7 @@ function init() {
   const skyUniforms = {
     uSunDir: { value: sunDir }, uHorizon: { value: horizon.clone() },
     uMid: { value: new THREE.Color(0.6, 0.7, 0.85) }, uZenith: { value: new THREE.Color(0.27, 0.46, 0.72) },
-    uPage: { value: pageColor() }, uTime: { value: 0 }, uFade: { value: 0 }, uLinearOut: { value: 0 },
+    uPage: { value: pageColor() }, uTime: { value: 0 }, uFade: { value: 0 }, uLinearOut: { value: 0 }, uNight: { value: 0 },
   };
   const skyMat = new THREE.ShaderMaterial({
     uniforms: skyUniforms, vertexShader: SKY_VERT, fragmentShader: SKY_FRAG,
@@ -192,7 +216,7 @@ function init() {
   tGeo.translate(0, 0, -270);
   const terrainUniforms = {
     uSunDir: { value: sunDir }, uHaze: { value: horizon.clone() }, uCam: { value: new THREE.Vector3() },
-    uPage: { value: pageColor() }, uFade: { value: 0 },
+    uPage: { value: pageColor() }, uFade: { value: 0 }, uNight: { value: 0 },
   };
   const terrain = new THREE.Mesh(tGeo, new THREE.ShaderMaterial({
     uniforms: terrainUniforms, vertexShader: TERRAIN_VERT, fragmentShader: TERRAIN_FRAG, defines: { OCT },
@@ -208,8 +232,33 @@ function init() {
   const envSky = new THREE.Mesh(skyGeo, envMat);
   envScene.add(envSky);
   const pmrem = new THREE.PMREMGenerator(renderer);
-  const envRT = pmrem.fromScene(envScene, 0, 1, 2000);
-  scene.environment = envRT.texture;
+  let envRT = null;
+  const rebuildEnv = (n) => {
+    const h = mixC(DAYC.horizon, NIGHTC.horizon, n);
+    envMat.uniforms.uHorizon.value.setRGB(...h);
+    envMat.uniforms.uMid.value.setRGB(...mixC(DAYC.mid, NIGHTC.mid, n));
+    envMat.uniforms.uZenith.value.setRGB(...mixC(DAYC.zen, NIGHTC.zen, n));
+    envMat.uniforms.uNight.value = n;
+    envMat.uniforms.uSunDir.value.set(...mixC(DAY_DIR, NIGHT_DIR, n)).normalize();
+    const old = envRT;
+    envRT = pmrem.fromScene(envScene, 0, 1, 2000);
+    scene.environment = envRT.texture;
+    if (old) old.dispose();
+  };
+  const isDark = () => document.documentElement.dataset.theme === 'dark';
+  const state = { p: 0, time: 0, mx: 0, my: 0, tx: 0, ty: 0, night: isDark() ? 1 : 0, nightTarget: isDark() ? 1 : 0 };
+  const setNight = (n) => {
+    const h = mixC(DAYC.horizon, NIGHTC.horizon, n);
+    sunDir.set(...mixC(DAY_DIR, NIGHT_DIR, n)).normalize();
+    skyUniforms.uHorizon.value.setRGB(...h);
+    skyUniforms.uMid.value.setRGB(...mixC(DAYC.mid, NIGHTC.mid, n));
+    skyUniforms.uZenith.value.setRGB(...mixC(DAYC.zen, NIGHTC.zen, n));
+    terrainUniforms.uHaze.value.setRGB(...h);
+    skyUniforms.uNight.value = n;
+    terrainUniforms.uNight.value = n;
+  };
+  setNight(state.night);
+  rebuildEnv(state.nightTarget);
 
   // glass card
   const card = new THREE.Group();
@@ -234,9 +283,11 @@ function init() {
   window.addEventListener('themechange', () => {
     skyUniforms.uPage.value.copy(pageColor());
     terrainUniforms.uPage.value.copy(pageColor());
+    state.nightTarget = isDark() ? 1 : 0;
+    if (reduced) { state.night = state.nightTarget; setNight(state.night); }
+    rebuildEnv(state.nightTarget);
   });
 
-  const state = { p: 0, time: 0, mx: 0, my: 0, tx: 0, ty: 0 };
   const fwd = new THREE.Vector3(), look = new THREE.Vector3();
 
   function resize() {
@@ -260,6 +311,11 @@ function init() {
     state.mx = lerp(state.mx, reduced ? 0 : state.tx, 0.05);
     state.my = lerp(state.my, reduced ? 0 : state.ty, 0.05);
     if (!reduced) state.time += dt;
+    if (state.night !== state.nightTarget) {
+      state.night += (state.nightTarget - state.night) * Math.min(1, dt * 2.4);
+      if (Math.abs(state.nightTarget - state.night) < 0.002) state.night = state.nightTarget;
+      setNight(state.night);
+    }
 
     const ease = p * p * (3 - 2 * p);
     const z = lerp(70, -210, ease);
