@@ -28,13 +28,6 @@
   background: linear-gradient(90deg, oklch(0.78 0.13 65), oklch(0.7 0.1 250));
   transform: scaleX(0); transform-origin: 0 50%;
 }
-.cursor {
-  position: fixed; left: 0; top: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px;
-  mix-blend-mode: difference; pointer-events: none; z-index: 400; opacity: 0; transition: opacity .25s ease;
-}
-.cursor::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #fff; transition: transform .25s ease; }
-.cursor.on { opacity: 1; }
-.cursor.big::after { transform: scale(3.3); }
 .sidebar-nav a.active { background: oklch(1 0 0 / 0.9); color: var(--accent-strong); }
 
 /* ===== About ===== */
@@ -152,5 +145,4 @@
   .experience-inner, .education-inner { padding: 32px 24px; margin: 0 20px; }
   .education { padding: 24px 0 72px; }
   .contact { padding: 96px 0 24px; }
-  .cursor { display: none; }
 }

@@ -374,18 +374,6 @@
     });
   }
 
-  function initCursor() {
-    const el = document.getElementById('cursor');
-    if (!el || isReducedMotion() || !window.matchMedia('(hover: hover) and (pointer: fine)').matches || typeof gsap === 'undefined') return;
-    el.classList.add('on');
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.3, ease: 'power3' });
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.3, ease: 'power3' });
-    window.addEventListener('pointermove', (e) => { xTo(e.clientX); yTo(e.clientY); });
-    document.addEventListener('pointerover', (e) => {
-      el.classList.toggle('big', !!e.target.closest('a, button, .chip, .project-card, .archive-card'));
-    });
-  }
-
   // ---------- micro-interactions ----------
   function initMicroInteractions() {
     if (typeof anime === 'undefined') return;
@@ -430,7 +418,6 @@
 
     buildScenery();
     initScrollFX();
-    initCursor();
     initMicroInteractions();
     mqReduced.addEventListener('change', () => location.reload());
   }
