@@ -26,7 +26,7 @@
     { name: 'Infra & Tools', items: ['Docker', 'AWS', 'CI/CD', 'Git'] },
     { name: 'Design', items: ['Figma', 'Motion design', 'Design systems'] },
   ];
-  const CAT_COLORS = ['oklch(0.86 0.03 130)', 'oklch(0.78 0.09 146)', 'oklch(0.7 0.07 140)', 'oklch(0.62 0.05 150)', 'oklch(0.9 0.02 120)'];
+  const CAT_COLORS = ['oklch(0.86 0.032 78)', 'oklch(0.78 0.095 78)', 'oklch(0.7 0.074 78)', 'oklch(0.62 0.053 78)', 'oklch(0.9 0.021 78)'];
 
   const FEATURED_RAW = [
     { id: 'f1', idx: '01', name: '[Project Name One]', tagline: '[One-line summary of what it does and who it is for]', tags: ['React', 'Node.js', 'PostgreSQL'] },
@@ -54,9 +54,9 @@
     { degree: '[Degree, Field of Study]', school: '[University Name]', note: '[Placeholder: honors, focus area]', dates: '2016 – 2020' },
   ];
   const STATUS_META = {
-    shipped: { label: 'Shipped', color: 'oklch(0.36 0.09 150)' },
-    'in-progress': { label: 'In progress', color: 'oklch(0.55 0.06 130)' },
-    archived: { label: 'Archived', color: 'oklch(0.55 0.01 144)' },
+    shipped: { label: 'Shipped', color: 'oklch(0.48 0.14 45)' },
+    'in-progress': { label: 'In progress', color: 'oklch(0.5 0.1 250)' },
+    archived: { label: 'Archived', color: 'oklch(0.5 0.03 60)' },
   };
 
   // ---------- nav ----------

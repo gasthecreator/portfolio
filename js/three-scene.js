@@ -79,14 +79,14 @@ const SKILL_CATEGORIES = [
 let COLOR;
 function initPalette() {
   COLOR = {
-    hubNode: oklchToThree('oklch(0.76 0.12 146)'),
-    node: oklchToThree('oklch(0.86 0.03 128)'),
-    hubEdge: oklchToThree('oklch(0.8 0.12 146)'),
-    heroEdge: oklchToThree('oklch(0.62 0.08 148)'),
-    edge: oklchToThree('oklch(0.4 0.045 150)'),
-    fog: oklchToThree('oklch(0.19 0.048 152)'),
-    bgInner: oklchToThree('oklch(0.27 0.05 152)'),
-    catNodes: ['oklch(0.86 0.03 130)', 'oklch(0.78 0.09 146)', 'oklch(0.7 0.07 140)', 'oklch(0.62 0.05 150)', 'oklch(0.9 0.02 120)'].map(oklchToThree),
+    hubNode: oklchToThree('oklch(0.82 0.14 68)'),
+    node: oklchToThree('oklch(0.93 0.035 85)'),
+    hubEdge: oklchToThree('oklch(0.86 0.13 68)'),
+    edge: oklchToThree('oklch(0.5 0.07 265)'),
+    heroEdge: oklchToThree('oklch(0.72 0.09 250)'),
+    fog: oklchToThree('oklch(0.18 0.055 275)'),
+    bgInner: oklchToThree('oklch(0.27 0.065 268)'),
+    catNodes: ['oklch(0.84 0.13 72)', 'oklch(0.78 0.11 38)', 'oklch(0.76 0.09 240)', 'oklch(0.7 0.11 320)', 'oklch(0.93 0.04 90)'].map(oklchToThree),
   };
 }
 

@@ -2,7 +2,7 @@
 
 /* ===== Shared ===== */
 .panel {
-  background: oklch(0.985 0.008 140 / 0.84);
+  background: oklch(0.985 0.008 245 / 0.84);
   backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2);
   border: 1px solid oklch(1 0 0 / 0.75); border-radius: 26px;
 }
@@ -12,11 +12,11 @@
   position: absolute; width: 44vw; height: 44vw; max-width: 640px; max-height: 640px; border-radius: 50%;
   filter: blur(70px); opacity: 0.55; animation: blob-drift 24s ease-in-out infinite alternate;
 }
-.blobs i:nth-child(1) { left: -8%; top: 4%; background: oklch(0.86 0.09 140); }
-.blobs i:nth-child(2) { right: -10%; top: 38%; background: oklch(0.9 0.09 75); animation-delay: -9s; }
-.blobs i:nth-child(3) { left: 32%; bottom: -16%; background: oklch(0.85 0.07 200); animation-delay: -15s; }
-.blobs--warm i:nth-child(1) { background: oklch(0.9 0.09 70); }
-.blobs--warm i:nth-child(2) { background: oklch(0.86 0.08 145); }
+.blobs i:nth-child(1) { left: -8%; top: 4%; background: oklch(0.88 0.09 68); }
+.blobs i:nth-child(2) { right: -10%; top: 38%; background: oklch(0.86 0.06 240); animation-delay: -9s; }
+.blobs i:nth-child(3) { left: 32%; bottom: -16%; background: oklch(0.87 0.08 32); animation-delay: -15s; }
+.blobs--warm i:nth-child(1) { background: oklch(0.9 0.08 62); }
+.blobs--warm i:nth-child(2) { background: oklch(0.87 0.06 235); }
 @keyframes blob-drift { to { transform: translate(6vw, -4vh) scale(1.12); } }
 @media (prefers-reduced-motion: reduce) {
   .blobs i, .stars i { animation: none; }
@@ -25,7 +25,7 @@
 /* ===== Global chrome ===== */
 .progress-bar {
   position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 300; pointer-events: none;
-  background: linear-gradient(90deg, oklch(0.75 0.13 60), oklch(0.72 0.12 146));
+  background: linear-gradient(90deg, oklch(0.78 0.13 65), oklch(0.7 0.1 250));
   transform: scaleX(0); transform-origin: 0 50%;
 }
 .cursor {
@@ -52,17 +52,17 @@
 
 /* ===== Skills (night) ===== */
 .skills {
-  position: relative; overflow: clip; padding: 130px 0 0; color: oklch(0.96 0.01 140);
-  background: radial-gradient(ellipse at 15% 0%, oklch(0.34 0.06 200), transparent 55%),
-    linear-gradient(180deg, oklch(0.21 0.04 230), oklch(0.15 0.035 165));
+  position: relative; overflow: clip; padding: 130px 0 0; color: oklch(0.96 0.011 245);
+  background: radial-gradient(ellipse at 15% 0%, oklch(0.36 0.09 285), transparent 55%),
+    linear-gradient(180deg, oklch(0.23 0.055 262), oklch(0.15 0.05 275));
 }
-.skills .eyebrow { color: oklch(0.84 0.09 146); }
-.skills .section-title { color: oklch(0.97 0.012 120); }
+.skills .eyebrow { color: oklch(0.85 0.11 72); }
+.skills .section-title { color: oklch(0.97 0.013 245); }
 .skills-intro { max-width: 1180px; margin: 0 auto 36px; padding: 0 56px; }
-.skills-desc { font-size: 16px; color: oklch(0.88 0.02 140); max-width: 420px; margin: 14px 0 0; line-height: 1.6; }
+.skills-desc { font-size: 16px; color: oklch(0.88 0.021 245); max-width: 420px; margin: 14px 0 0; line-height: 1.6; }
 .skills-cluster-wrap {
   position: relative; width: 100%; height: 580px; padding: 16px 0; overflow: hidden;
-  background: radial-gradient(circle at 50% 45%, oklch(0.28 0.05 175), transparent 68%);
+  background: radial-gradient(circle at 50% 45%, oklch(0.3 0.085 288), transparent 68%);
 }
 
 /* ===== Featured: sticky stack ===== */
@@ -72,20 +72,20 @@
 .stack-item { position: sticky; top: calc(96px + var(--i) * 20px); margin-bottom: 16vh; transform-origin: 50% 0; }
 .stack-item:last-child { margin-bottom: 0; }
 .project-card {
-  background: oklch(0.985 0.008 140 / 0.94); border: 0; border-radius: 28px;
-  box-shadow: 0 34px 60px -34px oklch(0.2 0.05 150 / 0.45);
+  background: oklch(0.985 0.008 245 / 0.94); border: 0; border-radius: 28px;
+  box-shadow: 0 34px 60px -34px oklch(0.3 0.08 50 / 0.4);
 }
 @media (max-height: 720px) { .stack-item { position: static; margin-bottom: 28px; } }
 
 /* ===== Marquee ===== */
-.marquee { overflow: hidden; background: oklch(0.2 0.04 150); color: oklch(0.95 0.025 130); padding: 22px 16px; }
+.marquee { overflow: hidden; background: oklch(0.2 0.052 270); color: oklch(0.95 0.026 245); padding: 22px 16px; }
 .marquee-track { display: flex; width: max-content; }
 .marquee span { font-family: var(--font-display); font-size: clamp(30px, 4vw, 56px); padding: 0 30px; white-space: nowrap; }
-.marquee span::after { content: '✦'; margin-left: 60px; color: oklch(0.8 0.12 146); font-size: 0.6em; vertical-align: 0.12em; }
+.marquee span::after { content: '✦'; margin-left: 60px; color: oklch(0.8 0.126 78); font-size: 0.6em; vertical-align: 0.12em; }
 
 /* ===== Archive ===== */
 .archive { background: linear-gradient(180deg, var(--bg-alt), var(--bg)); }
-.archive-card { border-radius: 18px; background: oklch(0.985 0.008 140 / 0.95); }
+.archive-card { border-radius: 18px; background: oklch(0.985 0.008 245 / 0.95); }
 
 /* ===== Experience / Education ===== */
 .experience { padding: 130px 0 60px; background: var(--bg); }

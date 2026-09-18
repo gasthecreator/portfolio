@@ -162,7 +162,7 @@ function init() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.75));
 
   const OCT = mobile ? 4 : 5;
-  const page = oklchToRGB('oklch(0.90 0.022 144)');
+  const page = oklchToRGB('oklch(0.955 0.02 245)');
   const sunDir = new THREE.Vector3(0.6, 0.24, -0.75).normalize();
   const horizon = new THREE.Color(1.0, 0.72, 0.5);
 
