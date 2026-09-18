@@ -284,6 +284,7 @@ function init() {
     card.scale.setScalar(2.1 * (0.6 + 0.4 * cardVis));
 
     renderer.render(scene, camera);
+    canvas.classList.add('ready');
   }
 
   let last = performance.now();
