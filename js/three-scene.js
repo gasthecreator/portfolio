@@ -1,4 +1,8 @@
 import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 function lerp(a, b, t) { return a + (b - a) * t; }
@@ -49,6 +53,21 @@ function makeGlowTexture() {
   return new THREE.CanvasTexture(canvas);
 }
 
+function makeGradientBackground() {
+  const w = 512, h = 512;
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(w * 0.3, h * 0.25, 0, w * 0.3, h * 0.25, Math.hypot(w * 0.7, h * 0.75));
+  g.addColorStop(0, COLOR.bgInner.getStyle());
+  g.addColorStop(1, COLOR.fog.getStyle());
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, w, h);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
 const SKILL_CATEGORIES = [
   { name: 'Languages', items: ['TypeScript', 'JavaScript', 'Python', 'Go'] },
   { name: 'Frontend', items: ['React', 'Next.js', 'Three.js / R3F', 'Tailwind CSS'] },
@@ -65,6 +84,7 @@ function initPalette() {
     hubEdge: oklchToThree('oklch(0.55 0.08 146)'),
     edge: oklchToThree('oklch(0.4 0.045 150)'),
     fog: oklchToThree('oklch(0.19 0.048 152)'),
+    bgInner: oklchToThree('oklch(0.27 0.05 152)'),
     catNodes: ['oklch(0.86 0.03 130)', 'oklch(0.78 0.09 146)', 'oklch(0.7 0.07 140)', 'oklch(0.62 0.05 150)', 'oklch(0.9 0.02 120)'].map(oklchToThree),
   };
 }
@@ -80,6 +100,16 @@ function createHeroScene() {
   scene.fog = new THREE.Fog(COLOR.fog.getHex(), 260, 780);
   const camera = new THREE.PerspectiveCamera(45, 1, 1, 2000);
   camera.position.set(0, 0, 620);
+
+  // Bloom needs an opaque frame (it drops alpha), so on desktop the CSS gradient is recreated as the scene background.
+  let composer = null;
+  if (!isMobile()) {
+    scene.background = makeGradientBackground();
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(new UnrealBloomPass(new THREE.Vector2(1, 1), 0.7, 0.55, 0.62));
+    composer.addPass(new OutputPass());
+  }
 
   const group = new THREE.Group();
   scene.add(group);
@@ -150,13 +180,14 @@ function createHeroScene() {
   const edgeLines = new THREE.LineSegments(edgeGeo, edgeMat);
   group.add(edgeLines);
 
-  return { canvas, wrap, renderer, scene, camera, group, baseNodes, structNodes, edges, hubs, nodeMeshes, glowSprites, edgeGeo };
+  return { canvas, wrap, renderer, composer, scene, camera, group, baseNodes, structNodes, edges, hubs, nodeMeshes, glowSprites, edgeGeo };
 }
 
 function resizeHero(hero) {
   const w = hero.wrap.clientWidth, h = hero.wrap.clientHeight;
   if (w === 0 || h === 0) return;
   hero.renderer.setSize(w, h, false);
+  if (hero.composer) { hero.composer.setPixelRatio(hero.renderer.getPixelRatio()); hero.composer.setSize(w, h); }
   hero.camera.aspect = w / h;
   hero.camera.updateProjectionMatrix();
 }
@@ -193,7 +224,7 @@ function updateHero(hero, state) {
   });
   hero.edgeGeo.attributes.position.needsUpdate = true;
 
-  hero.renderer.render(hero.scene, hero.camera);
+  if (hero.composer) hero.composer.render(); else hero.renderer.render(hero.scene, hero.camera);
 
   const rotXDeg = Math.round((rotX * 180) / Math.PI);
   const rotYDeg = Math.round(((rotY % (2 * Math.PI)) * 180) / Math.PI);
@@ -314,7 +345,7 @@ function updateSkills(sk, state) {
     p.n.label.style.opacity = op.toFixed(3);
   });
 
-  document.getElementById('skills-hud-count').innerHTML = `STACK.VIS — ${sk.nodes.length} NODES / ${SKILL_CATEGORIES.length} CATEGORIES`;
+  document.getElementById('skills-hud-count').innerHTML = `STACK.VIS · ${sk.nodes.length} NODES / ${SKILL_CATEGORIES.length} CATEGORIES`;
 }
 
 // ---------- interactions + shared loop ----------

@@ -46,12 +46,12 @@
   ];
 
   const EXPERIENCE = [
-    { dates: '2024 — Present', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['React', 'TypeScript'] },
-    { dates: '2022 — 2024', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['Node.js', 'AWS'] },
-    { dates: '2020 — 2022', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['Python'] },
+    { dates: '2024 – Present', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['React', 'TypeScript'] },
+    { dates: '2022 – 2024', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['Node.js', 'AWS'] },
+    { dates: '2020 – 2022', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['Python'] },
   ];
   const EDUCATION = [
-    { degree: '[Degree, Field of Study]', school: '[University Name]', note: '[Placeholder — honors, focus area]', dates: '2016 — 2020' },
+    { degree: '[Degree, Field of Study]', school: '[University Name]', note: '[Placeholder: honors, focus area]', dates: '2016 – 2020' },
   ];
   const STATUS_META = {
     shipped: { label: 'Shipped', color: 'oklch(0.36 0.09 150)' },

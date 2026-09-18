@@ -41,7 +41,8 @@ body {
   background-image:
     radial-gradient(circle at 12% 8%, oklch(0.93 0.02 140 / 0.65), transparent 45%),
     radial-gradient(circle at 88% 65%, oklch(0.87 0.024 148 / 0.55), transparent 50%),
-    repeating-linear-gradient(128deg, oklch(0.87 0.026 144 / 0.4) 0px, oklch(0.87 0.026 144 / 0.4) 1px, transparent 1px, transparent 4px);
+    radial-gradient(oklch(0.78 0.03 146 / 0.32) 1px, transparent 1px);
+  background-size: auto, auto, 22px 22px;
   min-height: 100vh;
 }
 a { color: var(--accent); text-decoration: none; }
@@ -202,9 +203,9 @@ img { max-width: 100%; }
 .orbit-canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 .orbit-canvas.dragging { cursor: grabbing; }
 .hud { position: absolute; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.02em; }
-.hud--tl { top: 14px; left: 14px; color: var(--hud-dim); }
+.hud--tl { top: 14px; left: 14px; max-width: calc(100% - 150px); color: var(--hud-dim); }
 .hud--tr { top: 14px; right: 14px; color: var(--hud-accent); text-align: right; }
-.hud--bl { bottom: 14px; left: 14px; color: var(--hud-dim); }
+.hud--bl { bottom: 14px; left: 14px; max-width: calc(100% - 150px); color: var(--hud-dim); }
 .hud--br { bottom: 14px; right: 20px; color: var(--hud-dim); }
 .explode-btn {
   position: absolute; bottom: 12px; right: 12px; font-family: 'IBM Plex Mono', monospace;
@@ -242,11 +243,11 @@ img { max-width: 100%; }
 .alt-bg {
   background-color: var(--bg-alt);
   background-image: radial-gradient(circle at 82% 22%, oklch(0.885 0.024 140 / 0.55), transparent 45%),
-    repeating-linear-gradient(128deg, oklch(0.82 0.03 146 / 0.35) 0px, oklch(0.82 0.03 146 / 0.35) 1px, transparent 1px, transparent 4px);
+    radial-gradient(oklch(0.74 0.03 146 / 0.32) 1px, transparent 1px); background-size: auto, 22px 22px;
 }
 
 /* ===== Skills ===== */
-.skills { padding: 120px 0 100px; background-color: var(--bg-alt); background-image: radial-gradient(circle at 82% 22%, oklch(0.885 0.024 140 / 0.55), transparent 45%), repeating-linear-gradient(128deg, oklch(0.82 0.03 146 / 0.35) 0px, oklch(0.82 0.03 146 / 0.35) 1px, transparent 1px, transparent 4px); }
+.skills { padding: 120px 0 100px; background-color: var(--bg-alt); background-image: radial-gradient(circle at 82% 22%, oklch(0.885 0.024 140 / 0.55), transparent 45%), radial-gradient(oklch(0.74 0.03 146 / 0.32) 1px, transparent 1px); background-size: auto, 22px 22px; }
 .skills-intro { max-width: 640px; padding: 0 56px; margin-bottom: 40px; }
 .skills-desc { font-size: 15px; color: var(--text-secondary); max-width: 380px; margin: 14px 0 0; line-height: 1.6; }
 .skills-cluster-wrap {
