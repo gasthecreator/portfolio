@@ -62,7 +62,7 @@
   // ---------- nav ----------
   function renderNav() {
     document.getElementById('sidebar-nav').innerHTML =
-      NAV_ITEMS.map((i) => `<a href="${i.href}"><span>${i.n}</span></a>`).join('');
+      NAV_ITEMS.map((i) => `<a href="${i.href}">${esc(i.label)}</a>`).join('');
     document.getElementById('mobile-menu-nav').innerHTML =
       NAV_ITEMS.map((i) => `<a href="${i.href}" data-close><span class="n">${i.n}</span><span class="label">${esc(i.label)}</span></a>`).join('');
   }

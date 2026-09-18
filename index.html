@@ -40,27 +40,43 @@
     <main id="home-view">
 
       <!-- ===== HERO ===== -->
-      <section id="hero" data-screen-label="Hero" class="hero">
-        <div class="hero-text">
-          <div class="hero-kicker">Software Engineer, available for work</div>
-          <h1 class="hero-name">Gideon Sanni</h1>
-          <p class="hero-tagline">[Tagline: one line describing what you build, for whom, and how]</p>
-          <div class="hero-actions">
-            <a href="#featured" class="btn btn--primary">View work</a>
-            <a href="#contact" class="btn btn--ghost">Contact</a>
+      <section id="hero" data-screen-label="Hero" class="hero-scene">
+        <div class="hero-pin">
+          <canvas id="landscape-canvas" class="landscape-canvas" aria-hidden="true"></canvas>
+          <div class="hero-vignette"></div>
+          <div class="hero-bottom">
+            <div class="hero-main">
+              <div class="hero-kicker">Software Engineer, available for work</div>
+              <h1 class="hero-name">Gideon<br>Sanni</h1>
+            </div>
+            <div class="hero-aside">
+              <p class="hero-tagline">[Tagline: one line describing what you build, for whom, and how]</p>
+              <div class="hero-actions">
+                <a href="#featured" class="btn btn--primary">View work</a>
+                <a href="#contact" class="btn btn--ghost">Contact</a>
+              </div>
+            </div>
           </div>
           <div class="scroll-cue">
             <svg class="scroll-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span>SCROLL</span>
           </div>
         </div>
+      </section>
 
-        <div class="hero-canvas-wrap" id="hero-canvas-wrap">
-          <canvas id="hero-canvas" class="orbit-canvas"></canvas>
-          <div class="hud hud--tl">NETWORK.VIS · <span id="hud-node-count">20</span> NODES / <span id="hud-edge-count">0</span> EDGES</div>
-          <div class="hud hud--tr" id="hud-rot">X 0° · Y 0°</div>
-          <div class="hud hud--bl" id="hud-hint">DRAG TO ORBIT · SCROLL TO MORPH</div>
-          <button class="explode-btn" id="explode-btn">[ EXPLODE ]</button>
+      <!-- ===== NETWORK ===== -->
+      <section id="network" data-screen-label="Systems" class="reveal network-section">
+        <div class="section-inner">
+          <div class="eyebrow">Systems</div>
+          <h2 class="section-title" style="margin-bottom:12px;">How it connects</h2>
+          <p class="network-desc">[A live model of how the pieces you build connect. Drag it, explode it, scroll to morph it.]</p>
+          <div class="hero-canvas-wrap" id="hero-canvas-wrap">
+            <canvas id="hero-canvas" class="orbit-canvas"></canvas>
+            <div class="hud hud--tl">NETWORK.VIS · <span id="hud-node-count">20</span> NODES / <span id="hud-edge-count">0</span> EDGES</div>
+            <div class="hud hud--tr" id="hud-rot">X 0° · Y 0°</div>
+            <div class="hud hud--bl" id="hud-hint">DRAG TO ORBIT · SCROLL TO MORPH</div>
+            <button class="explode-btn" id="explode-btn">[ EXPLODE ]</button>
+          </div>
         </div>
       </section>
 
@@ -197,5 +213,6 @@
 { "imports": { "three": "./js/vendor/three.module.js", "three/addons/": "./js/vendor/three-addons/" } }
 </script>
 <script type="module" src="js/three-scene.js"></script>
+<script type="module" src="js/landscape.js"></script>
 </body>
 </html>
