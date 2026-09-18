@@ -81,7 +81,8 @@ function initPalette() {
   COLOR = {
     hubNode: oklchToThree('oklch(0.76 0.12 146)'),
     node: oklchToThree('oklch(0.86 0.03 128)'),
-    hubEdge: oklchToThree('oklch(0.55 0.08 146)'),
+    hubEdge: oklchToThree('oklch(0.8 0.12 146)'),
+    heroEdge: oklchToThree('oklch(0.62 0.08 148)'),
     edge: oklchToThree('oklch(0.4 0.045 150)'),
     fog: oklchToThree('oklch(0.19 0.048 152)'),
     bgInner: oklchToThree('oklch(0.27 0.05 152)'),
@@ -97,7 +98,7 @@ function createHeroScene() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(COLOR.fog.getHex(), 260, 780);
+  scene.fog = new THREE.Fog(COLOR.fog.getHex(), 340, 1000);
   const camera = new THREE.PerspectiveCamera(45, 1, 1, 2000);
   camera.position.set(0, 0, 620);
 
@@ -169,14 +170,14 @@ function createHeroScene() {
   const edgePositions = new Float32Array(edges.length * 2 * 3);
   const edgeColors = new Float32Array(edges.length * 2 * 3);
   edges.forEach(([a, b], i) => {
-    const c = (hubs.has(a) && hubs.has(b)) ? COLOR.hubEdge : COLOR.edge;
+    const c = (hubs.has(a) && hubs.has(b)) ? COLOR.hubEdge : COLOR.heroEdge;
     edgeColors[i * 6 + 0] = c.r; edgeColors[i * 6 + 1] = c.g; edgeColors[i * 6 + 2] = c.b;
     edgeColors[i * 6 + 3] = c.r; edgeColors[i * 6 + 4] = c.g; edgeColors[i * 6 + 5] = c.b;
   });
   const edgeGeo = new THREE.BufferGeometry();
   edgeGeo.setAttribute('position', new THREE.BufferAttribute(edgePositions, 3));
   edgeGeo.setAttribute('color', new THREE.BufferAttribute(edgeColors, 3));
-  const edgeMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.85, fog: true });
+  const edgeMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 1, fog: true });
   const edgeLines = new THREE.LineSegments(edgeGeo, edgeMat);
   group.add(edgeLines);
 
