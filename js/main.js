@@ -28,6 +28,7 @@
   const STATUS_META = {
     shipped: { label: 'Shipped', color: 'var(--st-shipped)' },
     'in-progress': { label: 'In progress', color: 'var(--st-progress)' },
+    internal: { label: 'Internal · Solera', color: 'var(--st-progress)' },
     archived: { label: 'Archived', color: 'var(--st-archived)' },
   };
 

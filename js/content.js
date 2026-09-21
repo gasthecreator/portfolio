@@ -32,7 +32,35 @@ window.SITE = {
 
   featured: [
     {
-      id: 'pharos', idx: '01', name: 'Pharos',
+      id: 'feedback-automation', idx: '01', name: 'Feedback Automation Pipeline', status: 'internal',
+      tagline: 'Human-approved feedback triage that turns user complaints into AI-generated fix pull requests.',
+      tags: ['.NET 10', 'Kubernetes', 'GitHub Actions'],
+      metric: { value: '127', label: 'AI-authored fix PRs in a six-week pilot' },
+      cardProblem: 'Product feedback piled up in a database and almost never became a code change.',
+      cardStack: '.NET 10, ASP.NET Core, Blazor, MongoDB, Kubernetes, GitHub Actions, Copilot SDK',
+      cardOutcome: 'A working dev-cluster pilot that generated 127 AI-authored fix PRs, each behind a human approval gate.',
+      problem: 'Users of Solera\'s claims-estimating platform submit free-text feedback every day. It landed in a database, was reviewed by hand if at all, and almost never became a code change. There was no triage surface, no traceability from complaint to fix, and nothing between "a user complained" and "an engineer has a diff to review".',
+      approach: 'A reviewer triages feedback in a Blazor dashboard and approves it. The approval writes a durable work item first and only then commits, so it is all-or-nothing. A background worker leases the item and hands it to GitHub Actions on a self-hosted runner, where a one-shot .NET runner drives an agentic Copilot SDK session: localize the defect, reproduce it with a failing test (RED), make a surgical fix, verify (GREEN), then open an issue and a pull request with the evidence. I co-designed the evidence-based architecture, wrote its RED to GREEN success criterion, built a competing AI pipeline and commissioned a ten-dimension comparison against the adopted design, then owned delivery and reliability.',
+      stack: '.NET 10, ASP.NET Core, Blazor Server, MongoDB, GitHub Copilot SDK, GitHub Actions on self-hosted runners, Docker, Kubernetes with health probes, Vault-injected secrets, Jira integration, SonarQube quality gates, xUnit.',
+      outcome: 'A deployed, demo-validated internal pilot on a dev Kubernetes cluster that generated 127 AI-authored fix pull requests from real, multilingual feedback. Reliability comes from a lease-based state machine with idempotent dispatch, bounded exponential retry and stranded-work recovery. It is a pilot, not production: every fix is a proposal for a developer to review.',
+      links: [],
+    },
+    {
+      id: 'release-checklist', idx: '02', name: 'Release Checklist Automation', status: 'internal',
+      tagline: 'Turns a bulk drop of release screenshots into a reviewed, template-faithful Excel checklist.',
+      tags: ['C#', 'Open XML', 'MongoDB GridFS'],
+      metric: { value: '87 tests', label: 'passing, plus a 60-image regression suite' },
+      cardProblem: 'Assembling the release-approval workbook meant pasting 60 screenshots by hand.',
+      cardStack: '.NET 10, Open XML SDK, MongoDB GridFS, EF Core, Copilot SDK, xUnit',
+      cardOutcome: 'Only reviewed human decisions reach the workbook, and invalid files are blocked before and after writing.',
+      problem: 'Before every release, an engineer assembled a Release Management Checklist by hand: paste dozens of evidence screenshots into the right worksheet tabs, set 23 checklist rows, tick release-team checkboxes and repair the internal hyperlinks that let a reviewer jump to the evidence. The reference workbook has 20 worksheets and 60 embedded screenshots, and it drifted every release.',
+      approach: 'An AI vision step suggests where each screenshot belongs, constrained to the allowed worksheet and checklist keys, and a human reviews every placement. I helped design the integration contracts and the stable-key model that hides all Excel coordinates behind a versioned template profile. I owned the export layer: an Open XML writer, sanitizer and manifest service, GridFS persistence for large binaries, and validation that blocks invalid packages before writing and again after reopening the saved file.',
+      stack: '.NET 10, ASP.NET Core, Open XML SDK, MongoDB with GridFS, SQLite via EF Core, GitHub Copilot SDK, ImageSharp, Server-Sent Events, xUnit.',
+      outcome: 'A dev deployment (v0.1.0) with 87 passing tests and a 60-image regression suite that compares workbooks semantically (structure, relationships, hyperlinks, drawings, formulas, validation rules, control state) instead of byte for byte. Manual checks in desktop Excel caught two defects that green tests missed: hyperlinks that left evidence off-screen, and checkbox state stored in two separate package parts. Both became permanent validation coverage.',
+      links: [],
+    },
+    {
+      id: 'pharos', idx: '03', name: 'Pharos',
       tagline: 'A distributed adverse-event ingestion pipeline for clinical trials.',
       tags: ['Go', 'Kafka', 'Cassandra'],
       metric: { value: '101ms', label: 'p95 under multi-datacenter load' },
@@ -46,7 +74,7 @@ window.SITE = {
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/pharos' }],
     },
     {
-      id: 'cascade', idx: '02', name: 'Cascade Operator',
+      id: 'cascade', idx: '04', name: 'Cascade Operator',
       tagline: 'A Kubernetes operator that stops cascading failures before they finish.',
       tags: ['Go', 'Kubernetes', 'Istio / Linkerd'],
       metric: { value: '63.2% → 31.8%', label: 'fan-out error rate, k6 benchmark' },
@@ -60,7 +88,7 @@ window.SITE = {
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/Cascade-Operator' }],
     },
     {
-      id: 'safelink', idx: '03', name: 'SafeLink',
+      id: 'safelink', idx: '05', name: 'SafeLink',
       tagline: 'Offline-first disaster alerts delivered over a Bluetooth mesh.',
       tags: ['FastAPI', 'Bluetooth mesh', 'AI'],
       metric: { value: '70%', label: 'lower alert notification latency' },
@@ -77,7 +105,7 @@ window.SITE = {
       ],
     },
     {
-      id: 'tripwire', idx: '04', name: 'Tripwire', status: 'in-progress',
+      id: 'tripwire', idx: '06', name: 'Tripwire', status: 'in-progress',
       tagline: 'Automated DeFi exploit containment, in seconds instead of minutes.',
       tags: ['Rust', 'Solidity', 'Foundry'],
       metric: { value: '55 tests', label: 'detection and contract tests, incl. fuzzing' },
