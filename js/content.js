@@ -12,7 +12,7 @@ window.SITE = {
 
   tagline: 'I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work.',
 
-  bio: "I'm a Computer Science & Cybersecurity student at Grambling State University (graduating May 2028) who builds the parts of software that have to keep working when things go wrong: distributed data pipelines, Kubernetes automation, and AI systems that must prove their own fixes. In summer 2026 at Solera Holdings I shipped two AI-driven pipelines that save 500+ engineering hours a month.",
+  bio: "I'm a Computer Science & Cybersecurity student at Grambling State University (graduating May 2028) who builds the parts of software that have to keep working when things go wrong: distributed data pipelines, Kubernetes automation, and AI systems that must prove their own fixes. In summer 2026 at Solera Holdings I shipped two AI-driven pipelines that save 500+ engineering hours a month, built so AI-generated fixes must clear a failing-test proof and a human approval gate.",
 
   stats: [
     { value: '500+', label: 'engineering hours saved per month at Solera' },
@@ -120,10 +120,12 @@ window.SITE = {
       dates: 'May 2026 – Aug 2026', role: 'Software Engineering Intern', org: 'Solera Holdings LLC · Westlake, TX',
       bullets: [
         'Built and deployed two approval-triggered pipelines: one runs end-to-end AI fixes on customer feedback (cutting engineering hours 50%+), the other auto-generates release documentation (saving 500+ engineering hours a month).',
-        'Architected the AI verification core: a read-only fault localizer, a framework-aware xUnit/Jest proof gate that requires a failing test before any fix, a five-part independent verifier, and a lease-based state machine.',
-        'Owned an Excel/Open XML engine (writer, validator, sanitizer, manifest service, CLI), validated against a 60-image regression suite.',
+        'Co-designed and built a human-approved feedback pipeline on .NET 10: approved user feedback becomes an AI-generated GitHub issue and fix pull request. The pilot produced 127 AI-authored fix PRs.',
+        'Owned delivery and reliability: GitHub Actions handoff to a one-shot .NET runner, Kubernetes deployment with health checks, and a lease-based durable state machine with idempotent dispatch, bounded retry and stranded-work recovery.',
+        'Set the RED to GREEN success criterion for the AI core: a fix is only accepted after a failing test reproduces the defect and independent verification confirms it passes.',
+        'Owned an Excel export subsystem for release-checklist automation: Open XML SDK writer with GridFS persistence, blocking invalid workbooks before writing and again on reopen, validated by a 60-image regression suite and 87 passing tests.',
       ],
-      tags: ['AI pipelines', 'xUnit / Jest', 'Open XML'],
+      tags: ['C# / .NET 10', 'GitHub Actions', 'Open XML'],
     },
     {
       dates: 'Mar 2026 – May 2026', role: 'Software Engineer', org: 'Praecept · Remote, US',
