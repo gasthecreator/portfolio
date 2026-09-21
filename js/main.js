@@ -236,11 +236,43 @@
     t.href = `mailto:${SITE.person.email}?subject=${subject}&body=${body}`;
   }
 
+
+  // ---------- résumé preview ----------
+  function initResumePreview() {
+    const dlg = document.getElementById('resume-dialog');
+    const frame = document.getElementById('resume-frame');
+    const fallback = document.getElementById('resume-fallback');
+    if (!dlg || !frame) return;
+    const canInline = navigator.pdfViewerEnabled !== false && !/iPhone|iPad|iPod/.test(navigator.userAgent);
+    let lastFocus = null;
+    const open = () => {
+      lastFocus = document.activeElement;
+      if (canInline) { if (!frame.src) frame.src = 'assets/resume.pdf#view=FitH'; } else { frame.hidden = true; fallback.hidden = false; }
+      if (lenis) lenis.stop();
+      document.body.style.overflow = 'hidden';
+      dlg.showModal();
+    };
+    const close = () => dlg.close();
+    dlg.addEventListener('close', () => {
+      if (lenis) lenis.start();
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+    dlg.addEventListener('keydown', (e) => { if (e.key === 'Escape' && dlg.open) { e.preventDefault(); close(); } });
+    document.getElementById('resume-close').addEventListener('click', close);
+    document.querySelectorAll('[data-resume-open]').forEach((b) => b.addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      if (menu && menu.classList.contains('open')) document.getElementById('hamburger-btn').click();
+      open();
+    }));
+  }
+
   // ---------- project detail routing ----------
   const ALL_PROJECTS = [...FEATURED_RAW, ...ARCHIVE_RAW];
   function findProject(id) { return ALL_PROJECTS.find((p) => p.id === id) || ALL_PROJECTS[0]; }
   let homeScrollY = 0;
-  function openProject(id) {
+  function openProject(id, fromHistory) {
     const sel = findProject(id);
     const meta = STATUS_META[sel.status] || STATUS_META.shipped;
     const set = (i, v) => { document.getElementById(i).textContent = v; };
@@ -259,13 +291,20 @@
     statusPill.style.color = meta.color;
     document.getElementById('detail-tags').innerHTML = sel.tech.map((t) => `<span class="tag-chip">${esc(t)}</span>`).join('');
     document.getElementById('detail-links').innerHTML = (sel.links || []).map((l) => `<a class="detail-link" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)} →</a>`).join('');
-    homeScrollY = window.scrollY;
+    if (!fromHistory) {
+      homeScrollY = window.scrollY;
+      history.pushState({ project: sel.id }, '', '#project-' + sel.id);
+    }
     document.getElementById('home-view').hidden = true;
     document.getElementById('detail-view').hidden = false;
     if (lenis) { lenis.resize(); lenis.scrollTo(0, { immediate: true, force: true }); }
     window.scrollTo(0, 0);
   }
+  // the on-page back button and the browser's back button do the same thing: step back through history
   function closeProject() {
+    if (history.state && history.state.project) history.back(); else showHome();
+  }
+  function showHome() {
     document.getElementById('detail-view').hidden = true;
     document.getElementById('home-view').hidden = false;
     // return to where the visitor left the list (Featured or Archive), not the top of the site
@@ -273,6 +312,12 @@
     if (lenis) { lenis.resize(); lenis.scrollTo(homeScrollY, { immediate: true, force: true }); }
     window.scrollTo(0, homeScrollY);
   }
+
+  window.addEventListener('popstate', (e) => {
+    const id = e.state && e.state.project;
+    if (id) openProject(id, true);
+    else if (!document.getElementById('detail-view').hidden) showHome();
+  });
 
   // ---------- scroll effects ----------
   let lenis = null;
@@ -463,6 +508,12 @@
     buildScenery();
     initScrollFX();
     initMicroInteractions();
+    initResumePreview();
+    const deepLink = location.hash.match(/^#project-(.+)$/);
+    if (deepLink && ALL_PROJECTS.some((p) => p.id === deepLink[1])) {
+      history.replaceState(null, '', location.pathname + location.search);
+      openProject(deepLink[1]);
+    }
     mqReduced.addEventListener('change', () => location.reload());
   }
 
