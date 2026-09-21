@@ -22,13 +22,13 @@ window.SITE = {
 
   skills: [
     { name: 'Languages', items: ['Go', 'Python', 'TypeScript', 'Rust', 'C#', 'Java', 'SQL'] },
-    { name: 'Backend & Data', items: ['Node.js', 'FastAPI', 'ASP.NET Core', 'Kafka', 'Cassandra', 'PostgreSQL'] },
+    { name: 'Backend & Data', items: ['Node.js', 'FastAPI', '.NET', 'ASP.NET Core', 'Kafka', 'Cassandra', 'PostgreSQL'] },
     { name: 'Infrastructure', items: ['Kubernetes', 'Docker', 'Prometheus', 'Cloudflare'] },
     { name: 'Frontend', items: ['React', 'React Native', 'Vite'] },
     { name: 'AI Tooling', items: ['Claude', 'Cursor', 'Copilot', 'MCP'] },
   ],
 
-  marquee: ['Go', 'Kubernetes', 'Kafka', 'Cassandra', 'TypeScript', 'Python', 'Rust', 'PostgreSQL', 'Node.js', 'Prometheus'],
+  marquee: ['Go', 'Kubernetes', 'Kafka', 'Cassandra', 'TypeScript', 'Python', 'Rust', 'C#', '.NET', 'PostgreSQL', 'Node.js', 'Prometheus'],
 
   featured: [
     {
