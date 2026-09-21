@@ -76,19 +76,23 @@ window.SITE = {
         { label: 'Live demo', href: 'https://safelink-dashboard.onrender.com/' },
       ],
     },
-  ],
-
-  archive: [
     {
-      id: 'tripwire', name: 'Tripwire', domain: 'Security', status: 'in-progress',
-      tech: ['Rust', 'Solidity'], thumb: 'Rust + Solidity',
-      tagline: 'Automated DeFi exploit containment.',
+      id: 'tripwire', idx: '04', name: 'Tripwire', status: 'in-progress',
+      tagline: 'Automated DeFi exploit containment, in seconds instead of minutes.',
+      tags: ['Rust', 'Solidity', 'Foundry'],
+      metric: { value: '55 tests', label: 'detection and contract tests, incl. fuzzing' },
+      cardProblem: 'An exploit can drain a protocol before a human is even paged.',
+      cardStack: 'Rust, Solidity, OpenZeppelin, Foundry/anvil, Slither',
+      cardOutcome: 'Detection engine pauses a vault on-chain; 36 detection and 19 contract tests.',
       problem: 'A single-transaction exploit finalizes in one block, so no reactive system can prevent the first loss. Real incidents often continue with more drains while a team is still being paged, and today\'s detection tools leave the response step to a human.',
       approach: 'A Rust detection engine (signature matching plus confidence scoring) feeds an on-chain, OpenZeppelin-based Guardian contract that can pause a protected vault. An integration test deploys the real contracts to a live anvil node and pauses them through the full pipeline.',
       stack: 'Rust, Solidity, OpenZeppelin, Foundry/anvil, Slither.',
       outcome: 'The claim is deliberately bounded: cut response time from human minutes to seconds so the second transaction never lands. 36 detection tests including adversarial cases, and 19 contract tests including fuzzing and a live reentrancy simulation. A portfolio-stage project, not an audited deployment.',
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/tripwire' }],
     },
+  ],
+
+  archive: [
     {
       id: 'disaster-sentinel', name: 'Disaster Sentinel', domain: 'Backend', status: 'shipped',
       tech: ['Python', 'REST'], thumb: 'Python',

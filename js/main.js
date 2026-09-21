@@ -20,7 +20,7 @@
   ].map((i) => ({ ...i, href: '#' + i.id }));
 
   const SITE = window.SITE;
-  const FEATURED_RAW = SITE.featured.map((p) => ({ ...p, tech: p.tags, status: 'shipped' }));
+  const FEATURED_RAW = SITE.featured.map((p) => ({ ...p, tech: p.tags, status: p.status || 'shipped' }));
   const ARCHIVE_RAW = SITE.archive;
   const EXPERIENCE = SITE.experience;
   const EDUCATION = SITE.education;
