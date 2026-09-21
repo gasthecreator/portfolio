@@ -143,24 +143,78 @@ const TERRAIN_FRAG = /* glsl */ `
   }
 `;
 
-function makeMonogram() {
+const CARD_W = 720, CARD_H = 1008, CARD_R = 62;
+
+function roundRectPath(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function makeCanvasTexture(drawFn) {
   const c = document.createElement('canvas');
-  c.width = 512; c.height = 720;
+  c.width = CARD_W; c.height = CARD_H;
   const ctx = c.getContext('2d');
-  const draw = () => {
-    ctx.clearRect(0, 0, c.width, c.height);
-    ctx.fillStyle = 'rgba(255,255,255,0.92)';
-    ctx.font = '600 220px Newsreader, Georgia, serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('GS', c.width / 2, c.height / 2 - 10);
-    ctx.strokeStyle = 'rgba(255,255,255,0.55)'; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(150, c.height / 2 + 120); ctx.lineTo(c.width - 150, c.height / 2 + 120); ctx.stroke();
-    tex.needsUpdate = true;
-  };
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
-  draw();
-  if (document.fonts && document.fonts.load) document.fonts.load('600 220px Newsreader').then(draw).catch(() => {});
+  tex.anisotropy = 4;
+  const redraw = () => { ctx.clearRect(0, 0, CARD_W, CARD_H); drawFn(ctx); tex.needsUpdate = true; };
+  redraw();
+  if (document.fonts && document.fonts.load) {
+    Promise.all([document.fonts.load('600 96px Newsreader'), document.fonts.load('500 30px "IBM Plex Mono"'), document.fonts.load('500 32px "IBM Plex Sans"')]).then(redraw).catch(() => {});
+  }
+  return { tex, redraw };
+}
+
+// Front: portrait photo with a soft caption
+function makeFrontTexture() {
+  const img = new Image();
+  let loaded = false;
+  const { tex, redraw } = makeCanvasTexture((ctx) => {
+    roundRectPath(ctx, 0, 0, CARD_W, CARD_H, CARD_R);
+    ctx.save(); ctx.clip();
+    if (loaded) {
+      ctx.drawImage(img, 0, 0, CARD_W, CARD_H);
+    } else {
+      ctx.fillStyle = '#2b3350'; ctx.fillRect(0, 0, CARD_W, CARD_H);
+    }
+    ctx.restore();
+  });
+  img.onload = () => { loaded = true; redraw(); };
+  img.src = 'assets/gideon-card.jpg';
+  return tex;
+}
+
+// Back: business card
+function makeBackTexture() {
+  const { tex } = makeCanvasTexture((ctx) => {
+    roundRectPath(ctx, 0, 0, CARD_W, CARD_H, CARD_R);
+    const g = ctx.createLinearGradient(0, 0, CARD_W, CARD_H);
+    g.addColorStop(0, '#1b2140'); g.addColorStop(1, '#2a2050');
+    ctx.fillStyle = g; ctx.fill();
+    ctx.strokeStyle = 'rgba(251,246,236,0.18)'; ctx.lineWidth = 3; ctx.stroke();
+    ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+    ctx.fillStyle = '#f2b46a';
+    ctx.font = '500 30px "IBM Plex Mono", monospace';
+    ctx.fillText('AVAILABLE FOR WORK', 60, 112);
+    ctx.fillStyle = '#fbf6ec';
+    ctx.font = '600 104px Newsreader, Georgia, serif';
+    ctx.fillText('Gideon', 60, 400);
+    ctx.fillText('Sanni', 60, 502);
+    ctx.font = '500 40px "IBM Plex Sans", sans-serif';
+    ctx.fillStyle = 'rgba(251,246,236,0.92)';
+    ctx.fillText('Software Engineer', 60, 584);
+    ctx.strokeStyle = 'rgba(251,246,236,0.28)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(60, 700); ctx.lineTo(CARD_W - 60, 700); ctx.stroke();
+    ctx.font = '500 33px "IBM Plex Mono", monospace';
+    ctx.fillStyle = '#fbf6ec';
+    ctx.fillText('gideonsanni2023@gmail.com', 46, 790);
+    ctx.fillText('Grambling State University', 46, 850);
+    ctx.fillStyle = 'rgba(251,246,236,0.78)';
+    ctx.fillText('Grambling, LA', 46, 910);
+  });
   return tex;
 }
 
@@ -271,11 +325,13 @@ function init() {
     ...(mobile ? { transparent: true, opacity: 0.3 } : { transmission: 1, thickness: 0.7, attenuationColor: new THREE.Color(1, 0.86, 0.7), attenuationDistance: 4 }),
   });
   card.add(new THREE.Mesh(cardGeo, glass));
-  const mono = makeMonogram();
-  const monoMat = new THREE.MeshBasicMaterial({ map: mono, transparent: true, toneMapped: false, depthWrite: false });
-  const front = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 1.68), monoMat);
+  const frontMat = new THREE.MeshBasicMaterial({ map: makeFrontTexture(), transparent: true, toneMapped: false, depthWrite: false });
+  const backMat = new THREE.MeshBasicMaterial({ map: makeBackTexture(), transparent: true, toneMapped: false, depthWrite: false });
+  const faceGeo = new THREE.PlaneGeometry(1.32, 1.848);
+  const front = new THREE.Mesh(faceGeo, frontMat);
   front.position.z = 0.085;
-  const back = front.clone(); back.position.z = -0.085; back.rotation.y = Math.PI;
+  const back = new THREE.Mesh(faceGeo, backMat);
+  back.position.z = -0.085; back.rotation.y = Math.PI;
   card.add(front, back);
   card.scale.setScalar(2.1);
   scene.add(card);
