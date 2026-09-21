@@ -238,7 +238,7 @@ a.detail-link:hover { color: var(--text); border-color: var(--accent); }
 /* ===== Résumé preview ===== */
 .resume-dialog {
   width: min(960px, calc(100vw - 32px)); height: min(90vh, 1100px); padding: 0; border: 1px solid var(--glass-border); border-radius: 18px;
-  background: var(--bg); color: var(--text); box-shadow: 0 30px 80px oklch(0.2 0.05 265 / 0.45); overflow: hidden;
+  background: var(--bg); color: var(--text); box-shadow: 0 12px 32px oklch(0.2 0.05 265 / 0.35); overflow: hidden;
 }
 .resume-dialog[open] { display: flex; flex-direction: column; }
 .resume-dialog::backdrop { background: oklch(0.16 0.04 265 / 0.6); backdrop-filter: blur(4px); }
