@@ -239,6 +239,7 @@
   // ---------- project detail routing ----------
   const ALL_PROJECTS = [...FEATURED_RAW, ...ARCHIVE_RAW];
   function findProject(id) { return ALL_PROJECTS.find((p) => p.id === id) || ALL_PROJECTS[0]; }
+  let homeScrollY = 0;
   function openProject(id) {
     const sel = findProject(id);
     const meta = STATUS_META[sel.status] || STATUS_META.shipped;
@@ -258,13 +259,19 @@
     statusPill.style.color = meta.color;
     document.getElementById('detail-tags').innerHTML = sel.tech.map((t) => `<span class="tag-chip">${esc(t)}</span>`).join('');
     document.getElementById('detail-links').innerHTML = (sel.links || []).map((l) => `<a class="detail-link" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)} →</a>`).join('');
+    homeScrollY = window.scrollY;
     document.getElementById('home-view').hidden = true;
     document.getElementById('detail-view').hidden = false;
+    if (lenis) { lenis.resize(); lenis.scrollTo(0, { immediate: true, force: true }); }
     window.scrollTo(0, 0);
   }
   function closeProject() {
     document.getElementById('detail-view').hidden = true;
     document.getElementById('home-view').hidden = false;
+    // return to where the visitor left the list (Featured or Archive), not the top of the site
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+    if (lenis) { lenis.resize(); lenis.scrollTo(homeScrollY, { immediate: true, force: true }); }
+    window.scrollTo(0, homeScrollY);
   }
 
   // ---------- scroll effects ----------
