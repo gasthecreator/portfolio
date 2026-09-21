@@ -173,7 +173,7 @@
   function renderFilterBar() {
     const allTech = [...new Set(ARCHIVE_RAW.flatMap((p) => p.tech))];
     const allDomains = [...new Set(ARCHIVE_RAW.map((p) => p.domain))];
-    const statusOpts = [{ v: 'all', label: 'All' }, { v: 'shipped', label: 'Shipped' }, { v: 'in-progress', label: 'In progress' }, { v: 'archived', label: 'Archived' }];
+    const statusOpts = [{ v: 'all', label: 'All' }, { v: 'shipped', label: 'Shipped' }, { v: 'in-progress', label: 'In progress' }, { v: 'internal', label: 'Internal' }, { v: 'archived', label: 'Archived' }];
     document.getElementById('filter-bar').innerHTML = `
       <div class="filter-row"><span class="filter-label">Tech</span>${allTech.map((t) => `<button type="button" class="chip${filters.tech.has(t) ? ' active' : ''}" data-kind="tech" data-value="${esc(t)}">${esc(t)}</button>`).join('')}</div>
       <div class="filter-row"><span class="filter-label">Domain</span>${allDomains.map((d) => `<button type="button" class="chip${filters.domain.has(d) ? ' active' : ''}" data-kind="domain" data-value="${esc(d)}">${esc(d)}</button>`).join('')}</div>
