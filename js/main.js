@@ -268,6 +268,30 @@
     }));
   }
 
+
+  // ---------- in-page links: scroll to the section without touching the address bar ----------
+  function initAnchorLinks() {
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || a.getAttribute('href').length < 2) return;
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      const detailOpen = !document.getElementById('detail-view').hidden;
+      if (detailOpen) {
+        history.replaceState(null, '', location.pathname + location.search);
+        showHome();
+      }
+      const go = () => {
+        if (id === 'hero') { if (lenis) lenis.scrollTo(0, { duration: 1.2 }); else window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        else if (lenis) lenis.scrollTo(target, { duration: 1.2 });
+        else target.scrollIntoView({ behavior: 'smooth' });
+      };
+      if (detailOpen) setTimeout(go, 80); else go();
+    });
+  }
+
   // ---------- project detail routing ----------
   const ALL_PROJECTS = [...FEATURED_RAW, ...ARCHIVE_RAW];
   function findProject(id) { return ALL_PROJECTS.find((p) => p.id === id) || ALL_PROJECTS[0]; }
@@ -509,6 +533,7 @@
     initScrollFX();
     initMicroInteractions();
     initResumePreview();
+    initAnchorLinks();
     const deepLink = location.hash.match(/^#project-(.+)$/);
     if (deepLink && ALL_PROJECTS.some((p) => p.id === deepLink[1])) {
       history.replaceState(null, '', location.pathname + location.search);
