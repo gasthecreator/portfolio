@@ -6,12 +6,18 @@
 <meta name="color-scheme" content="light dark">
 <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 <title>Gideon Sanni | Software Engineer</title>
-<meta name="description" content="Portfolio of Gideon Sanni, software engineer.">
+<meta name="description" content="Gideon Sanni is a software engineer and Computer Science & Cybersecurity student at Grambling State University, building fault-tolerant systems, Kubernetes automation and AI pipelines.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gideon Sanni | Software Engineer">
+<meta property="og:description" content="Fault-tolerant systems, Kubernetes automation and AI pipelines that verify their own work.">
+<meta property="og:image" content="https://gasthecreator.github.io/portfolio/assets/gideon-about.jpg">
+<meta property="og:url" content="https://gasthecreator.github.io/portfolio/">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20260920b">
-<link rel="stylesheet" href="css/sections.css?v=20260920b">
+<link rel="stylesheet" href="css/style.css?v=20260920e">
+<link rel="stylesheet" href="css/sections.css?v=20260920e">
 </head>
 <body>
   <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
@@ -60,7 +66,7 @@
               <h1 class="hero-name">Gideon<br>Sanni</h1>
             </div>
             <div class="hero-aside">
-              <p class="hero-tagline">[Tagline: one line describing what you build, for whom, and how]</p>
+              <p class="hero-tagline" data-site="tagline">I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work.</p>
               <div class="hero-actions">
                 <a href="#featured" class="btn btn--primary">View work</a>
                 <a href="#contact" class="btn btn--ghost">Contact</a>
@@ -79,7 +85,7 @@
         <div class="section-inner">
           <div class="eyebrow">Systems</div>
           <h2 class="section-title" style="margin-bottom:12px;">How it connects</h2>
-          <p class="network-desc">[A live model of how the pieces you build connect. Drag it, explode it, scroll to morph it.]</p>
+          <p class="network-desc">A live model of a distributed system: services, queues and the connections between them. Drag it, explode it, scroll to morph it.</p>
           <div class="hero-canvas-wrap" id="hero-canvas-wrap">
             <canvas id="hero-canvas" class="orbit-canvas"></canvas>
             <div class="hud hud--tl">NETWORK.VIS · <span id="hud-node-count">20</span> NODES / <span id="hud-edge-count">0</span> EDGES</div>
@@ -97,16 +103,11 @@
           <div class="about-panel panel">
             <div class="eyebrow" data-reveal>Profile / 01</div>
             <h2 class="section-title" style="margin-bottom:24px;">About</h2>
-            <p class="about-bio" data-reveal>[Placeholder bio: two to three sentences on background, focus area, and what kind of problems you enjoy solving. Replace with real copy before shipping.]</p>
-            <div class="about-stats" data-stagger>
-              <div class="stat"><div class="stat-num">[X]</div><div class="stat-label">years building</div></div>
-              <div class="stat"><div class="stat-num">[N]</div><div class="stat-label">shipped projects</div></div>
-              <div class="stat"><div class="stat-num">[City]</div><div class="stat-label">based in</div></div>
-            </div>
+            <p class="about-bio" data-reveal data-site="bio">I'm a Computer Science & Cybersecurity student at Grambling State University (graduating May 2028) who builds the parts of software that have to keep working when things go wrong: distributed data pipelines, Kubernetes automation, and AI systems that must prove their own fixes. In summer 2026 at Solera Holdings I shipped two AI-driven pipelines that save 500+ engineering hours a month.</p>
+            <div class="about-stats" id="about-stats" data-stagger></div>
           </div>
-          <div class="about-image media-placeholder" data-clip>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span class="placeholder-label">[portrait]</span>
+          <div class="about-image" data-clip>
+            <img src="assets/gideon-about.jpg" width="840" height="1000" alt="Portrait of Gideon Sanni outdoors, smiling, wearing a dark jacket" loading="lazy">
           </div>
         </div>
       </section>
@@ -116,7 +117,7 @@
         <div class="skills-intro">
           <div class="eyebrow">Toolkit / 02</div>
           <h2 class="section-title">Skills</h2>
-          <p class="skills-desc">[A living map of the languages, frameworks and tools reached for most often.]</p>
+          <p class="skills-desc">The languages, frameworks and infrastructure I reach for most, grouped by how they fit together. Drag to orbit.</p>
         </div>
         <div class="skills-cluster-wrap" id="skills-cluster-wrap">
           <canvas id="skills-canvas" class="orbit-canvas"></canvas>
@@ -137,7 +138,7 @@
       </section>
 
       <div class="marquee" aria-hidden="true">
-        <div class="marquee-track"><span>TypeScript</span><span>Three.js</span><span>React</span><span>Node.js</span><span>PostgreSQL</span><span>WebGL</span><span>GraphQL</span><span>Docker</span><span>Motion design</span><span>Design systems</span><span>TypeScript</span><span>Three.js</span><span>React</span><span>Node.js</span><span>PostgreSQL</span><span>WebGL</span><span>GraphQL</span><span>Docker</span><span>Motion design</span><span>Design systems</span></div>
+        <div class="marquee-track" id="marquee-track"></div>
       </div>
 
       <!-- ===== ARCHIVE ===== -->
@@ -167,6 +168,11 @@
           <div class="eyebrow">Education / 06</div>
           <h2 class="section-title" style="margin-bottom:28px;">Education</h2>
           <div class="education-list" id="education-list"></div>
+          <div class="education-extra" id="education-extra"></div>
+          <div class="education-actions">
+            <a class="btn btn--ghost" id="transcript-btn" href="#">Request transcript</a>
+            <span class="education-actions-note">Unofficial copy by email. Official transcripts come from Grambling's registrar.</span>
+          </div>
         </div>
       </section>
 
@@ -179,9 +185,9 @@
         <svg class="ridge ridge--near" id="ridge-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
         <div class="section-inner contact-inner">
           <div class="eyebrow">Get in touch / 07</div>
-          <h2 class="contact-title">[Closing line: invite the visitor to reach out]</h2>
+          <h2 class="contact-title" data-site="closing">Let's build something that keeps working.</h2>
           <div class="contact-actions" data-reveal>
-            <a href="mailto:hello@example.com" class="btn btn--primary">hello@example.com</a>
+            <a href="mailto:gideonsanni2023@gmail.com" class="btn btn--primary">gideonsanni2023@gmail.com</a>
             <a href="assets/resume.pdf" download class="btn btn--ghost">↓ Download résumé</a>
           </div>
         </div>
@@ -194,8 +200,7 @@
             <div class="copyright">© 2026 Gideon Sanni</div>
             <div class="social-links">
               <a href="https://github.com/gasthecreator" target="_blank" rel="noopener">GitHub</a>
-              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
-              <a href="#" target="_blank" rel="noopener">X / Twitter</a>
+              <a href="https://www.linkedin.com/in/gideonadeniyisanni/" target="_blank" rel="noopener">LinkedIn</a>
             </div>
           </div>
         </div>
@@ -207,25 +212,19 @@
     <main id="detail-view" class="detail-view" hidden>
       <div class="section-inner">
         <button class="back-btn" id="back-btn">← Back to archive</button>
-        <div class="detail-cover media-placeholder">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="placeholder-label">[project cover image]</span>
-        </div>
+        <div class="detail-cover metric-panel" id="detail-cover"></div>
         <div class="detail-header">
-          <h1 class="detail-title" id="detail-title"></h1>
+          <div><h1 class="detail-title" id="detail-title"></h1><p class="detail-tagline" id="detail-tagline"></p></div>
           <span class="status-pill" id="detail-status"></span>
         </div>
         <div class="detail-tags" id="detail-tags"></div>
         <div class="detail-grid">
-          <div><div class="detail-label">Problem</div><p class="detail-body">[Placeholder: the problem this project set out to solve]</p></div>
-          <div><div class="detail-label">Approach</div><p class="detail-body">[Placeholder: how it was designed and built]</p></div>
-          <div><div class="detail-label">Stack</div><p class="detail-body">[Placeholder: key technical decisions]</p></div>
-          <div><div class="detail-label">Outcome</div><p class="detail-body">[Placeholder: measurable or qualitative result]</p></div>
+          <div><div class="detail-label">Problem</div><p class="detail-body" id="detail-problem"></p></div>
+          <div><div class="detail-label">Approach</div><p class="detail-body" id="detail-approach"></p></div>
+          <div><div class="detail-label">Stack</div><p class="detail-body" id="detail-stack"></p></div>
+          <div><div class="detail-label">Outcome</div><p class="detail-body" id="detail-outcome"></p></div>
         </div>
-        <div class="detail-links">
-          <span class="detail-link">Live demo →</span>
-          <span class="detail-link">Source →</span>
-        </div>
+        <div class="detail-links" id="detail-links"></div>
       </div>
     </main>
 
@@ -236,11 +235,12 @@
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/vendor/SplitText.min.js"></script>
 <script src="js/vendor/anime.umd.min.js"></script>
-<script src="js/main.js?v=20260920b"></script>
+<script src="js/content.js?v=20260920e"></script>
+<script src="js/main.js?v=20260920e"></script>
 <script type="importmap">
 { "imports": { "three": "./js/vendor/three.module.js", "three/addons/": "./js/vendor/three-addons/" } }
 </script>
-<script type="module" src="js/three-scene.js?v=20260920b"></script>
-<script type="module" src="js/landscape.js?v=20260920b"></script>
+<script type="module" src="js/three-scene.js?v=20260920e"></script>
+<script type="module" src="js/landscape.js?v=20260920e"></script>
 </body>
 </html>

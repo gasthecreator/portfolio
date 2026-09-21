@@ -68,13 +68,7 @@ function makeGradientBackground() {
   return tex;
 }
 
-const SKILL_CATEGORIES = [
-  { name: 'Languages', items: ['TypeScript', 'JavaScript', 'Python', 'Go'] },
-  { name: 'Frontend', items: ['React', 'Next.js', 'Three.js / R3F', 'Tailwind CSS'] },
-  { name: 'Backend', items: ['Node.js', 'PostgreSQL', 'GraphQL', 'Redis'] },
-  { name: 'Infra & Tools', items: ['Docker', 'AWS', 'CI/CD', 'Git'] },
-  { name: 'Design', items: ['Figma', 'Motion design', 'Design systems'] },
-];
+const SKILL_CATEGORIES = window.SITE.skills;
 
 let COLOR;
 function initPalette() {

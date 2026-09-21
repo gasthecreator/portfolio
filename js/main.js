@@ -19,40 +19,12 @@
     { id: 'education', label: 'Education', n: '06' }, { id: 'contact', label: 'Contact', n: '07' },
   ].map((i) => ({ ...i, href: '#' + i.id }));
 
-  const SKILL_CATEGORIES = [
-    { name: 'Languages', items: ['TypeScript', 'JavaScript', 'Python', 'Go'] },
-    { name: 'Frontend', items: ['React', 'Next.js', 'Three.js / R3F', 'Tailwind CSS'] },
-    { name: 'Backend', items: ['Node.js', 'PostgreSQL', 'GraphQL', 'Redis'] },
-    { name: 'Infra & Tools', items: ['Docker', 'AWS', 'CI/CD', 'Git'] },
-    { name: 'Design', items: ['Figma', 'Motion design', 'Design systems'] },
-  ];
-  const CAT_COLORS = ['oklch(0.86 0.032 78)', 'oklch(0.78 0.095 78)', 'oklch(0.7 0.074 78)', 'oklch(0.62 0.053 78)', 'oklch(0.9 0.021 78)'];
+  const SITE = window.SITE;
+  const FEATURED_RAW = SITE.featured.map((p) => ({ ...p, tech: p.tags, status: 'shipped' }));
+  const ARCHIVE_RAW = SITE.archive;
+  const EXPERIENCE = SITE.experience;
+  const EDUCATION = SITE.education;
 
-  const FEATURED_RAW = [
-    { id: 'f1', idx: '01', name: '[Project Name One]', tagline: '[One-line summary of what it does and who it is for]', tags: ['React', 'Node.js', 'PostgreSQL'] },
-    { id: 'f2', idx: '02', name: '[Project Name Two]', tagline: '[One-line summary of what it does and who it is for]', tags: ['Next.js', 'Three.js', 'WebGL'] },
-    { id: 'f3', idx: '03', name: '[Project Name Three]', tagline: '[One-line summary of what it does and who it is for]', tags: ['TypeScript', 'GraphQL', 'Redis'] },
-  ].map((p) => ({ ...p, problem: '[Placeholder problem statement]', stack: '[Placeholder stack notes]', outcome: '[Placeholder outcome]' }));
-
-  const ARCHIVE_RAW = [
-    { id: 'a1', name: '[Archive Project A]', tech: ['React', 'Node.js'], domain: 'Web App', status: 'shipped' },
-    { id: 'a2', name: '[Archive Project B]', tech: ['Python', 'Docker'], domain: 'Tooling', status: 'shipped' },
-    { id: 'a3', name: '[Archive Project C]', tech: ['Three.js', 'React'], domain: 'Data Viz', status: 'in-progress' },
-    { id: 'a4', name: '[Archive Project D]', tech: ['Go', 'Redis'], domain: 'API', status: 'shipped' },
-    { id: 'a5', name: '[Archive Project E]', tech: ['Vue', 'GraphQL'], domain: 'Web App', status: 'archived' },
-    { id: 'a6', name: '[Archive Project F]', tech: ['Rust', 'Docker'], domain: 'Experiment', status: 'in-progress' },
-    { id: 'a7', name: '[Archive Project G]', tech: ['React', 'GraphQL'], domain: 'Design System', status: 'shipped' },
-    { id: 'a8', name: '[Archive Project H]', tech: ['Python', 'React'], domain: 'Open Source', status: 'archived' },
-  ];
-
-  const EXPERIENCE = [
-    { dates: '2024 – Present', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['React', 'TypeScript'] },
-    { dates: '2022 – 2024', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['Node.js', 'AWS'] },
-    { dates: '2020 – 2022', role: '[Role Title]', org: '[Company Name]', desc: '[Placeholder description of responsibilities and impact in this role]', tags: ['Python'] },
-  ];
-  const EDUCATION = [
-    { degree: '[Degree, Field of Study]', school: '[University Name]', note: '[Placeholder: honors, focus area]', dates: '2016 – 2020' },
-  ];
   const STATUS_META = {
     shipped: { label: 'Shipped', color: 'var(--st-shipped)' },
     'in-progress': { label: 'In progress', color: 'var(--st-progress)' },
@@ -85,6 +57,18 @@
       try { saved = localStorage.getItem('theme'); } catch (err) {}
       if (!saved) applyTheme(e.matches ? 'dark' : 'light', true);
     });
+  }
+
+  // ---------- content fill ----------
+  function fillSite() {
+    document.querySelectorAll('[data-site]').forEach((el) => {
+      const v = SITE[el.dataset.site];
+      if (typeof v === 'string') el.textContent = v;
+    });
+    document.getElementById('about-stats').innerHTML = SITE.stats.map((s) => `
+      <div class="stat"><div class="stat-num">${esc(s.value)}</div><div class="stat-label">${esc(s.label)}</div></div>`).join('');
+    const spans = SITE.marquee.map((t) => `<span>${esc(t)}</span>`).join('');
+    document.getElementById('marquee-track').innerHTML = spans + spans;
   }
 
   // ---------- nav ----------
@@ -131,10 +115,10 @@
       <div class="stack-item" style="--i:${i}">
       <div class="project-card" data-project-id="${p.id}">
         <div class="project-card-inner${i % 2 === 1 ? ' reverse' : ''}">
-          <div class="project-media media-placeholder">
+          <div class="project-media metric-panel">
             <div class="project-glare" data-glare></div>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span class="placeholder-label">[project screenshot]</span>
+            <div class="metric-value">${esc(p.metric.value)}</div>
+            <div class="metric-label">${esc(p.metric.label)}</div>
           </div>
           <div class="project-content">
             <div class="project-heading">
@@ -144,9 +128,9 @@
             <p class="project-tagline">${esc(p.tagline)}</p>
             <div class="tag-list">${p.tags.map((t) => `<span class="tag-chip">${esc(t)}</span>`).join('')}</div>
             <div class="project-meta">
-              <div><div class="project-meta-label">Problem</div><div class="project-meta-val">${esc(p.problem)}</div></div>
-              <div><div class="project-meta-label">Stack</div><div class="project-meta-val">${esc(p.stack)}</div></div>
-              <div><div class="project-meta-label">Outcome</div><div class="project-meta-val">${esc(p.outcome)}</div></div>
+              <div><div class="project-meta-label">Problem</div><div class="project-meta-val">${esc(p.cardProblem)}</div></div>
+              <div><div class="project-meta-label">Stack</div><div class="project-meta-val">${esc(p.cardStack)}</div></div>
+              <div><div class="project-meta-label">Outcome</div><div class="project-meta-val">${esc(p.cardOutcome)}</div></div>
             </div>
           </div>
         </div>
@@ -203,10 +187,7 @@
       const isIn = archiveNewIds.has(p.id);
       const meta = STATUS_META[p.status];
       return `<div class="archive-card${isIn ? '' : ' hidden-out'}" data-project-id="${p.id}">
-        <div class="archive-thumb media-placeholder">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>[shot]</span>
-        </div>
+        <div class="archive-thumb metric-panel metric-panel--sm"><span class="metric-value">${esc(p.thumb)}</span></div>
         <div class="archive-card-head"><h4>${esc(p.name)}</h4><span class="status-dot" style="background:${meta.color}"></span></div>
         <div class="archive-domain">${esc(p.domain)}</div>
         <div class="archive-tags">${p.tech.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
@@ -227,38 +208,55 @@
         <div class="timeline-dates">${esc(e.dates)}</div>
         <h3 class="timeline-role">${esc(e.role)}</h3>
         <div class="timeline-org">${esc(e.org)}</div>
-        <p class="timeline-desc">${esc(e.desc)}</p>
+        <ul class="timeline-desc">${e.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
         <div class="timeline-tags">${e.tags.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
       </div>
     `).join('');
   }
   function renderEducation() {
-    document.getElementById('education-list').innerHTML = EDUCATION.map((ed) => `
+    const list = SITE.education.map((ed) => `
       <div class="education-item">
-        <div>
+        <div class="education-main">
           <h3>${esc(ed.degree)}</h3>
           <div class="education-school">${esc(ed.school)}</div>
-          <div class="education-note">${esc(ed.note)}</div>
+          <div class="education-tags">${ed.achievements.map((a) => `<span>${esc(a)}</span>`).join('')}</div>
+          <p class="education-note"><strong>Coursework:</strong> ${esc(ed.coursework)}</p>
         </div>
         <div class="education-dates">${esc(ed.dates)}</div>
       </div>
     `).join('');
+    document.getElementById('education-list').innerHTML = list;
+    document.getElementById('education-extra').innerHTML = `
+      <div class="education-group"><div class="education-group-label">Certifications</div><div class="education-tags">${SITE.certifications.map((c) => `<span>${esc(c)}</span>`).join('')}</div></div>
+      <div class="education-group"><div class="education-group-label">Programs &amp; affiliations</div><div class="education-tags">${SITE.programs.map((c) => `<span>${esc(c)}</span>`).join('')}</div></div>`;
+    const t = document.getElementById('transcript-btn');
+    const subject = encodeURIComponent('Transcript request: Gideon Sanni');
+    const body = encodeURIComponent('Hi Gideon,\n\nI would like to request a copy of your transcript.\n\nName:\nOrganization:\nPurpose:\n\nThank you.');
+    t.href = `mailto:${SITE.person.email}?subject=${subject}&body=${body}`;
   }
 
   // ---------- project detail routing ----------
-  const ALL_PROJECTS = [
-    ...FEATURED_RAW.map((p) => ({ ...p, tech: p.tags, status: 'shipped' })),
-    ...ARCHIVE_RAW,
-  ];
+  const ALL_PROJECTS = [...FEATURED_RAW, ...ARCHIVE_RAW];
   function findProject(id) { return ALL_PROJECTS.find((p) => p.id === id) || ALL_PROJECTS[0]; }
   function openProject(id) {
     const sel = findProject(id);
     const meta = STATUS_META[sel.status] || STATUS_META.shipped;
-    document.getElementById('detail-title').textContent = sel.name;
+    const set = (i, v) => { document.getElementById(i).textContent = v; };
+    set('detail-title', sel.name);
+    set('detail-tagline', sel.tagline);
+    set('detail-problem', sel.problem);
+    set('detail-approach', sel.approach);
+    set('detail-stack', sel.stack);
+    set('detail-outcome', sel.outcome);
+    const cover = document.getElementById('detail-cover');
+    cover.innerHTML = sel.metric
+      ? `<div class="metric-value">${esc(sel.metric.value)}</div><div class="metric-label">${esc(sel.metric.label)}</div>`
+      : `<div class="metric-value">${esc(sel.thumb || sel.name)}</div>`;
     const statusPill = document.getElementById('detail-status');
     statusPill.textContent = meta.label;
     statusPill.style.color = meta.color;
     document.getElementById('detail-tags').innerHTML = sel.tech.map((t) => `<span class="tag-chip">${esc(t)}</span>`).join('');
+    document.getElementById('detail-links').innerHTML = (sel.links || []).map((l) => `<a class="detail-link" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)} →</a>`).join('');
     document.getElementById('home-view').hidden = true;
     document.getElementById('detail-view').hidden = false;
     window.scrollTo(0, 0);
@@ -315,6 +313,12 @@
 
     const once = (el, extra = {}) => ({ trigger: el, start: 'top 90%', once: true, ...extra });
 
+    // SplitText can drop the space between the last words of a heading; put it back after every (re)split
+    const restoreSpaces = (words) => words.forEach((w, i) => {
+      const next = w.nextSibling;
+      if (i < words.length - 1 && !(next && next.nodeType === 3 && /\s/.test(next.textContent))) w.after(document.createTextNode(' '));
+    });
+
     // headings
     if (hasSplitText) {
       const heroName = document.querySelector('.hero-name');
@@ -330,6 +334,7 @@
         SplitText.create(el, {
           type: 'words', autoSplit: true,
           onSplit(self) {
+            restoreSpaces(self.words);
             return gsap.from(self.words, { y: '70%', opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06, scrollTrigger: once(el, { start: 'top 88%' }) });
           },
         });
@@ -421,6 +426,7 @@
 
   // ---------- init ----------
   function init() {
+    fillSite();
     renderNav();
     initMobileMenu();
     renderFeatured();
