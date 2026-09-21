@@ -334,6 +334,7 @@
         SplitText.create(heroName, {
           type: 'chars', autoSplit: true,
           onSplit(self) {
+            heroName.setAttribute('aria-label', 'Gideon Sanni');
             return gsap.from(self.chars, { yPercent: 110, opacity: 0, duration: 0.9, ease: 'power4.out', stagger: 0.03, delay: 0.15 });
           },
         });
