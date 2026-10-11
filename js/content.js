@@ -10,6 +10,9 @@ window.SITE = {
     linkedin: 'https://www.linkedin.com/in/gideonadeniyisanni/',
   },
 
+  // Set to the deployed Worker URL (https://portfolio-chat.<account>.workers.dev/chat) to enable the "Ask about Gideon" assistant.
+  chatEndpoint: '',
+
   tagline: 'I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work.',
 
   bio: "I'm a Computer Science & Cybersecurity student at Grambling State University (graduating May 2028) who builds the parts of software that have to keep working when things go wrong: distributed data pipelines, Kubernetes automation, and AI systems that must prove their own fixes. In summer 2026 at Solera Holdings I shipped two AI-driven pipelines that save 500+ engineering hours a month, built so AI-generated fixes must clear a failing-test proof and a human approval gate.",

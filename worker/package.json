@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-chat",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "knowledge": "node build-knowledge.mjs",
+    "dev": "npm run knowledge && wrangler dev --remote --var ALLOW_MODEL_OVERRIDE:1",
+    "deploy": "npm run knowledge && wrangler deploy",
+    "eval": "node eval/run.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.36.0"
+  }
+}

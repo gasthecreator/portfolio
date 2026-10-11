@@ -1,0 +1,20 @@
+name = "portfolio-chat"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Workers AI binding: no API key to manage or leak.
+[ai]
+binding = "AI"
+
+# Per-visitor throttle: 8 questions per minute.
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "7301"
+
+  [ratelimits.simple]
+  limit = 8
+  period = 60
+
+[vars]
+MODEL = "qwen3"
+ALLOWED_ORIGINS = "https://gasthecreator.github.io,http://localhost:8764"
