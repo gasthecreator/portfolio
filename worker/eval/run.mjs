@@ -15,7 +15,7 @@ const test = (re, s) => new RegExp(re, 'i').test(s);
 const summary = [];
 const transcript = {};
 for (const model of models) {
-  let pass = 0, ms = 0, chars = 0, errors = 0;
+  let pass = 0, ms = 0, chars = 0, errors = 0, neurons = 0, pronouns = 0;
   const fails = [];
   transcript[model] = [];
   for (const item of questions) {
@@ -24,13 +24,14 @@ for (const model of models) {
     try {
       const r = await fetch(`${BASE}/chat?model=${model}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', content: item.q }] }) });
       const j = await r.json();
-      if (!r.ok) err = `${r.status} ${j.error}`; else reply = j.reply;
+      if (!r.ok) err = `${r.status} ${j.error}`; else { reply = j.reply; neurons += j.neurons || 0; }
     } catch (e) { err = String(e.message || e); }
     ms += Date.now() - t0;
     const problems = [];
     if (err) { errors++; problems.push(`error: ${err}`); }
     else {
       chars += reply.length;
+      if (/\b(he|his|him|she|her)\b/i.test(reply)) pronouns++;
       for (const group of item.all || []) if (!group.some((re) => test(re, reply))) problems.push(`missing one of: ${group.join(' | ')}`);
       for (const re of item.none || []) if (test(re, reply)) problems.push(`contains forbidden: ${re}`);
     }
@@ -38,12 +39,12 @@ for (const model of models) {
     transcript[model].push({ q: item.q, reply, err, problems });
   }
   const n = questions.length;
-  summary.push({ model, pass, n, errors, avgMs: Math.round(ms / n), avgChars: Math.round(chars / Math.max(1, n - errors)), fails });
+  summary.push({ model, pass, n, errors, avgNeurons: +(neurons / n).toFixed(1), pronounReplies: pronouns, avgMs: Math.round(ms / n), avgChars: Math.round(chars / Math.max(1, n - errors)), fails });
 }
 
 console.log('\n=== RESULTS ===');
 for (const s of summary) {
-  console.log(`\n${s.model}: ${s.pass}/${s.n} passed, ${s.errors} errors, avg ${s.avgMs} ms, avg reply ${s.avgChars} chars`);
+  console.log(`\n${s.model}: ${s.pass}/${s.n} passed, ${s.errors} errors, avg ${s.avgMs} ms, avg reply ${s.avgChars} chars, ~${s.avgNeurons} neurons/answer (~${Math.floor(10000 / Math.max(1, s.avgNeurons))} free chats/day), ${s.pronounReplies} replies used he/his`);
   for (const f of s.fails) console.log(`  x ${f.q}\n      ${f.problems.join('; ')}\n      reply: ${f.reply.replace(/\s+/g, ' ').slice(0, 220)}`);
 }
 writeFileSync(join(dir, 'last-run.json'), JSON.stringify({ when: new Date().toISOString(), summary, transcript }, null, 2));

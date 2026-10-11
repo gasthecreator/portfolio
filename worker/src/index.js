@@ -3,7 +3,7 @@ import { SYSTEM_PROMPT } from './prompt.js';
 // Short names are what the dev/eval harness can ask for; production uses env.MODEL.
 const MODELS = {
   qwen3: { id: '@cf/qwen/qwen3-30b-a3b-fp8', tokenParam: 'max_tokens', extra: { chat_template_kwargs: { enable_thinking: false } } },
-  gemma4: { id: '@cf/google/gemma-4-26b-a4b-it', tokenParam: 'max_completion_tokens', extra: {} },
+  gemma4: { id: '@cf/google/gemma-4-26b-a4b-it', tokenParam: 'max_completion_tokens', extra: { chat_template_kwargs: { enable_thinking: false } } },
   llama8b: { id: '@cf/meta/llama-3.1-8b-instruct-fp8-fast', tokenParam: 'max_tokens', extra: {} },
 };
 
@@ -45,7 +45,11 @@ function extractText(res) {
   let t = '';
   if (typeof res === 'string') t = res;
   else if (res && typeof res.response === 'string') t = res.response;
-  else if (res && res.choices && res.choices[0]) t = (res.choices[0].message && res.choices[0].message.content) || res.choices[0].text || '';
+  else if (res && res.choices && res.choices[0]) {
+    // Qwen3 on Workers AI can return its whole answer in reasoning_content with content: null.
+    const msg = res.choices[0].message || {};
+    t = msg.content || res.choices[0].text || msg.reasoning_content || msg.reasoning || '';
+  }
   return t.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/<think>[\s\S]*$/, '').trim();
 }
 
@@ -77,16 +81,19 @@ export default {
     const wanted = devMode && MODELS[url.searchParams.get('model')] ? url.searchParams.get('model') : env.MODEL;
     const model = MODELS[wanted] || MODELS.qwen3;
 
+    const run = () => env.AI.run(model.id, {
+      messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
+      temperature: 0.2,
+      [model.tokenParam]: MAX_NEW_TOKENS,
+      ...model.extra,
+    });
+
     try {
-      const res = await env.AI.run(model.id, {
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
-        temperature: 0.2,
-        [model.tokenParam]: MAX_NEW_TOKENS,
-        ...model.extra,
-      });
-      const reply = extractText(res).slice(0, 1500);
+      let res = await run();
+      let reply = extractText(res).slice(0, 1500);
+      if (!reply) { res = await run(); reply = extractText(res).slice(0, 1500); } // models occasionally return nothing once
       if (!reply) return json({ error: 'empty' }, 502, headers);
-      return json({ reply }, 200, headers);
+      return json(devMode ? { reply, neurons: res && res.usage && res.usage.neurons, tokens: res && res.usage && res.usage.completion_tokens } : { reply }, 200, headers);
     } catch (err) {
       // Most likely the free daily allowance is used up, or the model is briefly unavailable.
       return json({ error: 'unavailable' }, 503, headers);

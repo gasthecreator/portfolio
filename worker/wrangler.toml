@@ -16,5 +16,5 @@ namespace_id = "7301"
   period = 60
 
 [vars]
-MODEL = "qwen3"
+MODEL = "gemma4"
 ALLOWED_ORIGINS = "https://gasthecreator.github.io,http://localhost:8764"

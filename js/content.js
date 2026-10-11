@@ -11,7 +11,7 @@ window.SITE = {
   },
 
   // Set to the deployed Worker URL (https://portfolio-chat.<account>.workers.dev/chat) to enable the "Ask about Gideon" assistant.
-  chatEndpoint: '',
+  chatEndpoint: 'https://portfolio-chat.gideonsanni2023.workers.dev/chat',
 
   tagline: 'I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work.',
 
