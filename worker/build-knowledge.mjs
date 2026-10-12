@@ -43,10 +43,18 @@ add('## EDUCATION');
 S.education.forEach((e) => add(`${e.degree}, ${e.school} (${e.dates})`, `Achievements: ${e.achievements.join(', ')}`, `Coursework: ${e.coursework}`));
 add(`Certifications: ${S.certifications.join(', ')}`, `Programs and affiliations: ${S.programs.join(', ')}`, '');
 
+add('## ENGINEERING NOTES (write-ups on the site, each linked to its source)');
+(S.notes || []).forEach((n) => add(`### ${n.title} (${n.project})`, n.body, ''));
+const byId = Object.fromEntries([...S.featured, ...S.archive].map((p) => [p.id, p.name]));
+add('## WHERE SKILLS HAVE BEEN USED (projects on the site)',
+  ...Object.entries(S.skillEvidence || {}).map(([k, v]) => `${k}: ${v.map((id) => byId[id] || id).join(', ')}`),
+  `Strongest areas: ${(S.skillsCore || []).join(', ')}`, '');
 add('## USING THE WEBSITE',
   '- The résumé can be viewed in a pop-up (eye icon in the navigation, or "View résumé" in the Contact section) or downloaded as a PDF.',
   '- The Education section has a "Request transcript" button that opens an email to Gideon.',
-  '- Each featured and archived project has its own detail page with problem, approach, stack and outcome.',
+  '- Each featured and archived project has its own detail page with problem, approach, stack and outcome, plus screenshots, terminal captures, charts or architecture diagrams.',
+  '- The Skills section lets visitors pick a skill to see which projects used it.',
+  '- The site switches between light and dark by the visitor\'s local time of day (light 6am to 6pm), and the toggle overrides that for the session.',
   `- Closing line on the site: ${S.closing}`, '');
 
 const text = out.join('\n');

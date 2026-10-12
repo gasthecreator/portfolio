@@ -236,7 +236,14 @@ function init() {
 
   const mobile = mqMobile.matches;
   const reduced = mqReduced.matches;
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: false });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: false });
+  } catch (err) {
+    // No WebGL (blocked, very old device, software rendering): keep the CSS sunset gradient and the plain hero.
+    document.documentElement.classList.add('no-webgl');
+    return;
+  }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.75));
 
   const OCT = mobile ? 4 : 5;

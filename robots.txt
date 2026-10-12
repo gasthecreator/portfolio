@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gasthecreator.github.io/portfolio/sitemap.xml

@@ -15,8 +15,8 @@
   const NAV_ITEMS = [
     { id: 'hero', label: 'Home', n: '00' }, { id: 'about', label: 'About', n: '01' },
     { id: 'skills', label: 'Skills', n: '02' }, { id: 'featured', label: 'Work', n: '03' },
-    { id: 'archive', label: 'Archive', n: '04' }, { id: 'experience', label: 'Experience', n: '05' },
-    { id: 'education', label: 'Education', n: '06' }, { id: 'contact', label: 'Contact', n: '07' },
+    { id: 'archive', label: 'Archive', n: '04' }, { id: 'notes', label: 'Notes', n: '05' }, { id: 'experience', label: 'Experience', n: '06' },
+    { id: 'education', label: 'Education', n: '07' }, { id: 'contact', label: 'Contact', n: '08' },
   ].map((i) => ({ ...i, href: '#' + i.id }));
 
   const SITE = window.SITE;
@@ -297,6 +297,87 @@
   }
 
 
+
+  // ---------- skills: pick a skill, see the work behind it ----------
+  function renderSkills() {
+    const groupsEl = document.getElementById('skills-groups');
+    const panel = document.getElementById('skills-evidence');
+    if (!groupsEl || !panel) return;
+    const evidence = SITE.skillEvidence || {};
+    const core = new Set(SITE.skillsCore || []);
+    groupsEl.innerHTML = SITE.skills.map((g) => `
+      <div class="skills-group">
+        <h3 class="skills-group-label">${esc(g.name)}</h3>
+        <div class="skills-chips">${g.items.map((s) => {
+          const n = (evidence[s] || []).length;
+          const cls = ['skill-chip', core.has(s) ? 'skill-chip--core' : '', n ? '' : 'skill-chip--none'].filter(Boolean).join(' ');
+          return `<button type="button" class="${cls}" data-skill="${esc(s)}" aria-pressed="false">${esc(s)}${n ? `<span class="skill-count" aria-hidden="true">${n}</span>` : ''}</button>`;
+        }).join('')}</div>
+      </div>`).join('');
+    const show = (skill) => {
+      groupsEl.querySelectorAll('.skill-chip').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.skill === skill)));
+      const ids = evidence[skill] || [];
+      const items = ids.map((id) => ALL_PROJECTS.find((p) => p.id === id)).filter(Boolean);
+      const meta = items.length
+        ? `Used in ${items.length} project${items.length > 1 ? 's' : ''} on this site${core.has(skill) ? ', and one of my strongest areas' : ''}.`
+        : 'On my résumé, with no project on this site yet.';
+      panel.innerHTML = `
+        <p class="evidence-eyebrow">${core.has(skill) ? 'Strongest area' : 'Skill'}</p>
+        <h3 class="evidence-title">${esc(skill)}</h3>
+        <p class="evidence-meta">${esc(meta)}</p>
+        <ul class="evidence-list">${items.map((p) => `
+          <li><button type="button" class="evidence-card" data-open-project="${esc(p.id)}">
+            <span class="evidence-name">${esc(p.name)}</span>
+            <span class="evidence-tag">${esc(p.tagline)}</span>
+            ${p.metric ? `<span class="evidence-metric">${esc(p.metric.value)} · ${esc(p.metric.label)}</span>` : ''}
+            <span class="evidence-go">View project →</span>
+          </button></li>`).join('')}</ul>`;
+    };
+    groupsEl.addEventListener('click', (e) => {
+      const b = e.target.closest('.skill-chip');
+      if (!b) return;
+      show(b.dataset.skill);
+      if (window.matchMedia('(max-width: 900px)').matches) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    panel.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-open-project]');
+      if (b) openProject(b.dataset.openProject);
+    });
+    show((SITE.skillsCore || [])[0] || SITE.skills[0].items[0]);
+  }
+
+
+  // ---------- optional: analytics beacon and booking link (inert until set in content.js) ----------
+  function initOptionalIntegrations() {
+    if (SITE.analyticsToken) {
+      const s = document.createElement('script');
+      s.defer = true; s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+      s.setAttribute('data-cf-beacon', JSON.stringify({ token: SITE.analyticsToken }));
+      document.head.appendChild(s);
+    }
+    const actions = document.querySelector('.contact-actions');
+    if (SITE.bookingUrl && actions) {
+      const a = document.createElement('a');
+      a.className = 'btn btn--ghost'; a.href = SITE.bookingUrl; a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = 'Book a call';
+      actions.appendChild(a);
+    }
+  }
+
+
+  // ---------- engineering notes ----------
+  function renderNotes() {
+    const grid = document.getElementById('notes-grid');
+    if (!grid || !SITE.notes) return;
+    grid.innerHTML = SITE.notes.map((n) => `
+      <article class="note-card" data-reveal>
+        <div class="note-project">${esc(n.project)}</div>
+        <h3 class="note-title">${esc(n.title)}</h3>
+        <p class="note-body">${esc(n.body)}</p>
+        <a class="note-source" href="${esc(n.source.href)}" target="_blank" rel="noopener">${esc(n.source.label)} →</a>
+      </article>`).join('');
+  }
+
   // ---------- project gallery + lightbox ----------
   let galleryItems = [];
   let galleryIndex = 0;
@@ -572,6 +653,8 @@
     renderNav();
     initMobileMenu();
     renderFeatured();
+    renderSkills();
+    renderNotes();
     renderFilterBar();
     renderArchiveGrid();
     renderExperience();
@@ -598,6 +681,7 @@
     initMicroInteractions();
     initResumePreview();
     initLightbox();
+    initOptionalIntegrations();
     initAnchorLinks();
     const deepLink = location.hash.match(/^#project-(.+)$/);
     if (deepLink && ALL_PROJECTS.some((p) => p.id === deepLink[1])) {

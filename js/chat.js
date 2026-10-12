@@ -162,12 +162,19 @@
     launcher.setAttribute('aria-expanded', 'false');
     launcher.classList.remove('is-hidden');
     document.body.style.overflow = '';
+    away();
     (lastFocus && lastFocus.focus ? lastFocus : launcher).focus();
   }
   launcher.addEventListener('click', open);
   closeBtn.addEventListener('click', close);
   panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); close(); } });
   form.addEventListener('submit', (e) => { e.preventDefault(); send(input.value); });
+
+  // keep the hero clean: the launcher appears once the visitor scrolls past the first screen
+  const away = () => launcher.classList.toggle('is-away', window.scrollY < window.innerHeight * 0.6 && panel.hidden);
+  window.addEventListener('scroll', away, { passive: true });
+  window.addEventListener('resize', away);
+  away();
 
   // lift the launcher above the footer strip so it never covers the social links
   const strip = document.querySelector('.footer-strip');

@@ -11,6 +11,10 @@ window.SITE = {
   },
 
   // Set to the deployed Worker URL (https://portfolio-chat.<account>.workers.dev/chat) to enable the "Ask about Gideon" assistant.
+  // Privacy-friendly analytics: paste the Cloudflare Web Analytics token here to enable (no cookies). Empty = no analytics.
+  analyticsToken: '',
+  // A scheduling link (Cal.com, Calendly...) adds a "Book a call" button to the Contact section. Empty = hidden.
+  bookingUrl: '',
   chatEndpoint: 'https://portfolio-chat.gideonsanni2023.workers.dev/chat',
 
   tagline: 'I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work.',
@@ -31,7 +35,40 @@ window.SITE = {
     { name: 'AI Tooling', items: ['Claude', 'Cursor', 'Copilot', 'Gemini', 'Codex', 'MCP'] },
   ],
 
+  // Which projects on this site back each skill. A skill with no entry is on the résumé but has no project here yet.
+  skillEvidence: {
+    'Go': ['pharos', 'cascade'], 'Python': ['safelink'], 'TypeScript': ['refraction'], 'JavaScript': ['praecept'],
+    'Rust': ['tripwire'], 'C#': ['feedback-automation', 'release-checklist'], 'Solidity': ['tripwire'], 'SQL': ['refraction'],
+    'Node.js': ['praecept'], 'Express': ['refraction'], 'FastAPI': ['safelink'],
+    '.NET': ['feedback-automation', 'release-checklist'], 'ASP.NET Core': ['feedback-automation', 'release-checklist'],
+    'Kafka': ['pharos'], 'Cassandra': ['pharos'], 'MongoDB': ['feedback-automation', 'release-checklist'],
+    'PostgreSQL': ['refraction'], 'Supabase': ['praecept'],
+    'Kubernetes': ['cascade', 'feedback-automation'], 'Docker': ['pharos', 'feedback-automation'],
+    'Prometheus': ['cascade', 'pharos'], 'Cloudflare': ['praecept'],
+    'Copilot': ['feedback-automation', 'release-checklist'],
+  },
+  skillsCore: ['Go', 'Kubernetes', 'C#', '.NET', 'Kafka', 'Cassandra'],
+
   marquee: ['Go', 'Kubernetes', 'Kafka', 'Cassandra', 'TypeScript', 'Python', 'Rust', 'C#', '.NET', 'PostgreSQL', 'Node.js', 'Prometheus'],
+
+  // Short write-ups of findings that are already documented in the project repos (each links its source).
+  notes: [
+    {
+      project: 'Pharos', title: 'A load test that could not fail',
+      body: 'The first burst test used one sequential virtual user and produced zero rate-limit rejections. The limiter was fine: each request took about 120 ms, so that one client managed only about 8 requests a second, below the 10-a-second refill, and the bucket never emptied. A token bucket limits arrival rate, so proving it took k6\'s constant-arrival-rate executor. At 30 requests a second for 15 seconds, about 200 of 450 requests were rejected, matching the arithmetic (100 + 15 x 10 = 250 accepted), and none leaked to the other sites.',
+      source: { label: 'Benchmark write-up', href: 'https://github.com/gasthecreator/pharos/blob/main/docs/benchmark-results.md' },
+    },
+    {
+      project: 'Pharos', title: 'The slow part was not Kafka',
+      body: 'End-to-end ingestion averaged about 122 ms. The Kafka publish step took about 53 ms and the downstream Cassandra write about 10 ms, which left roughly 69 ms unexplained. It was the Cassandra outbox insert, a lightweight transaction whose Paxos round trip makes it costlier than a normal write. It was the first time that number was measured instead of assumed, and it names the first thing to optimize if the system ever needed to go faster.',
+      source: { label: 'Benchmark write-up', href: 'https://github.com/gasthecreator/pharos/blob/main/docs/benchmark-results.md' },
+    },
+    {
+      project: 'Cascade Operator', title: 'Retry storm barely moves, on purpose',
+      body: 'In the benchmark, the retry-storm error rate went from 69.5% to 67.1% under mitigation, while fan-out amplification dropped from 63.2% to 31.8%. That is expected. The mitigation removes the retries that turn one failing call into three, which cuts load on the struggling dependency (1,877 requests down to 1,711), but it cannot make the dependency healthy. The honest signal there is request volume, not error rate.',
+      source: { label: 'Benchmark write-up', href: 'https://github.com/gasthecreator/Cascade-Operator/blob/main/docs/benchmark-results.md' },
+    },
+  ],
 
   featured: [
     {

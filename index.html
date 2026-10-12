@@ -10,17 +10,82 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Gideon Sanni | Software Engineer">
 <meta property="og:description" content="Fault-tolerant systems, Kubernetes automation and AI pipelines that verify their own work.">
-<meta property="og:image" content="https://gasthecreator.github.io/portfolio/assets/gideon-about.jpg">
+<meta property="og:image" content="https://gasthecreator.github.io/portfolio/assets/brand/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Gideon Sanni, Software Engineer, over a dusk landscape">
 <meta property="og:url" content="https://gasthecreator.github.io/portfolio/">
-<meta name="twitter:card" content="summary">
+<meta property="og:site_name" content="Gideon Sanni">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gideon Sanni | Software Engineer">
+<meta name="twitter:description" content="Fault-tolerant systems, Kubernetes automation and AI pipelines that verify their own work.">
+<meta name="twitter:image" content="https://gasthecreator.github.io/portfolio/assets/brand/og-card.jpg">
+<link rel="canonical" href="https://gasthecreator.github.io/portfolio/">
+<meta name="theme-color" content="#dbe9f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1330" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/brand/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Person",
+ "name": "Gideon Sanni",
+ "jobTitle": "Software Engineer",
+ "url": "https://gasthecreator.github.io/portfolio/",
+ "image": "https://gasthecreator.github.io/portfolio/assets/gideon-about.jpg",
+ "description": "Software engineer building fault-tolerant systems, Kubernetes automation and AI pipelines that verify their own work.",
+ "address": {
+  "@type": "PostalAddress",
+  "addressLocality": "Grambling",
+  "addressRegion": "LA",
+  "addressCountry": "US"
+ },
+ "alumniOf": {
+  "@type": "CollegeOrUniversity",
+  "name": "Grambling State University"
+ },
+ "sameAs": [
+  "https://github.com/gasthecreator",
+  "https://www.linkedin.com/in/gideonadeniyisanni/"
+ ],
+ "knowsAbout": [
+  "Distributed systems",
+  "Kubernetes",
+  "Go",
+  "C#",
+  ".NET",
+  "Apache Kafka",
+  "Apache Cassandra",
+  "AI pipelines",
+  "Rust"
+ ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20261011g">
-<link rel="stylesheet" href="css/sections.css?v=20261011g">
-<link rel="stylesheet" href="css/chat.css?v=20261011g">
+<link rel="stylesheet" href="css/style.css?v=20261012i">
+<link rel="stylesheet" href="css/sections.css?v=20261012i">
+<link rel="stylesheet" href="css/chat.css?v=20261012i">
 </head>
 <body>
+  <noscript>
+    <div style="max-width:720px;margin:0 auto;padding:32px 20px;font:16px/1.6 system-ui,sans-serif">
+      <h1 style="margin:0 0 8px">Gideon Sanni, Software Engineer</h1>
+      <p>I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work. Computer Science &amp; Cybersecurity at Grambling State University (graduating May 2028).</p>
+      <p>This site draws its content with JavaScript. Without it, here are the essentials:</p>
+      <ul>
+        <li><a href="https://github.com/gasthecreator/pharos">Pharos</a>: distributed adverse-event ingestion in Go, Kafka and Cassandra (101 ms p95 under multi-datacenter load).</li>
+        <li><a href="https://github.com/gasthecreator/Cascade-Operator">Cascade Operator</a>: a Kubernetes operator that stops cascading failures (fan-out error rate 63.2% to 31.8% in a k6 benchmark).</li>
+        <li><a href="https://github.com/gasthecreator/tripwire">Tripwire</a>: automated exploit containment for DeFi protocols, in Rust and Solidity.</li>
+        <li><a href="https://praecept.ai">Praecept</a>: engineer on the extraction pipeline and authentication system.</li>
+        <li>Solera Holdings (summer 2026): AI-driven engineering pipelines in C# and .NET.</li>
+      </ul>
+      <p><a href="mailto:gideonsanni2023@gmail.com">gideonsanni2023@gmail.com</a> · <a href="https://github.com/gasthecreator">GitHub</a> · <a href="https://www.linkedin.com/in/gideonadeniyisanni/">LinkedIn</a> · <a href="assets/resume.pdf">Résumé (PDF)</a></p>
+    </div>
+  </noscript>
   <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
 
   <!-- ============ NAV : DESKTOP ============ -->
@@ -104,13 +169,11 @@
         <div class="skills-intro">
           <div class="eyebrow">Toolkit / 02</div>
           <h2 class="section-title">Skills</h2>
-          <p class="skills-desc">The languages, frameworks and infrastructure I reach for most, grouped by how they fit together. Drag to orbit.</p>
+          <p class="skills-desc">Pick any skill to see the work that backs it. The highlighted ones are where I'm strongest.</p>
         </div>
-        <div class="skills-cluster-wrap" id="skills-cluster-wrap">
-          <canvas id="skills-canvas" class="orbit-canvas"></canvas>
-          <div id="skills-labels" class="skills-labels"></div>
-          <div class="hud hud--bl" id="skills-hud-count">STACK.VIS · 0 NODES / 0 CATEGORIES</div>
-          <div class="hud hud--br">DRAG TO ORBIT</div>
+        <div class="skills-layout">
+          <div class="skills-groups" id="skills-groups"></div>
+          <aside class="skills-evidence" id="skills-evidence" aria-live="polite" aria-label="Where the selected skill has been used"></aside>
         </div>
       </section>
 
@@ -140,10 +203,19 @@
       </section>
 
       <!-- ===== EXPERIENCE ===== -->
+      <section id="notes" data-screen-label="Engineering Notes" class="notes">
+        <div class="section-inner">
+          <div class="eyebrow">Field notes / 05</div>
+          <h2 class="section-title" style="margin-bottom:12px;">Engineering notes</h2>
+          <p class="notes-desc">What the benchmarks actually showed, including the parts that were not flattering. Each note links its source.</p>
+          <div class="notes-grid" id="notes-grid"></div>
+        </div>
+      </section>
+
       <section id="experience" data-screen-label="Experience" class="experience">
         <div class="blobs" aria-hidden="true"><i></i><i></i></div>
         <div class="experience-inner panel">
-          <div class="eyebrow">Track record / 05</div>
+          <div class="eyebrow">Track record / 06</div>
           <h2 class="section-title" style="margin-bottom:44px;">Experience</h2>
           <div class="timeline" id="experience-timeline"><span class="timeline-line" aria-hidden="true"></span></div>
         </div>
@@ -152,7 +224,7 @@
       <!-- ===== EDUCATION ===== -->
       <section id="education" data-screen-label="Education" class="education">
         <div class="education-inner panel" data-reveal>
-          <div class="eyebrow">Education / 06</div>
+          <div class="eyebrow">Education / 07</div>
           <h2 class="section-title" style="margin-bottom:28px;">Education</h2>
           <div class="education-list" id="education-list"></div>
           <div class="education-extra" id="education-extra"></div>
@@ -171,7 +243,7 @@
         <svg class="ridge ridge--mid" id="ridge-mid" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
         <svg class="ridge ridge--near" id="ridge-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
         <div class="section-inner contact-inner">
-          <div class="eyebrow">Get in touch / 07</div>
+          <div class="eyebrow">Get in touch / 08</div>
           <h2 class="contact-title" data-site="closing">Let's build something that keeps working.</h2>
           <div class="contact-actions" data-reveal>
             <a href="mailto:gideonsanni2023@gmail.com" class="btn btn--primary">gideonsanni2023@gmail.com</a>
@@ -255,13 +327,12 @@
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/vendor/SplitText.min.js"></script>
 <script src="js/vendor/anime.umd.min.js"></script>
-<script src="js/content.js?v=20261011g"></script>
-<script src="js/main.js?v=20261011g"></script>
-<script src="js/chat.js?v=20261011g"></script>
+<script src="js/content.js?v=20261012i"></script>
+<script src="js/main.js?v=20261012i"></script>
+<script src="js/chat.js?v=20261012i"></script>
 <script type="importmap">
-{ "imports": { "three": "./js/vendor/three.module.js", "three/addons/": "./js/vendor/three-addons/" } }
+{ "imports": { "three": "./js/vendor/three.module.js" } }
 </script>
-<script type="module" src="js/three-scene.js?v=20261011g"></script>
-<script type="module" src="js/landscape.js?v=20261011g"></script>
+<script type="module" src="js/landscape.js?v=20261012i"></script>
 </body>
 </html>
