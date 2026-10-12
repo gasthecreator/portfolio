@@ -345,7 +345,7 @@ img { max-width: 100%; }
 .archive-thumb { height: 92px; border-radius: 6px; margin-bottom: 14px; gap: 6px; }
 .archive-thumb svg { width: 16px; height: 16px; }
 .archive-card-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
-.archive-card-head h4 { font-size: 15px; font-weight: 600; margin: 0; color: var(--text); }
+.archive-card-head h3 { font-size: 15px; font-weight: 600; margin: 0; color: var(--text); }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .archive-domain { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
 .archive-tags { display: flex; gap: 6px; flex-wrap: wrap; }

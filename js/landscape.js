@@ -183,7 +183,7 @@ function makeFrontTexture() {
     ctx.restore();
   });
   img.onload = () => { loaded = true; redraw(); };
-  img.src = 'assets/gideon-card.jpg';
+  img.src = 'assets/gideon-card.webp';
   return tex;
 }
 
@@ -244,7 +244,8 @@ function init() {
     document.documentElement.classList.add('no-webgl');
     return;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.75));
+  let pixelRatio = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.75);
+  renderer.setPixelRatio(pixelRatio);
 
   const OCT = mobile ? 4 : 5;
   const PAGE = { light: 'oklch(0.955 0.02 245)', dark: 'oklch(0.19 0.045 268)' };
@@ -412,12 +413,22 @@ function init() {
     canvas.classList.add('ready');
   }
 
-  let last = performance.now();
+  // Adaptive resolution: if the device cannot hold ~30 fps, render at a lower resolution instead of stuttering.
+  let last = performance.now(), slow = 0, steps = 0;
   function tick(now) {
     const dt = Math.min((now - last) / 1000, 0.1);
     last = now;
     const r = canvas.getBoundingClientRect();
-    if (r.bottom > 0 && r.top < window.innerHeight) frame(dt);
+    if (r.bottom > 0 && r.top < window.innerHeight) {
+      frame(dt);
+      slow = dt > 0.036 ? slow + 1 : Math.max(0, slow - 1);
+      if (slow > 40 && steps < 5 && pixelRatio > 0.5) {
+        steps += 1; slow = 0;
+        pixelRatio = Math.max(0.5, pixelRatio * 0.8);
+        renderer.setPixelRatio(pixelRatio);
+        resize();
+      }
+    }
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);

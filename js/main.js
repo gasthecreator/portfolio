@@ -193,7 +193,7 @@
       const meta = STATUS_META[p.status];
       return `<div class="archive-card${isIn ? '' : ' hidden-out'}" data-project-id="${p.id}">
         <div class="archive-thumb metric-panel metric-panel--sm"><span class="metric-value">${esc(p.thumb)}</span></div>
-        <div class="archive-card-head"><h4>${esc(p.name)}</h4><span class="status-dot" style="background:${meta.color}"></span></div>
+        <div class="archive-card-head"><h3>${esc(p.name)}</h3><span class="status-dot" style="background:${meta.color}"></span></div>
         <div class="archive-domain">${esc(p.domain)}</div>
         <div class="archive-tags">${p.tech.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
       </div>`;
@@ -631,18 +631,16 @@
   }
 
   // ---------- micro-interactions ----------
+  const POP = 'cubic-bezier(.34, 1.56, .64, 1)';
+  function pop(el, keyframes, duration, easing) {
+    if (isReducedMotion() || !el.animate) return;
+    el.animate(keyframes, { duration, easing, fill: 'both' });
+  }
   function initMicroInteractions() {
-    if (typeof anime === 'undefined') return;
     document.querySelectorAll('.btn').forEach((btn) => {
-      btn.addEventListener('pointerdown', () => {
-        if (isReducedMotion()) return;
-        anime.animate(btn, { scale: 0.94, duration: 120, ease: 'outQuad' });
-      });
+      btn.addEventListener('pointerdown', () => pop(btn, [{ transform: 'scale(1)' }, { transform: 'scale(0.94)' }], 120, 'ease-out'));
       ['pointerup', 'pointerleave'].forEach((evt) => {
-        btn.addEventListener(evt, () => {
-          if (isReducedMotion()) return;
-          anime.animate(btn, { scale: 1, duration: 320, ease: 'outElastic(1, .6)' });
-        });
+        btn.addEventListener(evt, () => pop(btn, [{ transform: 'scale(0.94)' }, { transform: 'scale(1)' }], 320, POP));
       });
     });
   }
@@ -668,10 +666,8 @@
       else if (kind === 'domain') { nf.domain.has(value) ? nf.domain.delete(value) : nf.domain.add(value); }
       else if (kind === 'status') { nf.status = value; }
       applyFilters(nf);
-      if (!isReducedMotion() && typeof anime !== 'undefined') {
-        const fresh = document.querySelector(`.chip[data-kind="${kind}"][data-value="${value}"]`);
-        if (fresh) anime.animate(fresh, { scale: [1, 1.12, 1], duration: 320, ease: 'outElastic(1, .6)' });
-      }
+      const fresh = document.querySelector(`.chip[data-kind="${kind}"][data-value="${value}"]`);
+      if (fresh) pop(fresh, [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], 320, POP);
     });
     document.getElementById('back-btn').addEventListener('click', closeProject);
 
