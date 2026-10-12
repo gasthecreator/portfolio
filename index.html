@@ -212,11 +212,29 @@
           <div><div class="detail-label">Stack</div><p class="detail-body" id="detail-stack"></p></div>
           <div><div class="detail-label">Outcome</div><p class="detail-body" id="detail-outcome"></p></div>
         </div>
+        <section class="detail-gallery" id="detail-gallery" aria-labelledby="gallery-title" hidden>
+          <h2 class="detail-label" id="gallery-title">In action</h2>
+          <div class="gallery-grid" id="gallery-grid"></div>
+        </section>
         <div class="detail-links" id="detail-links"></div>
       </div>
     </main>
 
   </div>
+
+  <!-- ============ IMAGE LIGHTBOX ============ -->
+  <dialog class="lightbox" id="lightbox" aria-label="Project image">
+    <div class="lightbox-bar">
+      <span class="lightbox-count mono" id="lightbox-count"></span>
+      <button type="button" class="icon-btn" id="lightbox-close" autofocus aria-label="Close image"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="lightbox-stage">
+      <button type="button" class="icon-btn lightbox-nav" id="lightbox-prev" aria-label="Previous image"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <img id="lightbox-img" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <button type="button" class="icon-btn lightbox-nav" id="lightbox-next" aria-label="Next image"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </dialog>
 
   <!-- ============ RÉSUMÉ PREVIEW ============ -->
   <dialog class="resume-dialog" id="resume-dialog" aria-labelledby="resume-dialog-title">

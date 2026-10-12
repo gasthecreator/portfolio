@@ -292,6 +292,65 @@
     });
   }
 
+
+  // ---------- project gallery + lightbox ----------
+  let galleryItems = [];
+  let galleryIndex = 0;
+  function renderGallery(p) {
+    const wrap = document.getElementById('detail-gallery');
+    const grid = document.getElementById('gallery-grid');
+    galleryItems = p.gallery || [];
+    wrap.hidden = galleryItems.length === 0;
+    grid.innerHTML = galleryItems.map((g, i) => `
+      <figure class="gallery-item">
+        <button type="button" class="gallery-shot" data-gallery-index="${i}" aria-label="Enlarge image ${i + 1} of ${galleryItems.length}: ${esc(g.alt)}">
+          <img src="${esc(g.src)}" alt="${esc(g.alt)}" loading="lazy" decoding="async">
+        </button>
+        <figcaption>${esc(g.caption)}</figcaption>
+      </figure>`).join('');
+  }
+  function initLightbox() {
+    const dlg = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const cap = document.getElementById('lightbox-caption');
+    const count = document.getElementById('lightbox-count');
+    if (!dlg) return;
+    let lastFocus = null;
+    const show = (i) => {
+      galleryIndex = (i + galleryItems.length) % galleryItems.length;
+      const g = galleryItems[galleryIndex];
+      img.src = g.src; img.alt = g.alt; cap.textContent = g.caption;
+      count.textContent = `${galleryIndex + 1} / ${galleryItems.length}`;
+      const multi = galleryItems.length > 1;
+      document.getElementById('lightbox-prev').hidden = !multi;
+      document.getElementById('lightbox-next').hidden = !multi;
+    };
+    document.getElementById('gallery-grid').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-gallery-index]');
+      if (!b) return;
+      lastFocus = b;
+      show(Number(b.dataset.galleryIndex));
+      if (lenis) lenis.stop();
+      document.body.style.overflow = 'hidden';
+      dlg.showModal();
+    });
+    const close = () => dlg.close();
+    dlg.addEventListener('close', () => {
+      if (lenis) lenis.start();
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowRight') show(galleryIndex + 1);
+      else if (e.key === 'ArrowLeft') show(galleryIndex - 1);
+    });
+    document.getElementById('lightbox-close').addEventListener('click', close);
+    document.getElementById('lightbox-prev').addEventListener('click', () => show(galleryIndex - 1));
+    document.getElementById('lightbox-next').addEventListener('click', () => show(galleryIndex + 1));
+  }
+
   // ---------- project detail routing ----------
   const ALL_PROJECTS = [...FEATURED_RAW, ...ARCHIVE_RAW];
   function findProject(id) { return ALL_PROJECTS.find((p) => p.id === id) || ALL_PROJECTS[0]; }
@@ -314,6 +373,7 @@
     statusPill.textContent = meta.label;
     statusPill.style.color = meta.color;
     document.getElementById('detail-tags').innerHTML = sel.tech.map((t) => `<span class="tag-chip">${esc(t)}</span>`).join('');
+    renderGallery(sel);
     document.getElementById('detail-links').innerHTML = (sel.links || []).map((l) => `<a class="detail-link" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)} →</a>`).join('');
     if (!fromHistory) {
       homeScrollY = window.scrollY;
@@ -533,6 +593,7 @@
     initScrollFX();
     initMicroInteractions();
     initResumePreview();
+    initLightbox();
     initAnchorLinks();
     const deepLink = location.hash.match(/^#project-(.+)$/);
     if (deepLink && ALL_PROJECTS.some((p) => p.id === deepLink[1])) {

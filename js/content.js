@@ -46,6 +46,9 @@ window.SITE = {
       approach: 'A reviewer picks feedback in a Blazor dashboard and approves it. That one approval is the only manual step before the automation runs. The approval writes a durable work item first and only then commits, so it is all-or-nothing. A background worker leases the item and hands it to GitHub Actions on a self-hosted runner, where a one-shot .NET runner drives an agentic Copilot SDK session: localize the defect, reproduce it with a failing test (RED), make a surgical fix, verify (GREEN), then open an issue and a pull request with the evidence. I co-designed the evidence-based architecture, wrote its RED to GREEN success criterion, built a competing AI pipeline and commissioned a ten-dimension comparison against the adopted design, then owned delivery and reliability.',
       stack: '.NET 10, ASP.NET Core, Blazor Server, MongoDB, GitHub Copilot SDK, GitHub Actions on self-hosted runners, Docker, Kubernetes with health probes, Vault-injected secrets, Jira integration, SonarQube quality gates, xUnit.',
       outcome: 'A deployed, demo-validated internal pilot on a dev Kubernetes cluster that generated 127 AI-authored fix pull requests from real, multilingual feedback. Reliability comes from a lease-based state machine with idempotent dispatch, bounded exponential retry and stranded-work recovery. It is a pilot, not production: every fix is a proposal for a developer to review.',
+      gallery: [
+        { src: 'assets/projects/feedback-automation/architecture.webp', alt: 'Flow diagram of the Feedback Automation Pipeline, from approval to pull request', caption: 'Architecture overview, redrawn for this site. One approval starts the run, and a developer reviews every pull request. No internal names or data are shown.' },
+      ],
       links: [],
     },
     {
@@ -60,6 +63,9 @@ window.SITE = {
       approach: 'I worked as a software engineer on the product. I built a Node.js CLI that orchestrates a multi-stage data pipeline, combining LLM extraction, the CourtListener API and asynchronous task routing into a structured review workflow. I also migrated authentication from custom JWTs to Supabase Auth, proxied through the backend so sessions live in HttpOnly cookies.',
       stack: 'Node.js, LLM extraction, the CourtListener API, Supabase Auth with OAuth (PKCE), JWKS token verification, token revocation, HttpOnly session cookies, Cloudflare-aware rate limiting.',
       outcome: 'Live at praecept.ai, currently by invitation. Sessions use HttpOnly cookies instead of browser-stored tokens, and the pipeline feeds a structured review workflow. The source is private.',
+      gallery: [
+        { src: 'assets/projects/praecept/landing-map.webp', alt: 'Praecept landing page showing the interactive map of legal doctrine', caption: 'The public landing page at praecept.ai. My work sits behind it: the extraction pipeline and the authentication system.' },
+      ],
       links: [{ label: 'Live site', href: 'https://praecept.ai' }],
     },
     {
@@ -74,6 +80,11 @@ window.SITE = {
       approach: 'Each site runs an edge collector with a SQLite WAL queue, so durability starts on local disk. Central ingestion applies per-site rate limiting, validation and deduplication through a Cassandra transactional outbox. Kafka is partitioned by site to preserve ordering, and every event carries both event-time and ingestion-time.',
       stack: 'Go, Apache Kafka (KRaft), Apache Cassandra across two datacenters, MirrorMaker 2 replication, Docker Compose, TLS everywhere with per-site API keys.',
       outcome: 'Fault-injection tests against real Cassandra and Kafka (not mocks) covered total partitions, asymmetric healing and out-of-order delivery, and design review caught five real correctness bugs before they shipped. Load-tested to a 101ms p95 with confirmed per-site rate-limit isolation, shipping signed container images with SBOM and SLSA provenance.',
+      gallery: [
+        { src: 'assets/projects/pharos/load-test.webp', alt: 'Charts of Pharos load-test latency percentiles and burst rate-limiting results', caption: 'Load-test results from the repo\'s benchmark doc: latency for steady sites, and one bursting site being rate-limited without affecting the others.' },
+        { src: 'assets/projects/pharos/tests.webp', alt: 'Terminal output of the Pharos unit, property and simulation tests passing', caption: 'Unit, property and simulation tests that need no cluster, run locally. The cluster-backed integration tests need the full Cassandra and Kafka topology.' },
+        { src: 'assets/projects/pharos/cli.webp', alt: 'Terminal output of pharos-cli showing a stored adverse event and a dead-letter entry', caption: 'pharos-cli running against its built-in synthetic sample data: a stored event with its Kafka lineage, and a rejected event in the dead-letter queue.' },
+      ],
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/pharos' }],
     },
     {
@@ -88,20 +99,31 @@ window.SITE = {
       approach: 'The operator watches Prometheus for three cascade signatures (latency/error cascades, retry storms and fan-out amplification), then patches whichever mesh primitive controls that failure mode and ramps a stepwise restore once the signal clears. One shared interface runs on either Istio or Linkerd, and optional Tetragon eBPF TCP-reset signals corroborate a verdict.',
       stack: 'Go, controller-runtime / Kubebuilder, Prometheus, Istio, Linkerd, k6, Tetragon, property-based testing with rapid.',
       outcome: 'A k6 benchmark on a live cluster, detect-only versus mitigated, cut fan-out amplification\'s error rate from 63.2% to 31.8% and the latency/error cascade\'s from 8.6% to 3.3%. Reconciler correctness is fuzzed with property-based tests against invariants like restore-step monotonicity.',
+      gallery: [
+        { src: 'assets/projects/cascade/replay-latency-cascade.webp', alt: 'Cascade Operator visual replay showing a tripped service and the patched DestinationRule', caption: 'Replay of a real episode captured from the live demo cluster: the operator trips and patches the DestinationRule for payments-service.' },
+        { src: 'assets/projects/cascade/replay-retry-storm.webp', alt: 'Cascade Operator visual replay of a retry storm during the stepwise restore', caption: 'A retry-storm episode during the stepwise restore (restore step 3).' },
+        { src: 'assets/projects/cascade/replay-fanout.webp', alt: 'Cascade Operator visual replay of a fan-out amplification episode', caption: 'A fan-out amplification episode, with the outlier-detection settings the operator applied to payments-service.' },
+        { src: 'assets/projects/cascade/benchmark.webp', alt: 'Bar charts comparing error rates with detect-only and mitigate modes for three cascade scenarios', caption: 'Benchmark results from the repo\'s benchmark doc. Retry storm barely moves by design, and the chart says so.' },
+        { src: 'assets/projects/cascade/tests.webp', alt: 'Terminal output of the Cascade Operator Go test packages passing', caption: 'The operator\'s unit and controller tests, run locally.' },
+      ],
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/Cascade-Operator' }],
     },
     {
       id: 'tripwire', idx: '05', name: 'Tripwire', status: 'in-progress',
       tagline: 'Automated DeFi exploit containment, in seconds instead of minutes.',
       tags: ['Rust', 'Solidity', 'Foundry'],
-      metric: { value: '55 tests', label: 'detection and contract tests, incl. fuzzing' },
+      metric: { value: '257 tests', label: 'passing: 220 Rust, 37 Foundry, incl. fuzzing' },
       cardProblem: 'An exploit can drain a protocol before a human is even paged.',
       cardStack: 'Rust, Solidity, OpenZeppelin, Foundry/anvil, Slither',
-      cardOutcome: 'Detection engine pauses a vault on-chain; 36 detection and 19 contract tests.',
+      cardOutcome: 'Detection engine pauses a vault on-chain; 257 passing tests across Rust and Solidity.',
       problem: 'A single-transaction exploit finalizes in one block, so no reactive system can prevent the first loss. Real incidents often continue with more drains while a team is still being paged, and today\'s detection tools leave the response step to a human.',
       approach: 'A Rust detection engine (signature matching plus confidence scoring) feeds an on-chain, OpenZeppelin-based Guardian contract that can pause a protected vault. An integration test deploys the real contracts to a live anvil node and pauses them through the full pipeline.',
       stack: 'Rust, Solidity, OpenZeppelin, Foundry/anvil, Slither.',
-      outcome: 'The claim is deliberately bounded: cut response time from human minutes to seconds so the second transaction never lands. 36 detection tests including adversarial cases, and 19 contract tests including fuzzing and a live reentrancy simulation. A portfolio-stage project, not an audited deployment.',
+      outcome: 'The claim is deliberately bounded: cut response time from human minutes to seconds so the second transaction never lands. 257 passing tests: 220 in Rust (including suites that run against live local anvil nodes and replays of four historical exploits) and 37 in Foundry (including fuzzing, a live reentrancy simulation and a seven-invariant stateful suite). A portfolio-stage project, not an audited deployment.',
+      gallery: [
+        { src: 'assets/projects/tripwire/forge-tests.webp', alt: 'Terminal output of the Foundry contract tests, including the invariant suite, passing', caption: 'Foundry contract tests: 37 passing, including a fuzz test and a seven-invariant stateful suite.' },
+        { src: 'assets/projects/tripwire/cargo-tests.webp', alt: 'Terminal output of the Rust workspace integration test suites passing', caption: 'Rust workspace tests, trimmed to each integration suite\'s summary line. 220 pass in total, including suites that run against live local anvil nodes and replays of four historical exploits.' },
+      ],
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/tripwire' }],
     },
   ],
@@ -115,6 +137,9 @@ window.SITE = {
       approach: 'An AI vision step suggests where each screenshot belongs, constrained to the allowed worksheet and checklist keys, and a human reviews every placement. I helped design the integration contracts and the stable-key model that hides all Excel coordinates behind a versioned template profile. I owned the export layer: an Open XML writer, sanitizer and manifest service, GridFS persistence for large binaries, and validation that blocks invalid packages before writing and again after reopening the saved file.',
       stack: '.NET 10, ASP.NET Core, Open XML SDK, MongoDB with GridFS, SQLite via EF Core, GitHub Copilot SDK, ImageSharp, Server-Sent Events, xUnit.',
       outcome: 'A dev deployment (v0.1.0) with 87 passing tests and a 60-image regression suite that compares workbooks semantically (structure, relationships, hyperlinks, drawings, formulas, validation rules, control state) instead of byte for byte. Manual checks in desktop Excel caught two defects that green tests missed: hyperlinks that left evidence off-screen, and checkbox state stored in two separate package parts. Both became permanent validation coverage.',
+      gallery: [
+        { src: 'assets/projects/release-checklist/architecture.webp', alt: 'Flow diagram of the Release Checklist Automation from screenshots to a validated workbook', caption: 'Architecture overview, redrawn for this site. The model suggests, a person decides, and the export layer refuses to write an invalid workbook.' },
+      ],
       links: [],
     },
     {
@@ -125,6 +150,11 @@ window.SITE = {
       approach: 'Phones form a Bluetooth and Wi-Fi mesh so alerts move device to device without internet. I built the distributed FastAPI backend for real-time event ingestion from GDACS, IP geolocation, dynamic risk scoring and tiered alert dispatch. Built with a team of five.',
       stack: 'FastAPI, GDACS event feed, Bluetooth and Wi-Fi mesh networking, AI routing and message prioritization.',
       outcome: 'Top 5 of 64 teams at the BE Smart Hackathon. The ingestion and dispatch path reduced notification latency by 70%.',
+      gallery: [
+        { src: 'assets/projects/safelink/dashboard.webp', alt: 'SafeLink rescue operations dashboard', caption: 'The team dashboard from the live demo. The counters read zero because the public demo holds no live rescue data. My part was the FastAPI ingestion and alert-dispatch backend.' },
+        { src: 'assets/projects/safelink/disaster-management.webp', alt: 'SafeLink disaster management screen with an emergency preparedness checklist', caption: 'Pre-, during- and post-disaster checklists in the same live demo.' },
+        { src: 'assets/projects/safelink/first-aid.webp', alt: 'SafeLink AI first aid guide screen', caption: 'The AI first-aid guide screen.' },
+      ],
       links: [
         { label: 'Source', href: 'https://github.com/BE-Hackathon-2025/SafeLink-' },
         { label: 'Live demo', href: 'https://safelink-dashboard.onrender.com/' },
@@ -138,6 +168,10 @@ window.SITE = {
       approach: 'Ingests user location (with an IP-geolocation fallback), pulls live events from the GDACS API, caches them for resilience, computes geodesic distance to classify risk tiers, and runs scheduled jobs with APScheduler. Alert delivery is rate-limited to prevent notification spam.',
       stack: 'Python, APScheduler, GDACS API, REST endpoints, lightweight JSON persistence.',
       outcome: 'Built during the BE Smart Hackathon (Top 5 of 64 teams). This repository preserves my individual backend contribution.',
+      gallery: [
+        { src: 'assets/projects/disaster-sentinel/api-docs.webp', alt: 'Interactive API documentation for the Disaster Sentinel FastAPI service', caption: 'The service running locally, with its interactive API docs.' },
+        { src: 'assets/projects/disaster-sentinel/requests.webp', alt: 'Terminal output of API requests subscribing a user, pushing a notification and reading health', caption: 'Real responses from a local run. The event cache is empty because the GDACS endpoint this project calls has changed since the hackathon.' },
+      ],
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/disaster-sentinel' }],
     },
     {
@@ -148,6 +182,11 @@ window.SITE = {
       approach: 'I implemented Passport.js authentication and RESTful PostgreSQL APIs, and integrated Mailjet and MessageBird so prescriptions can be shared and patients notified.',
       stack: 'TypeScript, Passport.js, PostgreSQL, REST APIs, Mailjet, MessageBird.',
       outcome: 'Built as a team during my Software Engineering internship at Grambling State University (Jan to Apr 2025).',
+      gallery: [
+        { src: 'assets/projects/refraction/dashboard.webp', alt: 'The Refraction optical prescription dashboard', caption: 'The team application running locally.' },
+        { src: 'assets/projects/refraction/records.webp', alt: 'The Refraction patient records list', caption: 'Patient records list. Every patient shown is synthetic sample data.' },
+        { src: 'assets/projects/refraction/details.webp', alt: 'The Refraction prescription detail page', caption: 'A prescription detail page with lens notes, for a synthetic patient. My part was authentication and the PostgreSQL REST APIs.' },
+      ],
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/Refraction-Team' }],
     },
   ],
