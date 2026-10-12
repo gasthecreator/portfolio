@@ -43,21 +43,25 @@
     });
     window.dispatchEvent(new CustomEvent('themechange', { detail: t }));
   }
+  // Day (06:00 to 18:00) is light, night is dark, by the visitor's own clock and time zone.
+  // A manual choice lasts for this tab's session only; a new visit follows the time of day again.
+  function themeForNow() { const h = new Date().getHours(); return h >= 6 && h < 18 ? 'light' : 'dark'; }
   function initTheme() {
+    let manual = false;
+    try { const s = sessionStorage.getItem('theme'); manual = s === 'light' || s === 'dark'; } catch (e) {}
     applyTheme(currentTheme(), false);
     document.querySelectorAll('.theme-toggle').forEach((b) => {
       b.addEventListener('click', () => {
         const next = currentTheme() === 'dark' ? 'light' : 'dark';
-        try { localStorage.setItem('theme', next); } catch (e) {}
+        manual = true;
+        try { sessionStorage.setItem('theme', next); } catch (e) {}
         applyTheme(next, true);
       });
     });
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    mq.addEventListener('change', (e) => {
-      let saved = null;
-      try { saved = localStorage.getItem('theme'); } catch (err) {}
-      if (!saved) applyTheme(e.matches ? 'dark' : 'light', true);
-    });
+    // If nobody has chosen, follow the clock across 06:00 and 18:00 while the page stays open.
+    const follow = () => { if (!manual && themeForNow() !== currentTheme()) applyTheme(themeForNow(), true); };
+    setInterval(follow, 60000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) follow(); });
   }
 
   // ---------- content fill ----------
