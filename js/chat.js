@@ -170,9 +170,6 @@
   panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); close(); } });
   form.addEventListener('submit', (e) => { e.preventDefault(); send(input.value); });
 
-  // a link like /portfolio/?chat=open (used from the GitHub profile) opens the assistant straight away
-  if (/[?&]chat=open\b/.test(window.location.search)) setTimeout(open, 700);
-
   // keep the hero clean: the launcher appears once the visitor scrolls past the first screen
   const away = () => launcher.classList.toggle('is-away', window.scrollY < window.innerHeight * 0.6 && panel.hidden);
   window.addEventListener('scroll', away, { passive: true });
