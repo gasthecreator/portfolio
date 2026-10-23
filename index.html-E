@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script>(function(){var t=null;try{t=sessionStorage.getItem("theme");localStorage.removeItem("theme");}catch(e){}if(t!=="dark"&&t!=="light"){var h=new Date().getHours();t=(h>=6&&h<18)?"light":"dark";}document.documentElement.dataset.theme=t;})();</script>
+<title>Gideon Sanni | Software Engineer</title>
+<meta name="description" content="Gideon Sanni is a software engineer and Computer Science student at Grambling State University, building fault-tolerant systems, Kubernetes automation and AI pipelines.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gideon Sanni | Software Engineer">
+<meta property="og:description" content="Fault-tolerant systems, Kubernetes automation and AI pipelines that verify their own work.">
+<meta property="og:image" content="https://gasthecreator.github.io/portfolio/assets/brand/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Gideon Sanni, Software Engineer, over a dusk landscape">
+<meta property="og:url" content="https://gasthecreator.github.io/portfolio/">
+<meta property="og:site_name" content="Gideon Sanni">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gideon Sanni | Software Engineer">
+<meta name="twitter:description" content="Fault-tolerant systems, Kubernetes automation and AI pipelines that verify their own work.">
+<meta name="twitter:image" content="https://gasthecreator.github.io/portfolio/assets/brand/og-card.jpg">
+<link rel="canonical" href="https://gasthecreator.github.io/portfolio/">
+<meta name="theme-color" content="#dbe9f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1330" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/brand/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Person",
+ "name": "Gideon Sanni",
+ "jobTitle": "Software Engineer",
+ "url": "https://gasthecreator.github.io/portfolio/",
+ "image": "https://gasthecreator.github.io/portfolio/assets/gideon-about.jpg",
+ "description": "Software engineer building fault-tolerant systems, Kubernetes automation and AI pipelines that verify their own work.",
+ "address": {
+  "@type": "PostalAddress",
+  "addressLocality": "Grambling",
+  "addressRegion": "LA",
+  "addressCountry": "US"
+ },
+ "alumniOf": {
+  "@type": "CollegeOrUniversity",
+  "name": "Grambling State University"
+ },
+ "sameAs": [
+  "https://github.com/gasthecreator",
+  "https://www.linkedin.com/in/gideonadeniyisanni/"
+ ],
+ "knowsAbout": [
+  "Distributed systems",
+  "Kubernetes",
+  "Go",
+  "C/C++",
+  "C#",
+  ".NET",
+  "Apache Kafka",
+  "Apache Cassandra",
+  "Rust",
+  "PyTorch",
+  "AI pipelines"
+ ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/style.css?v=20261023a">
+<link rel="stylesheet" href="css/sections.css?v=20261023a">
+<link rel="stylesheet" href="css/chat.css?v=20261023a">
+</head>
+<body>
+  <noscript>
+    <div style="max-width:720px;margin:0 auto;padding:32px 20px;font:16px/1.6 system-ui,sans-serif">
+      <h1 style="margin:0 0 8px">Gideon Sanni, Software Engineer</h1>
+      <p>I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work. B.S. in Computer Science at Grambling State University (graduating May 2028).</p>
+      <p>This site draws its content with JavaScript. Without it, here are the essentials:</p>
+      <ul>
+        <li><a href="https://github.com/gasthecreator/pharos">Pharos</a>: distributed adverse-event ingestion in Go, Kafka and Cassandra (101 ms p95 under multi-datacenter load).</li>
+        <li><a href="https://github.com/gasthecreator/Cascade-Operator">Cascade Operator</a>: a Kubernetes operator that stops cascading failures (fan-out error rate 63.2% to 31.8% in a k6 benchmark).</li>
+        <li><a href="https://github.com/gasthecreator/tripwire">Tripwire</a>: automated exploit containment for DeFi protocols, in Rust and Solidity.</li>
+        <li><a href="https://praecept.ai">Praecept</a>: engineer on the extraction pipeline and authentication system.</li>
+        <li><a href="https://github.com/gasthecreator/safelink-sentinel">SafeLink</a>: offline-first emergency app with Bluetooth relaying and offline routing (Top 5 of 64 teams at the BE Smart Hackathon).</li>
+        <li><a href="https://github.com/gasthecreator/tierfs">TierFS</a>: tiered-storage filesystem for macOS in C/C++17 (work in progress).</li>
+        <li><a href="https://github.com/gasthecreator/vigil">Vigil</a>: breast-cancer follow-up research platform on synthetic data (research prototype, not a medical device).</li>
+        <li>Solera Holdings (summer 2026): two automation workflows in C# and .NET, including an AI feedback pilot that generated 127 fix pull requests.</li>
+      </ul>
+      <p><a href="mailto:gideonsanni2023@gmail.com">gideonsanni2023@gmail.com</a> · <a href="https://github.com/gasthecreator">GitHub</a> · <a href="https://www.linkedin.com/in/gideonadeniyisanni/">LinkedIn</a> · <a href="assets/resume.pdf">Résumé (PDF)</a></p>
+    </div>
+  </noscript>
+  <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
+
+  <!-- ============ NAV : DESKTOP ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">GS</div>
+    <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    <div class="nav-actions">
+      <button type="button" class="icon-btn theme-toggle" aria-label="Switch to dark mode" title="Toggle light/dark"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button type="button" class="icon-btn" data-resume-open aria-label="View résumé" title="View résumé"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      <a href="assets/resume.pdf" download class="icon-btn" title="Download résumé">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+    </a>
+    </div>
+  </aside>
+
+  <!-- ============ NAV : MOBILE ============ -->
+  <header class="mobile-topbar" id="mobile-topbar">
+    <div class="brand brand--sm">GS</div>
+    <div class="topbar-actions">
+      <button type="button" class="theme-toggle theme-toggle--bar" aria-label="Switch to dark mode" title="Toggle light/dark"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="mobile-menu" id="mobile-menu">
+    <nav class="mobile-menu-nav" id="mobile-menu-nav"></nav>
+    <button type="button" class="mobile-resume-link" data-resume-open>View résumé</button>
+    <a href="assets/resume.pdf" download class="mobile-resume-link">↓ Download résumé</a>
+  </div>
+
+  <!-- ============ MAIN WRAPPER ============ -->
+  <div class="main-wrap">
+
+    <!-- ============ HOME ============ -->
+    <main id="home-view">
+
+      <!-- ===== HERO ===== -->
+      <section id="hero" data-screen-label="Hero" class="hero-scene">
+        <div class="hero-pin">
+          <canvas id="landscape-canvas" class="landscape-canvas" aria-hidden="true"></canvas>
+          <div class="hero-vignette"></div>
+          <div class="hero-bottom">
+            <div class="hero-main">
+              <div class="hero-kicker">Software Engineer, available for work</div>
+              <h1 class="hero-name" aria-label="Gideon Sanni">Gideon<br>Sanni</h1>
+            </div>
+            <div class="hero-aside">
+              <p class="hero-tagline" data-site="tagline">I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work.</p>
+              <div class="hero-actions">
+                <a href="#featured" class="btn btn--primary">View work</a>
+                <a href="#contact" class="btn btn--ghost">Contact</a>
+              </div>
+            </div>
+          </div>
+          <div class="scroll-cue">
+            <svg class="scroll-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>SCROLL</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ABOUT ===== -->
+      <section id="about" data-screen-label="About" class="about">
+        <div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="about-grid">
+          <div class="about-panel panel">
+            <div class="eyebrow" data-reveal>Profile / 01</div>
+            <h2 class="section-title" style="margin-bottom:24px;">About</h2>
+            <p class="about-bio" data-reveal data-site="bio">I'm a Computer Science student at Grambling State University (graduating May 2028) who builds the parts of software that have to keep working when things go wrong: distributed data pipelines, Kubernetes automation, offline-first mobile systems, and AI that must prove its own work. In summer 2026 at Solera Holdings I engineered two automation workflows, including an approval-triggered AI feedback pilot that generated 127 fix pull requests, with every AI fix blocked unless a failing test proved it.</p>
+            <div class="about-stats" id="about-stats" data-stagger></div>
+          </div>
+          <div class="about-image" data-clip>
+            <img src="assets/gideon-about.webp" width="840" height="1000" alt="Portrait of Gideon Sanni outdoors, smiling, wearing a dark jacket" loading="lazy">
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SKILLS ===== -->
+      <section id="skills" data-screen-label="Skills" class="skills" data-curtain>
+        <div class="skills-intro">
+          <div class="eyebrow">Toolkit / 02</div>
+          <h2 class="section-title">Skills</h2>
+          <p class="skills-desc">Pick any skill to see the work that backs it. The highlighted ones are where I'm strongest.</p>
+        </div>
+        <div class="skills-layout">
+          <div class="skills-groups" id="skills-groups"></div>
+          <aside class="skills-evidence" id="skills-evidence" aria-live="polite" aria-label="Where the selected skill has been used"></aside>
+        </div>
+      </section>
+
+      <!-- ===== FEATURED PROJECTS ===== -->
+      <section id="featured" data-screen-label="Featured Projects" class="featured">
+        <div class="blobs blobs--warm" aria-hidden="true"><i></i><i></i></div>
+        <div class="featured-inner">
+          <div class="eyebrow">Selected work / 03</div>
+          <h2 class="section-title" style="margin-bottom:52px;">Featured Projects</h2>
+          <div class="featured-list" id="featured-list"></div>
+        </div>
+      </section>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track" id="marquee-track"></div>
+      </div>
+
+      <!-- ===== ARCHIVE ===== -->
+      <section id="archive" data-screen-label="Project Archive" class="archive">
+        <div class="section-inner">
+          <div class="eyebrow">Everything else / 04</div>
+          <h2 class="section-title" style="margin-bottom:28px;">Full Archive</h2>
+          <div class="filter-bar" id="filter-bar"></div>
+          <div class="archive-grid" id="archive-grid"></div>
+          <div class="archive-empty" id="archive-empty" hidden>No projects match these filters.</div>
+        </div>
+      </section>
+
+      <!-- ===== EXPERIENCE ===== -->
+      <section id="notes" data-screen-label="Engineering Notes" class="notes">
+        <div class="section-inner">
+          <div class="eyebrow">Field notes / 05</div>
+          <h2 class="section-title" style="margin-bottom:12px;">Engineering notes</h2>
+          <p class="notes-desc">What the benchmarks actually showed, including the parts that were not flattering. Each note links its source.</p>
+          <div class="notes-grid" id="notes-grid"></div>
+        </div>
+      </section>
+
+      <section id="experience" data-screen-label="Experience" class="experience">
+        <div class="blobs" aria-hidden="true"><i></i><i></i></div>
+        <div class="experience-inner panel">
+          <div class="eyebrow">Track record / 06</div>
+          <h2 class="section-title" style="margin-bottom:44px;">Experience</h2>
+          <div class="timeline" id="experience-timeline"><span class="timeline-line" aria-hidden="true"></span></div>
+        </div>
+      </section>
+
+      <!-- ===== EDUCATION ===== -->
+      <section id="education" data-screen-label="Education" class="education">
+        <div class="education-inner panel" data-reveal>
+          <div class="eyebrow">Education / 07</div>
+          <h2 class="section-title" style="margin-bottom:28px;">Education</h2>
+          <div class="education-list" id="education-list"></div>
+          <div class="education-extra" id="education-extra"></div>
+          <div class="education-actions">
+            <a class="btn btn--ghost" id="transcript-btn" href="#">Request transcript</a>
+            <span class="education-actions-note">Sent straight to me. I'll reply with a copy.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CONTACT / FOOTER ===== -->
+      <footer id="contact" data-screen-label="Contact" class="contact" data-curtain>
+        <div class="stars" id="stars" aria-hidden="true"></div>
+        <div class="orb" aria-hidden="true"></div>
+        <svg class="ridge ridge--far" id="ridge-far" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <svg class="ridge ridge--mid" id="ridge-mid" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <svg class="ridge ridge--near" id="ridge-near" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="section-inner contact-inner">
+          <div class="eyebrow">Get in touch / 08</div>
+          <h2 class="contact-title" data-site="closing">Let's build something that keeps working.</h2>
+          <div class="contact-actions" data-reveal>
+            <a href="mailto:gideonsanni2023@gmail.com" class="btn btn--primary">gideonsanni2023@gmail.com</a>
+            <button type="button" class="btn btn--ghost" data-resume-open>View résumé</button>
+            <a href="assets/resume.pdf" download class="btn btn--ghost">↓ Download résumé</a>
+          </div>
+        </div>
+        <a href="#hero" class="contact-card" aria-label="Back to top">
+          <svg class="contact-card-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+          <span class="contact-card-label">Back to top</span>
+        </a>
+        <div class="footer-strip">
+          <div class="section-inner footer-bottom">
+            <div class="copyright">© 2026 Gideon Sanni</div>
+            <div class="social-links">
+              <a href="https://github.com/gasthecreator" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://www.linkedin.com/in/gideonadeniyisanni/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+
+    <!-- ============ PROJECT DETAIL ============ -->
+    <main id="detail-view" class="detail-view" hidden>
+      <div class="section-inner">
+        <button class="back-btn" id="back-btn">← Back to projects</button>
+        <div class="detail-cover metric-panel" id="detail-cover"></div>
+        <div class="detail-header">
+          <div><h1 class="detail-title" id="detail-title"></h1><p class="detail-tagline" id="detail-tagline"></p></div>
+          <span class="status-pill" id="detail-status"></span>
+        </div>
+        <div class="detail-tags" id="detail-tags"></div>
+        <div class="detail-grid">
+          <div><div class="detail-label">Problem</div><p class="detail-body" id="detail-problem"></p></div>
+          <div><div class="detail-label">Approach</div><p class="detail-body" id="detail-approach"></p></div>
+          <div><div class="detail-label">Stack</div><p class="detail-body" id="detail-stack"></p></div>
+          <div><div class="detail-label">Outcome</div><p class="detail-body" id="detail-outcome"></p></div>
+        </div>
+        <section class="detail-gallery" id="detail-gallery" aria-labelledby="gallery-title" hidden>
+          <h2 class="detail-label" id="gallery-title">In action</h2>
+          <div class="gallery-grid" id="gallery-grid"></div>
+        </section>
+        <div class="detail-links" id="detail-links"></div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ============ IMAGE LIGHTBOX ============ -->
+  <dialog class="lightbox" id="lightbox" aria-label="Project image">
+    <div class="lightbox-bar">
+      <span class="lightbox-count mono" id="lightbox-count"></span>
+      <button type="button" class="icon-btn" id="lightbox-close" autofocus aria-label="Close image"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="lightbox-stage">
+      <button type="button" class="icon-btn lightbox-nav" id="lightbox-prev" aria-label="Previous image"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <img id="lightbox-img" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <button type="button" class="icon-btn lightbox-nav" id="lightbox-next" aria-label="Next image"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </dialog>
+
+  <!-- ============ RÉSUMÉ PREVIEW ============ -->
+  <dialog class="resume-dialog" id="resume-dialog" aria-labelledby="resume-dialog-title">
+    <div class="resume-dialog-bar">
+      <h2 id="resume-dialog-title">Résumé</h2>
+      <div class="resume-dialog-actions">
+        <a href="assets/resume.pdf" download class="btn btn--ghost">↓ Download</a>
+        <a href="assets/resume.pdf" target="_blank" rel="noopener" class="btn btn--ghost resume-newtab">Open in new tab</a>
+        <button type="button" class="icon-btn" id="resume-close" autofocus aria-label="Close résumé preview"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+    <iframe class="resume-frame" id="resume-frame" title="Gideon Sanni résumé (PDF)"></iframe>
+    <p class="resume-fallback" id="resume-fallback" hidden>Your browser can't show PDFs inline. Use Download or Open in new tab above.</p>
+  </dialog>
+
+<script defer src="js/vendor/gsap.min.js"></script>
+<script defer src="js/vendor/ScrollTrigger.min.js"></script>
+<script defer src="js/vendor/lenis.min.js"></script>
+<script defer src="js/vendor/SplitText.min.js"></script>
+<script defer src="js/content.js?v=20261023a"></script>
+<script defer src="js/main.js?v=20261023a"></script>
+<script defer src="js/chat.js?v=20261023a"></script>
+<script type="module" src="js/landscape.min.js?v=20261023a"></script>
+</body>
+</html>

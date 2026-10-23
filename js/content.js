@@ -194,14 +194,14 @@ window.SITE = {
       ],
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/vigil' }],
     },
+  ],
+
+  archive: [
     {
-      id: 'pharos', idx: '07', name: 'Pharos',
+      id: 'pharos', name: 'Pharos', domain: 'Distributed systems', status: 'shipped',
       tagline: 'A distributed adverse-event ingestion pipeline for clinical trials.',
-      tags: ['Go', 'Kafka', 'Cassandra'],
+      tech: ['Go', 'Kafka', 'Cassandra'], thumb: '101ms',
       metric: { value: '101ms', label: 'p95 under multi-datacenter load' },
-      cardProblem: 'Sites drop offline, retries duplicate records, and events arrive out of order.',
-      cardStack: 'Go, Kafka, Cassandra, MirrorMaker 2',
-      cardOutcome: 'Five real correctness bugs caught before shipping; 101ms p95 under load.',
       problem: 'A trial site can lose connectivity for days, a retry can silently duplicate a record, one misbehaving site can degrade everyone else, and event timestamps rarely arrive in the order they happened. Pharos tackles those four problems for adverse-event reporting across countries and time zones.',
       approach: 'Each site runs an edge collector with a SQLite WAL queue, so durability starts on local disk. Central ingestion applies per-site rate limiting, validation and deduplication through a Cassandra transactional outbox. Kafka is partitioned by site to preserve ordering, and every event carries both event-time and ingestion-time.',
       stack: 'Go, Apache Kafka (KRaft), Apache Cassandra across two datacenters, MirrorMaker 2 replication, Docker Compose, TLS everywhere with per-site API keys.',
@@ -214,13 +214,10 @@ window.SITE = {
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/pharos' }],
     },
     {
-      id: 'tripwire', idx: '08', name: 'Tripwire', status: 'in-progress',
+      id: 'tripwire', name: 'Tripwire', domain: 'Security', status: 'in-progress',
       tagline: 'Automated DeFi exploit containment, in seconds instead of minutes.',
-      tags: ['Rust', 'Solidity', 'Foundry'],
+      tech: ['Rust', 'Solidity', 'Foundry'], thumb: '257 tests',
       metric: { value: '257 tests', label: 'passing: 220 Rust, 37 Foundry, incl. fuzzing' },
-      cardProblem: 'An exploit can drain a protocol before a human is even paged.',
-      cardStack: 'Rust, Solidity, OpenZeppelin, Foundry/anvil, Slither',
-      cardOutcome: 'Detection engine pauses a vault on-chain; 257 passing tests across Rust and Solidity.',
       problem: 'A single-transaction exploit finalizes in one block, so no reactive system can prevent the first loss. Real incidents often continue with more drains while a team is still being paged, and today\'s detection tools leave the response step to a human.',
       approach: 'A Rust detection engine (signature matching plus confidence scoring) feeds an on-chain, OpenZeppelin-based Guardian contract that can pause a protected vault. An integration test deploys the real contracts to a live anvil node and pauses them through the full pipeline.',
       stack: 'Rust, Solidity, OpenZeppelin, Foundry/anvil, Slither.',
@@ -231,9 +228,6 @@ window.SITE = {
       ],
       links: [{ label: 'Source', href: 'https://github.com/gasthecreator/tripwire' }],
     },
-  ],
-
-  archive: [
     {
       id: 'release-checklist', name: 'Release Checklist Automation', domain: 'Internal tools', status: 'internal',
       tagline: 'Turns a bulk drop of release screenshots into a reviewed, template-faithful Excel checklist.',
