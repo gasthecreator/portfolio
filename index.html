@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light dark">
 <script>(function(){var t=null;try{t=sessionStorage.getItem("theme");localStorage.removeItem("theme");}catch(e){}if(t!=="dark"&&t!=="light"){var h=new Date().getHours();t=(h>=6&&h<18)?"light":"dark";}document.documentElement.dataset.theme=t;})();</script>
 <title>Gideon Sanni | Software Engineer</title>
-<meta name="description" content="Gideon Sanni is a software engineer and Computer Science & Cybersecurity student at Grambling State University, building fault-tolerant systems, Kubernetes automation and AI pipelines.">
+<meta name="description" content="Gideon Sanni is a software engineer and Computer Science student at Grambling State University, building fault-tolerant systems, Kubernetes automation and AI pipelines.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Gideon Sanni | Software Engineer">
 <meta property="og:description" content="Fault-tolerant systems, Kubernetes automation and AI pipelines that verify their own work.">
@@ -54,12 +54,14 @@
   "Distributed systems",
   "Kubernetes",
   "Go",
+  "C/C++",
   "C#",
   ".NET",
   "Apache Kafka",
   "Apache Cassandra",
-  "AI pipelines",
-  "Rust"
+  "Rust",
+  "PyTorch",
+  "AI pipelines"
  ]
 }
 </script>
@@ -67,22 +69,25 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="css/style.css?v=20261012j">
-<link rel="stylesheet" href="css/sections.css?v=20261012j">
-<link rel="stylesheet" href="css/chat.css?v=20261012j">
+<link rel="stylesheet" href="css/style.css?v=20261023a">
+<link rel="stylesheet" href="css/sections.css?v=20261023a">
+<link rel="stylesheet" href="css/chat.css?v=20261023a">
 </head>
 <body>
   <noscript>
     <div style="max-width:720px;margin:0 auto;padding:32px 20px;font:16px/1.6 system-ui,sans-serif">
       <h1 style="margin:0 0 8px">Gideon Sanni, Software Engineer</h1>
-      <p>I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work. Computer Science &amp; Cybersecurity at Grambling State University (graduating May 2028).</p>
+      <p>I build fault-tolerant systems, Kubernetes automation, and AI pipelines that verify their own work. B.S. in Computer Science at Grambling State University (graduating May 2028).</p>
       <p>This site draws its content with JavaScript. Without it, here are the essentials:</p>
       <ul>
         <li><a href="https://github.com/gasthecreator/pharos">Pharos</a>: distributed adverse-event ingestion in Go, Kafka and Cassandra (101 ms p95 under multi-datacenter load).</li>
         <li><a href="https://github.com/gasthecreator/Cascade-Operator">Cascade Operator</a>: a Kubernetes operator that stops cascading failures (fan-out error rate 63.2% to 31.8% in a k6 benchmark).</li>
         <li><a href="https://github.com/gasthecreator/tripwire">Tripwire</a>: automated exploit containment for DeFi protocols, in Rust and Solidity.</li>
         <li><a href="https://praecept.ai">Praecept</a>: engineer on the extraction pipeline and authentication system.</li>
-        <li>Solera Holdings (summer 2026): AI-driven engineering pipelines in C# and .NET.</li>
+        <li><a href="https://github.com/gasthecreator/safelink-sentinel">SafeLink</a>: offline-first emergency app with Bluetooth relaying and offline routing (Top 5 of 64 teams at the BE Smart Hackathon).</li>
+        <li><a href="https://github.com/gasthecreator/tierfs">TierFS</a>: tiered-storage filesystem for macOS in C/C++17 (work in progress).</li>
+        <li><a href="https://github.com/gasthecreator/vigil">Vigil</a>: breast-cancer follow-up research platform on synthetic data (research prototype, not a medical device).</li>
+        <li>Solera Holdings (summer 2026): two automation workflows in C# and .NET, including an AI feedback pilot that generated 127 fix pull requests.</li>
       </ul>
       <p><a href="mailto:gideonsanni2023@gmail.com">gideonsanni2023@gmail.com</a> · <a href="https://github.com/gasthecreator">GitHub</a> · <a href="https://www.linkedin.com/in/gideonadeniyisanni/">LinkedIn</a> · <a href="assets/resume.pdf">Résumé (PDF)</a></p>
     </div>
@@ -156,7 +161,7 @@
           <div class="about-panel panel">
             <div class="eyebrow" data-reveal>Profile / 01</div>
             <h2 class="section-title" style="margin-bottom:24px;">About</h2>
-            <p class="about-bio" data-reveal data-site="bio">I'm a Computer Science & Cybersecurity student at Grambling State University (graduating May 2028) who builds the parts of software that have to keep working when things go wrong: distributed data pipelines, Kubernetes automation, and AI systems that must prove their own fixes. In summer 2026 at Solera Holdings I shipped two AI-driven pipelines that save 500+ engineering hours a month, built so AI-generated fixes must clear a failing-test proof and a human approval gate.</p>
+            <p class="about-bio" data-reveal data-site="bio">I'm a Computer Science student at Grambling State University (graduating May 2028) who builds the parts of software that have to keep working when things go wrong: distributed data pipelines, Kubernetes automation, offline-first mobile systems, and AI that must prove its own work. In summer 2026 at Solera Holdings I engineered two automation workflows, including an approval-triggered AI feedback pilot that generated 127 fix pull requests, with every AI fix blocked unless a failing test proved it.</p>
             <div class="about-stats" id="about-stats" data-stagger></div>
           </div>
           <div class="about-image" data-clip>
@@ -327,9 +332,9 @@
 <script defer src="js/vendor/ScrollTrigger.min.js"></script>
 <script defer src="js/vendor/lenis.min.js"></script>
 <script defer src="js/vendor/SplitText.min.js"></script>
-<script defer src="js/content.js?v=20261012j"></script>
-<script defer src="js/main.js?v=20261012j"></script>
-<script defer src="js/chat.js?v=20261012j"></script>
-<script type="module" src="js/landscape.min.js?v=20261012j"></script>
+<script defer src="js/content.js?v=20261023a"></script>
+<script defer src="js/main.js?v=20261023a"></script>
+<script defer src="js/chat.js?v=20261023a"></script>
+<script type="module" src="js/landscape.min.js?v=20261023a"></script>
 </body>
 </html>
