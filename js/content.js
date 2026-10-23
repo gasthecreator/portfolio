@@ -31,26 +31,35 @@ window.SITE = {
     { name: 'Languages', items: ['Python', 'TypeScript', 'Go', 'Rust', 'C/C++', 'C#', 'Java', 'JavaScript', 'SQL', 'Solidity', 'Swift', 'Kotlin'] },
     { name: 'Backend & Data', items: ['FastAPI', 'Node.js', 'Express', 'ASP.NET Core', '.NET', 'PostgreSQL', 'SQLite', 'Supabase', 'Redis', 'Kafka', 'Cassandra', 'MongoDB'] },
     { name: 'Infrastructure & Observability', items: ['Kubernetes', 'Docker', 'Prometheus', 'OpenTelemetry', 'Cloudflare'] },
-    { name: 'Mobile & Verification', items: ['React Native', 'Foundry', 'Alloy'] },
+    { name: 'Mobile & Web3', items: ['React Native', 'Foundry', 'Alloy'] },
     { name: 'AI / ML', items: ['PyTorch', 'scikit-learn', 'XGBoost', 'JAX', 'NumPyro/NUTS', 'ONNX Runtime', 'Neural posterior estimation', 'Censor-aware evaluation'] },
     { name: 'Agentic Tools', items: ['LLM agents', 'MCP', 'Claude', 'Cursor', 'GitHub Copilot', 'Gemini', 'Antigravity', 'OpenAI Codex'] },
   ],
 
   // Which projects on this site back each skill. A skill with no entry is on the résumé but has no project here yet.
   skillEvidence: {
-    'Python': ['safelink', 'vigil'], 'TypeScript': ['refraction'], 'Go': ['pharos', 'cascade'], 'Rust': ['tripwire'],
-    'C/C++': ['tierfs'], 'C#': ['feedback-automation', 'release-checklist'], 'JavaScript': ['praecept', 'safelink'],
-    'SQL': ['refraction'], 'Solidity': ['tripwire'], 'Swift': ['safelink', 'tierfs'], 'Kotlin': ['safelink'],
-    'FastAPI': ['safelink'], 'Node.js': ['praecept', 'safelink'], 'Express': ['refraction', 'safelink'],
+    // Languages (by files in the project repos)
+    'Python': ['vigil', 'tierfs', 'safelink'], 'TypeScript': ['refraction', 'vigil'], 'Go': ['pharos', 'cascade'], 'Rust': ['tripwire'],
+    'C/C++': ['tierfs'], 'C#': ['feedback-automation', 'release-checklist'], 'Java': ['tierfs'],
+    'JavaScript': ['praecept', 'safelink', 'pharos', 'cascade'], 'SQL': ['vigil', 'tierfs', 'refraction'], 'Solidity': ['tripwire'],
+    'Swift': ['safelink', 'tierfs'], 'Kotlin': ['safelink'],
+    // Backend and data
+    'FastAPI': ['safelink', 'vigil'], 'Node.js': ['praecept', 'safelink', 'refraction'], 'Express': ['refraction', 'safelink'],
     'ASP.NET Core': ['feedback-automation', 'release-checklist'], '.NET': ['feedback-automation', 'release-checklist'],
-    'PostgreSQL': ['refraction'], 'SQLite': ['tierfs'], 'Supabase': ['praecept'], 'Redis': ['pharos'],
+    'PostgreSQL': ['refraction', 'vigil'], 'SQLite': ['pharos', 'tierfs', 'safelink'], 'Supabase': ['praecept'], 'Redis': ['pharos'],
     'Kafka': ['pharos'], 'Cassandra': ['pharos'], 'MongoDB': ['feedback-automation', 'release-checklist'],
-    'Kubernetes': ['cascade', 'feedback-automation'], 'Docker': ['pharos', 'feedback-automation'],
-    'Prometheus': ['cascade', 'pharos'], 'Cloudflare': ['praecept'],
-    'React Native': ['safelink'], 'Foundry': ['tripwire'],
-    'PyTorch': ['vigil'], 'scikit-learn': ['vigil'], 'XGBoost': ['vigil'], 'JAX': ['vigil'], 'NumPyro/NUTS': ['vigil'],
+    // Infrastructure and observability
+    'Kubernetes': ['cascade', 'feedback-automation', 'pharos'], 'Docker': ['pharos', 'cascade', 'vigil', 'feedback-automation'],
+    'Prometheus': ['cascade', 'pharos', 'vigil', 'tripwire'], 'OpenTelemetry': ['vigil'], 'Cloudflare': ['praecept'],
+    // Mobile and web3 tooling
+    'React Native': ['safelink'], 'Foundry': ['tripwire'], 'Alloy': ['tripwire'],
+    // AI / ML
+    'PyTorch': ['vigil'], 'scikit-learn': ['vigil'], 'XGBoost': ['vigil'], 'JAX': ['vigil'], 'NumPyro/NUTS': ['vigil'], 'ONNX Runtime': ['vigil'],
     'Neural posterior estimation': ['vigil'], 'Censor-aware evaluation': ['vigil'],
-    'LLM agents': ['feedback-automation'], 'GitHub Copilot': ['feedback-automation', 'release-checklist'],
+    // Agentic tools (shown as "used in or while building": commit co-author trailers, agent files and docs in each repo)
+    'LLM agents': ['feedback-automation', 'vigil'], 'Claude': ['pharos', 'cascade', 'tripwire', 'tierfs', 'vigil', 'safelink'],
+    'Cursor': ['cascade', 'vigil'], 'GitHub Copilot': ['feedback-automation', 'release-checklist'],
+    'Gemini': ['pharos', 'vigil', 'safelink'], 'Antigravity': ['pharos', 'vigil'], 'OpenAI Codex': ['vigil'],
   },
   skillsCore: ['Go', 'Kubernetes', 'C#', '.NET', 'Kafka', 'Cassandra'],
 

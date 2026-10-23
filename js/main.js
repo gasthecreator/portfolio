@@ -305,6 +305,8 @@
     if (!groupsEl || !panel) return;
     const evidence = SITE.skillEvidence || {};
     const core = new Set(SITE.skillsCore || []);
+    const groupOf = {};
+    SITE.skills.forEach((g) => g.items.forEach((s) => { groupOf[s] = g.name; }));
     groupsEl.innerHTML = SITE.skills.map((g) => `
       <div class="skills-group">
         <h3 class="skills-group-label">${esc(g.name)}</h3>
@@ -318,8 +320,9 @@
       groupsEl.querySelectorAll('.skill-chip').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.skill === skill)));
       const ids = evidence[skill] || [];
       const items = ids.map((id) => ALL_PROJECTS.find((p) => p.id === id)).filter(Boolean);
+      const isTool = groupOf[skill] === 'Agentic Tools';
       const meta = items.length
-        ? `Used in ${items.length} project${items.length > 1 ? 's' : ''} on this site${core.has(skill) ? ', and one of my strongest areas' : ''}.`
+        ? `${isTool ? 'Used in or while building' : 'Used in'} ${items.length} project${items.length > 1 ? 's' : ''} on this site${core.has(skill) ? ', and one of my strongest areas' : ''}.`
         : 'On my résumé, with no project on this site yet.';
       panel.innerHTML = `
         <p class="evidence-eyebrow">${core.has(skill) ? 'Strongest area' : 'Skill'}</p>
