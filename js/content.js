@@ -39,14 +39,14 @@ window.SITE = {
   // Which projects on this site back each skill. A skill with no entry is on the résumé but has no project here yet.
   skillEvidence: {
     // Languages (by files in the project repos)
-    'Python': ['vigil', 'tierfs', 'safelink'], 'TypeScript': ['refraction', 'vigil'], 'Go': ['pharos', 'cascade'], 'Rust': ['tripwire'],
+    'Python': ['vigil', 'tierfs', 'safelink', 'quorum'], 'TypeScript': ['refraction', 'vigil', 'quorum'], 'Go': ['pharos', 'cascade'], 'Rust': ['tripwire'],
     'C/C++': ['tierfs'], 'C#': ['feedback-automation', 'release-checklist'], 'Java': ['tierfs'],
     'JavaScript': ['praecept', 'safelink', 'pharos', 'cascade'], 'SQL': ['vigil', 'tierfs', 'refraction'], 'Solidity': ['tripwire'],
     'Swift': ['safelink', 'tierfs'], 'Kotlin': ['safelink'],
     // Backend and data
-    'FastAPI': ['safelink', 'vigil'], 'Node.js': ['praecept', 'safelink', 'refraction'], 'Express': ['refraction', 'safelink'],
+    'FastAPI': ['safelink', 'vigil', 'quorum'], 'Node.js': ['praecept', 'safelink', 'refraction'], 'Express': ['refraction', 'safelink'],
     'ASP.NET Core': ['feedback-automation', 'release-checklist'], '.NET': ['feedback-automation', 'release-checklist'],
-    'PostgreSQL': ['refraction', 'vigil'], 'SQLite': ['pharos', 'tierfs', 'safelink'], 'Supabase': ['praecept'], 'Redis': ['pharos'],
+    'PostgreSQL': ['refraction', 'vigil'], 'SQLite': ['pharos', 'tierfs', 'safelink', 'quorum'], 'Supabase': ['praecept'], 'Redis': ['pharos'],
     'Kafka': ['pharos'], 'Cassandra': ['pharos'], 'MongoDB': ['feedback-automation', 'release-checklist'],
     // Infrastructure and observability
     'Kubernetes': ['cascade', 'feedback-automation', 'pharos'], 'Docker': ['pharos', 'cascade', 'vigil', 'feedback-automation'],
@@ -57,7 +57,7 @@ window.SITE = {
     'PyTorch': ['vigil'], 'scikit-learn': ['vigil'], 'XGBoost': ['vigil'], 'JAX': ['vigil'], 'NumPyro/NUTS': ['vigil'], 'ONNX Runtime': ['vigil'],
     'Neural posterior estimation': ['vigil'], 'Censor-aware evaluation': ['vigil'],
     // Agentic tools (shown as "used in or while building": commit co-author trailers, agent files and docs in each repo)
-    'LLM agents': ['feedback-automation', 'vigil'], 'Claude': ['pharos', 'cascade', 'tripwire', 'tierfs', 'vigil', 'safelink'],
+    'LLM agents': ['feedback-automation', 'vigil', 'quorum'], 'MCP': ['quorum'], 'Claude': ['pharos', 'cascade', 'tripwire', 'tierfs', 'vigil', 'safelink', 'quorum'],
     'Cursor': ['cascade', 'vigil'], 'GitHub Copilot': ['feedback-automation', 'release-checklist'],
     'Gemini': ['pharos', 'vigil', 'safelink'], 'Antigravity': ['pharos', 'vigil'], 'OpenAI Codex': ['vigil'],
   },
@@ -207,6 +207,21 @@ window.SITE = {
 
   archive: [
     {
+      id: 'quorum', name: 'Quorum', domain: 'Applied AI', status: 'in-progress',
+      tagline: 'A local app where open-weight models review code, debate it, and a judge rules, with each model\'s vote weighted by how well it measured on that kind of problem.',
+      tech: ['Python', 'FastAPI', 'Ollama'], thumb: 'Winner',
+      metric: { value: 'Winner', label: 'Best Use of Open Source Models, Hacktoberfest Hack Day Grambling' },
+      problem: 'One small model reviewing a diff can miss a bug and sound just as sure either way. A plain majority vote across several models treats a weak reviewer on one kind of bug the same as a strong one, and gives no sign of who changed their mind or why.',
+      approach: 'A panel of small open-weight models runs on the local machine through Ollama. They review a diff blind, then read each other\'s anonymized findings and revise, and a model can only change its mind by giving evidence. A judge then rules, and the screen shows who changed their mind, who dissented, and whether the judge overrode the weighted vote. Each model\'s vote is weighted by a per-category skill profile measured on a labeled corpus, using the Wilson 95% lower bound. Text pasted into the input is treated as data, and anything that tries to steer the models is flagged. Semgrep can confirm code findings as tool-verified, and an MCP server lets coding agents ask the panel for a local second opinion.',
+      stack: 'Python, FastAPI, SQLite, Pydantic, Server-Sent Events, Semgrep, Model Context Protocol, React, TypeScript, Vite, Ollama. Models: Qwen2.5 3B, Llama 3.2 3B and Gemma 3 4B, all open-weight. MIT licensed.',
+      outcome: 'Built solo, and won Best Use of Open Source Models at Hacktoberfest Hack Day Grambling. In a real run on three local models, all three flagged a seeded SQL injection and the judge agreed with the weighted vote (first screenshot). The calibration and evaluation corpora are small and synthetic, so I make no accuracy or model-ranking claims.',
+      gallery: [
+        { src: 'assets/projects/quorum/ruling.webp', alt: 'Quorum review room showing a seeded SQL injection diff and the final ruling with three supporters', caption: 'A real run on three local open-weight models. The diff with a seeded SQL injection is on the left, and the final ruling on the right shows the finding confirmed by all three reviewers, with the judge agreeing with the weighted vote.' },
+        { src: 'assets/projects/quorum/group-chat.webp', alt: 'Quorum group chat where three local models answer one message and a judge summarizes', caption: 'Group chat: one message goes to three local models, they react to each other in the thread, and a judge summarizes where they agreed and disagreed.' },
+      ],
+      links: [{ label: 'Source', href: 'https://github.com/gasthecreator/quorum' }],
+    },
+    {
       id: 'pharos', name: 'Pharos', domain: 'Distributed systems', status: 'shipped',
       tagline: 'A distributed adverse-event ingestion pipeline for clinical trials.',
       tech: ['Go', 'Kafka', 'Cassandra'], thumb: '101ms',
@@ -312,7 +327,7 @@ window.SITE = {
     },
   ],
   certifications: ['AWS Cloud Foundations', 'IBM (AI, Cybersecurity, Data)', 'PwC Extern'],
-  programs: ['BE Smart Hackathon (Top 5 of 64)', 'eBay SWE Fellow', 'Break Through Tech (Cornell Tech)', 'Computing Talent Initiative', 'AI4ALL', 'CodePath', 'Eli Lilly Discovery Day Fellow', 'Amazon AI/ML Symposium', 'ColorStack', 'Vassar Burnam Fellowship Volunteer', 'NSBE', 'NSYP', 'EY Expedition', 'NaijaCoder'],
+  programs: ['Hacktoberfest Hack Day Grambling (Best Use of Open Source Models)', 'BE Smart Hackathon (Top 5 of 64)', 'eBay SWE Fellow', 'Break Through Tech (Cornell Tech)', 'Computing Talent Initiative', 'AI4ALL', 'CodePath', 'Eli Lilly Discovery Day Fellow', 'Amazon AI/ML Symposium', 'ColorStack', 'Vassar Burnam Fellowship Volunteer', 'NSBE', 'NSYP', 'EY Expedition', 'NaijaCoder'],
 
   closing: "Let's build something that keeps working.",
 };
