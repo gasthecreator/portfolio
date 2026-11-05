@@ -168,22 +168,22 @@ function makeCanvasTexture(drawFn) {
   return { tex, redraw };
 }
 
-// Front: portrait photo with a soft caption
+// Front: monogram card
 function makeFrontTexture() {
-  const img = new Image();
-  let loaded = false;
-  const { tex, redraw } = makeCanvasTexture((ctx) => {
+  const { tex } = makeCanvasTexture((ctx) => {
     roundRectPath(ctx, 0, 0, CARD_W, CARD_H, CARD_R);
-    ctx.save(); ctx.clip();
-    if (loaded) {
-      ctx.drawImage(img, 0, 0, CARD_W, CARD_H);
-    } else {
-      ctx.fillStyle = '#2b3350'; ctx.fillRect(0, 0, CARD_W, CARD_H);
-    }
-    ctx.restore();
+    const g = ctx.createLinearGradient(0, 0, CARD_W, CARD_H);
+    g.addColorStop(0, '#2a2050'); g.addColorStop(1, '#1b2140');
+    ctx.fillStyle = g; ctx.fill();
+    ctx.strokeStyle = 'rgba(251,246,236,0.18)'; ctx.lineWidth = 3; ctx.stroke();
+    ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'center';
+    ctx.fillStyle = '#fbf6ec';
+    ctx.font = '600 340px Newsreader, Georgia, serif';
+    ctx.fillText('GS', CARD_W / 2, CARD_H / 2 + 100);
+    ctx.fillStyle = '#f2b46a';
+    ctx.font = '500 34px "IBM Plex Mono", monospace';
+    ctx.fillText('SOFTWARE ENGINEER', CARD_W / 2, CARD_H / 2 + 200);
   });
-  img.onload = () => { loaded = true; redraw(); };
-  img.src = 'assets/gideon-card.webp';
   return tex;
 }
 

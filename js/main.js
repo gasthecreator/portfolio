@@ -612,7 +612,6 @@
 
     // parallax
     if (desktop) {
-      gsap.to('.about-image', { yPercent: -8, ease: 'none', scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true } });
       gsap.to('.skills-intro', { yPercent: -14, ease: 'none', scrollTrigger: { trigger: '.skills', start: 'top bottom', end: 'center center', scrub: true } });
       gsap.utils.toArray('.blobs i').forEach((b, i) => {
         gsap.to(b, { yPercent: (i % 2 ? -1 : 1) * (18 + i * 6), ease: 'none', scrollTrigger: { trigger: b.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } });
